@@ -25,8 +25,9 @@ pub(crate) async fn polyfill(
     user_agent: Option<&str>,
     env: Arc<Env>,
     versions: &StoreVersions,
+    defaults: &polyfill_library::polyfill_parameters::ParameterDefaults,
 ) -> Response {
-    let parameters = get_polyfill_parameters(url, user_agent);
+    let parameters = get_polyfill_parameters(url, user_agent, defaults);
 
     let version = resolve_library_version(&parameters.version, versions);
 

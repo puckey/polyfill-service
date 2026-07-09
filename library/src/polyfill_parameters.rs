@@ -18,7 +18,20 @@ pub struct PolyfillParameters {
     pub strict: bool,
 }
 
-pub fn get_polyfill_parameters(url: &url::Url, user_agent: Option<&str>) -> PolyfillParameters {
+/// Values used when the query string does not specify them.
+pub struct ParameterDefaults {
+    /// Library version served for requests without a `version` parameter.
+    pub version: String,
+    /// Policy for unrecognized user agents when no `unknown` parameter is
+    /// given: "polyfill" (serve everything, feature-gated) or "ignore".
+    pub unknown: String,
+}
+
+pub fn get_polyfill_parameters(
+    url: &url::Url,
+    user_agent: Option<&str>,
+    defaults: &ParameterDefaults,
+) -> PolyfillParameters {
     let query = url
         .query_pairs()
         .into_owned()
@@ -37,15 +50,15 @@ pub fn get_polyfill_parameters(url: &url::Url, user_agent: Option<&str>) -> Poly
         );
     let unknown = query
         .get("unknown")
-        .map_or_else(|| "polyfill".to_owned(), std::clone::Clone::clone);
+        .map_or_else(|| defaults.unknown.clone(), std::clone::Clone::clone);
     let version = query
         .get("version")
         .map(std::clone::Clone::clone)
         .map_or_else(
-            || "3.111.0".to_owned(),
+            || defaults.version.clone(),
             |f| {
                 if f.is_empty() {
-                    "3.111.0".to_owned()
+                    defaults.version.clone()
                 } else {
                     f
                 }

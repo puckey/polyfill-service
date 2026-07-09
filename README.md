@@ -53,6 +53,8 @@ POLYFILL_DB=polyfills.db PORT=8080 ./target/release/polyfill-service
 | `POLYFILL_DB` | `polyfills.db` | Path to the SQLite store built by `build-db` |
 | `PORT` | `8080` | HTTP listen port |
 | `RUST_LOG` | `info` | Log filter (tracing-subscriber syntax) |
+| `DEFAULT_VERSION` | `3.111.0` if in store, else newest | Library version served when the URL has no `version=` parameter. Set to `5.3.1` to serve the newest library (es2025) by default — note this changes bundles for existing embed URLs. |
+| `DEFAULT_UNKNOWN` | `polyfill` | What unrecognized user agents get when the URL has no `unknown=` parameter: `polyfill` serves every requested feature behind runtime feature-detect gates (large bundles — and bots are unrecognized UAs, so they hit this path); `ignore` serves them nothing. |
 
 The service compresses responses (gzip/brotli/zstd, by `Accept-Encoding`) but
 does no TLS or caching — run it behind your regular reverse proxy / CDN.

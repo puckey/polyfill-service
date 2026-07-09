@@ -9,4 +9,6 @@ services:
       - "8080:8080"
     environment:
       RUST_LOG: info
+      # DEFAULT_VERSION: "5.3.1"   # serve the newest library (es2025) by default
+      # DEFAULT_UNKNOWN: "ignore"  # don't build big gated bundles for bots/unknown UAs
     restart: unless-stopped

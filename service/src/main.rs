@@ -15,6 +15,7 @@ pub struct AppState {
     pub env: Arc<Env>,
     pub registry: prometheus::Registry,
     pub versions: Arc<StoreVersions>,
+    pub defaults: Arc<polyfill_library::polyfill_parameters::ParameterDefaults>,
 }
 
 /// Library versions actually present in the polyfill store.
@@ -48,6 +49,32 @@ async fn main() {
         .unwrap_or_else(|err| panic!("failed to open polyfill store at {db_path}: {err}"));
 
     let versions = Arc::new(discover_store_versions(&pool, &db_path));
+
+    let default_version = match std::env::var("DEFAULT_VERSION") {
+        Ok(version) => {
+            assert!(
+                versions.available.iter().any(|v| v == &version),
+                "DEFAULT_VERSION {} is not in the polyfill store (available: {})",
+                version,
+                versions.available.join(", ")
+            );
+            version
+        }
+        Err(_) => versions.fallback.clone(),
+    };
+    let default_unknown =
+        std::env::var("DEFAULT_UNKNOWN").unwrap_or_else(|_| "polyfill".to_owned());
+    assert!(
+        default_unknown == "polyfill" || default_unknown == "ignore",
+        "DEFAULT_UNKNOWN must be \"polyfill\" or \"ignore\", got {default_unknown:?}"
+    );
+    tracing::info!(
+        "serving version {default_version} by default; unknown user agents default to unknown={default_unknown}"
+    );
+    let defaults = Arc::new(polyfill_library::polyfill_parameters::ParameterDefaults {
+        version: default_version,
+        unknown: default_unknown,
+    });
 
     let registry = prometheus::Registry::new();
     let store_query_metric = prometheus::IntCounterVec::new(
@@ -97,6 +124,7 @@ async fn main() {
         env,
         registry,
         versions,
+        defaults,
     };
 
     let app = axum::Router::new()
