@@ -1,5 +1,4 @@
 use indexmap::{IndexMap, IndexSet};
-use regex::Regex;
 use serde::Serialize;
 use std::collections::HashMap;
 use urlencoding::decode;
@@ -31,7 +30,7 @@ pub fn get_polyfill_parameters(url: &url::Url, user_agent: Option<&str>) -> Poly
     });
     let features = query
         .get("features")
-        .filter(|v| Regex::new(r"^[0-9a-zA-Z-_.@~,]+$").unwrap().is_match(v))
+        .filter(|v| crate::regex_cache::cached_regex(r"^[0-9a-zA-Z-_.@~,]+$").is_match(v))
         .map_or_else(
             || "default".to_owned(),
             |f| decode(f).map_or_else(|_| f.to_string(), |f| f.to_string()),
@@ -54,7 +53,7 @@ pub fn get_polyfill_parameters(url: &url::Url, user_agent: Option<&str>) -> Poly
         );
     let callback = query
         .get("callback")
-        .filter(|callback| Regex::new(r"^[\w.]+$").unwrap().is_match(callback))
+        .filter(|callback| crate::regex_cache::cached_regex(r"^[\w.]+$").is_match(callback))
         .map(std::clone::Clone::clone);
     let ua_string = query
         .get("ua")

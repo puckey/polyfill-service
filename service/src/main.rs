@@ -14,6 +14,14 @@ use std::sync::Arc;
 pub struct AppState {
     pub env: Arc<Env>,
     pub registry: prometheus::Registry,
+    pub versions: Arc<StoreVersions>,
+}
+
+/// Library versions actually present in the polyfill store.
+pub struct StoreVersions {
+    pub available: Vec<String>,
+    /// Served when a request names a version the store does not have.
+    pub fallback: String,
 }
 
 #[tokio::main]
@@ -39,7 +47,7 @@ async fn main() {
         .build(manager)
         .unwrap_or_else(|err| panic!("failed to open polyfill store at {db_path}: {err}"));
 
-    log_available_versions(&pool, &db_path);
+    let versions = Arc::new(discover_store_versions(&pool, &db_path));
 
     let registry = prometheus::Registry::new();
     let store_query_metric = prometheus::IntCounterVec::new(
@@ -78,17 +86,23 @@ async fn main() {
 
     let env = Arc::new(Env {
         polyfill_store: pool,
+        version_meta_cache: std::sync::RwLock::new(std::collections::HashMap::new()),
         store_query_metric,
         up_to_date_ua_metric,
         injected_polyfill_metric,
         bytes_out_metric,
     });
 
-    let state = AppState { env, registry };
+    let state = AppState {
+        env,
+        registry,
+        versions,
+    };
 
     let app = axum::Router::new()
         .route("/metrics", axum::routing::get(metrics))
         .fallback(routes::handle_request)
+        .layer(tower_http::compression::CompressionLayer::new())
         .with_state(state);
 
     let listener = tokio::net::TcpListener::bind(("0.0.0.0", port))
@@ -98,14 +112,17 @@ async fn main() {
     axum::serve(listener, app).await.expect("server failed");
 }
 
-fn log_available_versions(pool: &r2d2::Pool<r2d2_sqlite::SqliteConnectionManager>, db_path: &str) {
+fn discover_store_versions(
+    pool: &r2d2::Pool<r2d2_sqlite::SqliteConnectionManager>,
+    db_path: &str,
+) -> StoreVersions {
     let conn = pool.get().expect("failed to get store connection");
     let mut stmt = conn
         .prepare(
             "SELECT name FROM sqlite_master WHERE type = 'table' AND name LIKE 'files_%' ORDER BY name",
         )
         .expect("failed to inspect polyfill store");
-    let versions = stmt
+    let mut available = stmt
         .query_map([], |row| row.get::<_, String>(0))
         .expect("failed to inspect polyfill store")
         .filter_map(Result::ok)
@@ -113,15 +130,42 @@ fn log_available_versions(pool: &r2d2::Pool<r2d2_sqlite::SqliteConnectionManager
         .collect::<Vec<_>>();
 
     assert!(
-        !versions.is_empty(),
+        !available.is_empty(),
         "polyfill store at {} contains no files_* tables — build it with the build-db binary",
         db_path
     );
+    available.sort_by_key(|version| numeric_version_key(version));
+
+    // Prefer the upstream default so unversioned requests behave like the
+    // production service; otherwise serve the newest version in the store.
+    let fallback = if available.iter().any(|v| v == "3.111.0") {
+        "3.111.0".to_owned()
+    } else {
+        available.last().cloned().unwrap()
+    };
+
     tracing::info!(
-        "polyfill store {} provides versions: {}",
+        "polyfill store {} provides versions: {} (fallback: {})",
         db_path,
-        versions.join(", ")
+        available.join(", "),
+        fallback
     );
+
+    StoreVersions {
+        available,
+        fallback,
+    }
+}
+
+fn numeric_version_key(version: &str) -> (u64, u64, u64) {
+    let mut parts = version
+        .split('.')
+        .map(|part| part.parse::<u64>().unwrap_or(0));
+    (
+        parts.next().unwrap_or(0),
+        parts.next().unwrap_or(0),
+        parts.next().unwrap_or(0),
+    )
 }
 
 async fn metrics(State(state): State<AppState>) -> Response {

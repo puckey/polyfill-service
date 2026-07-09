@@ -1,184 +1,16 @@
+use crate::meta_store::{self, VersionMeta};
 use crate::{
     buffer::Buffer,
     old_ua::{self, OldUA},
     ua::{UserAgent, UA},
 };
-use crate::{meta, BoxError, Env};
+use crate::{BoxError, Env};
 use indexmap::IndexSet;
 use std::sync::Arc;
 
 use crate::{polyfill_parameters::PolyfillParameters, toposort::toposort};
-use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
 use std::str;
-
-macro_rules! lookup_file {
-    ( $fn:ident, $file:expr ) => {{
-        Ok(meta::$fn($file).map(Buffer::from_str))
-    }};
-}
-
-macro_rules! get_alias {
-    ( $version:expr ) => {{
-        Ok(Some(Buffer::from_str(include_str!(concat!(
-            "../../polyfill-libraries/",
-            $version,
-            "/aliases.json"
-        )))))
-    }};
-}
-
-pub(crate) fn lookup_file(version: &str, n: &str) -> Result<Option<Buffer>, BoxError> {
-    if n.ends_with("/meta.json") {
-        return match version {
-            "3.101.0" => lookup_file!(lookup_3_101_0, n),
-            "3.103.0" => lookup_file!(lookup_3_103_0, n),
-            "3.104.0" => lookup_file!(lookup_3_104_0, n),
-            "3.108.0" => lookup_file!(lookup_3_108_0, n),
-            "3.109.0" => lookup_file!(lookup_3_109_0, n),
-            "3.110.1" => lookup_file!(lookup_3_110_1, n),
-            "3.111.0" => lookup_file!(lookup_3_111_0, n),
-            "3.27.4" => lookup_file!(lookup_3_27_4, n),
-            "3.34.0" => lookup_file!(lookup_3_34_0, n),
-            "3.39.0" => lookup_file!(lookup_3_39_0, n),
-            "3.40.0" => lookup_file!(lookup_3_40_0, n),
-            "3.41.0" => lookup_file!(lookup_3_41_0, n),
-            "3.42.0" => lookup_file!(lookup_3_42_0, n),
-            "3.46.0" => lookup_file!(lookup_3_46_0, n),
-            "3.48.0" => lookup_file!(lookup_3_48_0, n),
-            "3.50.2" => lookup_file!(lookup_3_50_2, n),
-            "3.51.0" => lookup_file!(lookup_3_51_0, n),
-            "3.52.0" => lookup_file!(lookup_3_52_0, n),
-            "3.52.1" => lookup_file!(lookup_3_52_1, n),
-            "3.52.2" => lookup_file!(lookup_3_52_2, n),
-            "3.52.3" => lookup_file!(lookup_3_52_3, n),
-            "3.53.1" => lookup_file!(lookup_3_53_1, n),
-            "3.89.4" => lookup_file!(lookup_3_89_4, n),
-            "3.96.0" => lookup_file!(lookup_3_96_0, n),
-            "3.98.0" => lookup_file!(lookup_3_98_0, n),
-            "3.25.1" => lookup_file!(lookup_3_25_1, n),
-            "4.8.0" => lookup_file!(lookup_4_8_0, n),
-            "5.3.1" => lookup_file!(lookup_5_3_1, n),
-
-            v => {
-                tracing::warn!("no meta database for version {v}");
-                Ok(None)
-            }
-        };
-    }
-
-    if n == "/aliases.json" {
-        return match version {
-            "3.101.0" => get_alias!("3.101.0"),
-            "3.103.0" => get_alias!("3.103.0"),
-            "3.104.0" => get_alias!("3.104.0"),
-            "3.108.0" => get_alias!("3.108.0"),
-            "3.109.0" => get_alias!("3.109.0"),
-            "3.110.1" => get_alias!("3.110.1"),
-            "3.111.0" => get_alias!("3.111.0"),
-            "3.27.4" => get_alias!("3.27.4"),
-            "3.34.0" => get_alias!("3.34.0"),
-            "3.39.0" => get_alias!("3.39.0"),
-            "3.40.0" => get_alias!("3.40.0"),
-            "3.41.0" => get_alias!("3.41.0"),
-            "3.42.0" => get_alias!("3.42.0"),
-            "3.46.0" => get_alias!("3.46.0"),
-            "3.48.0" => get_alias!("3.48.0"),
-            "3.50.2" => get_alias!("3.50.2"),
-            "3.51.0" => get_alias!("3.51.0"),
-            "3.52.0" => get_alias!("3.52.0"),
-            "3.52.1" => get_alias!("3.52.1"),
-            "3.52.2" => get_alias!("3.52.2"),
-            "3.52.3" => get_alias!("3.52.3"),
-            "3.53.1" => get_alias!("3.53.1"),
-            "3.89.4" => get_alias!("3.89.4"),
-            "3.96.0" => get_alias!("3.96.0"),
-            "3.98.0" => get_alias!("3.98.0"),
-            "4.8.0" => get_alias!("4.8.0"),
-            "3.25.1" => get_alias!("3.25.1"),
-            "5.3.1" => get_alias!("5.3.1"),
-
-            v => {
-                tracing::warn!("no aliases for version {v}");
-                Ok(None)
-            }
-        };
-    }
-
-    tracing::warn!("lookup {n}: not found");
-    Ok(None)
-}
-
-#[allow(dead_code)]
-#[derive(Deserialize)]
-struct Browsers {
-    android: Option<String>,
-    bb: Option<String>,
-    chrome: Option<String>,
-    edge: Option<String>,
-    edge_mob: Option<String>,
-    firefox: Option<String>,
-    firefox_mob: Option<String>,
-    ie: Option<String>,
-    ie_mob: Option<String>,
-    ios_saf: Option<String>,
-    op_mini: Option<String>,
-    opera: Option<String>,
-    safari: Option<String>,
-    samsung_mob: Option<String>,
-}
-
-#[derive(Clone, Deserialize)]
-#[serde(rename_all = "camelCase")]
-struct PolyfillConfig {
-    license: Option<String>,
-    dependencies: Option<Vec<String>>,
-    browsers: Option<HashMap<String, String>>,
-    detect_source: Option<String>,
-}
-
-fn lookup(version: &str, key: &str) -> Option<Vec<u8>> {
-    let value = lookup_file(version, key);
-    let mut value = match value {
-        Err(_) | Ok(None) => return None,
-        Ok(Some(value)) => value,
-    };
-    let mut bytes = Vec::new();
-    if value.read_to_end(&mut bytes).is_err() {
-        None
-    } else {
-        Some(bytes)
-    }
-}
-
-fn get_polyfill_meta(version: &str, feature_name: &str) -> Option<PolyfillConfig> {
-    if feature_name.is_empty() {
-        return None;
-    }
-    let meta = lookup(version, &format!("/{feature_name}/meta.json"));
-    let meta = match meta {
-        None => return None,
-        Some(meta) => meta,
-    };
-    serde_json::from_slice(&meta).unwrap()
-}
-
-fn get_config_aliases(version: &str, alias: &str) -> Option<Vec<String>> {
-    if alias.is_empty() {
-        return None;
-    }
-    lookup(version, &format!("/aliases.json")).and_then(|bytes| {
-        let aliases = serde_json::from_slice::<HashMap<String, Vec<String>>>(&bytes)
-            .map_err(|e| {
-                panic!(
-                    "failed to json parse alias: {} from store error: {:#?}",
-                    alias, e
-                );
-            })
-            .unwrap();
-        aliases.get(alias).cloned()
-    })
-}
 
 #[derive(Clone, Default, Debug)]
 struct FeatureProperties {
@@ -263,6 +95,7 @@ fn add_feature(
 fn get_polyfills(
     options: &PolyfillParameters,
     version: &str,
+    meta_db: &VersionMeta,
 ) -> Result<HashMap<String, FeatureProperties>, BoxError> {
     let ua = if version == "3.25.1" {
         U::Old(old_ua::OldUA::new(&options.ua_string))
@@ -302,8 +135,10 @@ fn get_polyfills(
             };
 
             // Handle alias logic here
-            let alias = get_config_aliases(version, &feature_name)
-                .map_or_else(Default::default, |alias| alias);
+            let alias = meta_db
+                .config_aliases(&feature_name)
+                .cloned()
+                .unwrap_or_default();
 
             if !alias.is_empty() {
                 feature_names.remove(&feature_name);
@@ -334,7 +169,7 @@ fn get_polyfills(
                 }
             }
 
-            let Some(meta) = get_polyfill_meta(version, &feature_name) else {
+            let Some(meta) = meta_db.polyfill_meta(&feature_name).cloned() else {
                 feature_names.remove(&feature_name);
                 if add_feature(
                     &feature_name,
@@ -424,8 +259,11 @@ pub async fn get_polyfill_string_stream(
     let lf = if options.minify { "" } else { "\n" };
     let app_version_text = "Polyfill service v".to_owned() + app_version;
     let mut explainer_comment: Vec<String> = vec![];
+    let meta_db = meta_store::version_meta(&env, app_version)
+        .await
+        .map_err(|err| format!("failed to load metadata for version {app_version}: {err}"))?;
     // Build a polyfill bundle of polyfill sources sorted in dependency order
-    let mut targeted_features = get_polyfills(options, app_version)
+    let mut targeted_features = get_polyfills(options, app_version, &meta_db)
         .map_err(|err| format!("failed to get polyfills: {err}"))?;
     let mut warnings: Vec<String> = vec![];
     let mut feature_nodes: Vec<String> = vec![];
@@ -433,7 +271,7 @@ pub async fn get_polyfill_string_stream(
 
     let t = targeted_features.clone();
     for (feature_name, feature) in &mut targeted_features {
-        let polyfill = get_polyfill_meta(app_version, feature_name);
+        let polyfill = meta_db.polyfill_meta(feature_name).cloned();
         match polyfill {
             Some(polyfill) => {
                 feature_nodes.push(feature_name.to_string());
@@ -520,9 +358,9 @@ pub async fn get_polyfill_string_stream(
         for (feature_name, bb) in sorted_features_bb {
             let wrap_in_detect = targeted_features[feature_name].flags.contains("gated");
             if wrap_in_detect {
-                let meta = get_polyfill_meta(app_version, feature_name);
+                let meta = meta_db.polyfill_meta(feature_name);
                 if let Some(meta) = meta {
-                    if let Some(detect_source) = meta.detect_source {
+                    if let Some(detect_source) = meta.detect_source.clone() {
                         if detect_source.is_empty() {
                             output.append(bb);
                         } else {

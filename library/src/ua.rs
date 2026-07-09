@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 
 use nodejs_semver::{Range, Version};
-use regex::Regex;
 
 use crate::useragent::useragent;
 use crate::BoxError;
@@ -33,7 +32,7 @@ impl UserAgent for UA {
         let mut family: String;
         let mut major: String;
         let mut minor: String;
-        let re: Regex = Regex::new(r"(?i)^(\w+)/(\d+)\.?(\d+)?\.?(\d+)?$").unwrap();
+        let re = crate::regex_cache::cached_regex(r"(?i)^(\w+)/(\d+)\.?(\d+)?\.?(\d+)?$");
         if let Some(normalized) = re.captures(ua_string) {
             // println!("normalized: {:#?}", normalized);
             family = normalized.get(1).map(Into::<&str>::into).unwrap().into();
@@ -41,83 +40,64 @@ impl UserAgent for UA {
             minor = normalized.get(3).map_or("0", Into::<&str>::into).to_owned();
         } else {
             // Google Search iOS app should be detected as the underlying browser, which is safari on iOS
-            let ua_string = Regex::new(r"(?i) GSA\/[\d.]+")
-                .unwrap()
+            let ua_string = crate::regex_cache::cached_regex(r"(?i) GSA\/[\d.]+")
                 .replace(ua_string, "");
 
             // Instagram should be detected as the underlying browser, which is safari on ios
-            let ua_string = Regex::new(r"(?i) Instagram [\d.]+")
-                .unwrap()
+            let ua_string = crate::regex_cache::cached_regex(r"(?i) Instagram [\d.]+")
                 .replace(&ua_string, "");
 
             // WebPageTest is not a real browser, remove the token to find the underlying browser
-            let ua_string = Regex::new(r"(?i) PTST\/[\d.]+")
-                .unwrap()
+            let ua_string = crate::regex_cache::cached_regex(r"(?i) PTST\/[\d.]+")
                 .replace(&ua_string, "");
 
             // Waterfox is a Firefox fork, we can remove the Waterfox identifiers and parse the result as Firefox
-            let ua_string = Regex::new(r"(?i) Waterfox\/[\d.]+")
-                .unwrap()
+            let ua_string = crate::regex_cache::cached_regex(r"(?i) Waterfox\/[\d.]+")
                 .replace(&ua_string, "");
 
             // Pale Moon has a Firefox-compat UA string, we can remove the Pale Moon and Goanna identifiers and parse the result as Firefox
-            let ua_string = Regex::new(r"(?i) Goanna\/[\d.]+")
-                .unwrap()
+            let ua_string = crate::regex_cache::cached_regex(r"(?i) Goanna\/[\d.]+")
                 .replace(&ua_string, "");
 
             // Pale Moon has a Firefox-compat UA string, we can remove the Pale Moon and Goanna identifiers and parse the result as Firefox
-            let ua_string = Regex::new(r"(?i) PaleMoon\/[\d.]+")
-                .unwrap()
+            let ua_string = crate::regex_cache::cached_regex(r"(?i) PaleMoon\/[\d.]+")
                 .replace(&ua_string, "");
 
             // Yandex browser is recognised by UA module but is actually Chromium under the hood, so better to remove the Yandex identifier and get the UA module to detect it as Chrome
-            let ua_string = Regex::new(r"(?i)(YaBrowser)\/(\d+\.)+\d+ /")
-                .unwrap()
+            let ua_string = crate::regex_cache::cached_regex(r"(?i)(YaBrowser)\/(\d+\.)+\d+ /")
                 .replace(&ua_string, "");
 
             // Crosswalk browser is recognised by UA module but is actually Chromium under the hood, so better to remove the identifier and get the UA module to detect it as Chrome
-            let ua_string = Regex::new(r"(?i) (Crosswalk)\/(\d+)\.(\d+)\.(\d+)\.(\d+)")
-                .unwrap()
+            let ua_string = crate::regex_cache::cached_regex(r"(?i) (Crosswalk)\/(\d+)\.(\d+)\.(\d+)\.(\d+)")
                 .replace(&ua_string, "");
 
             // Chrome and Opera on iOS uses a UIWebView of the underlying platform to render content. By stripping the CriOS or OPiOS strings, the useragent parser will alias the user agent to ios_saf for the UIWebView, which is closer to the actual renderer
-            let ua_string = Regex::new(
-                r"(?i)((CriOS|OPiOS)\/(\d+)\.(\d+)\.(\d+)\.(\d+)|(FxiOS\/(\d+)\.(\d+)))",
-            )
-            .unwrap()
+            let ua_string = crate::regex_cache::cached_regex(r"(?i)((CriOS|OPiOS)\/(\d+)\.(\d+)\.(\d+)\.(\d+)|(FxiOS\/(\d+)\.(\d+)))")
             .replace(&ua_string, "");
 
             // Vivaldi browser is recognised by UA module but is actually identical to Chrome, so the best way to get accurate targeting is to remove the vivaldi token from the UA
-            let ua_string = Regex::new(r"(?i) vivaldi\/[\d.]+\d+")
-                .unwrap()
+            let ua_string = crate::regex_cache::cached_regex(r"(?i) vivaldi\/[\d.]+\d+")
                 .replace(&ua_string, "");
 
             // Facebook in-app browser `[FBAN/.....]` or `[FB_IAB/.....]` (see https://github.com/Financial-Times/polyfill-servicessues/990)
-            let ua_string = Regex::new(r"(?i) \[(FB_IAB|FBAN|FBIOS|FB4A)\/[^\]]+\]")
-                .unwrap()
+            let ua_string = crate::regex_cache::cached_regex(r"(?i) \[(FB_IAB|FBAN|FBIOS|FB4A)\/[^\]]+\]")
                 .replace(&ua_string, "");
 
             // Electron/X.Y.Z` (see https://github.com/Financial-Times/polyfill-servicessues/1129)
-            let ua_string = Regex::new(r"(?i) Electron\/[\d.]+\d+")
-                .unwrap()
+            let ua_string = crate::regex_cache::cached_regex(r"(?i) Electron\/[\d.]+\d+")
                 .replace(&ua_string, "");
 
             // Chromium-based Edge
-            let ua_string = Regex::new(r"(?i) Edg\/[\d.]+\d+")
-                .unwrap()
+            let ua_string = crate::regex_cache::cached_regex(r"(?i) Edg\/[\d.]+\d+")
                 .replace(&ua_string, "");
 
             // Modern mobile Googlebot which uses modern Chrome
-            let ua_string = Regex::new(
-                r"(?i)Safari.* Googlebot\/2\.1; \+http:\/\/www\.google\.com\/bot\.html\)",
-            )
-            .unwrap()
+            let ua_string = crate::regex_cache::cached_regex(r"(?i)Safari.* Googlebot\/2\.1; \+http:\/\/www\.google\.com\/bot\.html\)")
             .replace(&ua_string, "");
 
             // Modern desktop Googlebot which uses modern Chrome
             let ua_string =
-                Regex::new(r"(?i) Googlebot\/2\.1; \+http:\/\/www\.google\.com\/bot\.html\) ")
-                    .unwrap()
+                crate::regex_cache::cached_regex(r"(?i) Googlebot\/2\.1; \+http:\/\/www\.google\.com\/bot\.html\) ")
                     .replace(&ua_string, "");
 
             let ua = useragent(&ua_string);

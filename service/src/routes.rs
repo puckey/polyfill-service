@@ -218,11 +218,11 @@ pub async fn handle_request(State(state): State<AppState>, req: axum::extract::R
                     url.query_pairs_mut().append_pair("unknown", "ignore");
                 }
 
-                polyfill(&url, user_agent.as_deref(), state.env).await
+                polyfill(&url, user_agent.as_deref(), state.env, &state.versions).await
             }
             // FIXME: add v4
             else if path == "/v3/polyfill.min.js" || path == "/v3/polyfill.js" {
-                polyfill(&url, user_agent.as_deref(), state.env).await
+                polyfill(&url, user_agent.as_deref(), state.env, &state.versions).await
             } else {
                 resp(
                     StatusCode::NOT_FOUND,

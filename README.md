@@ -25,9 +25,7 @@ http://localhost:8080/v2/polyfill.min.js        (legacy v2 API)
 ```
 
 The first build takes a while: it compiles the Rust workspace and packs every
-polyfill library version into a SQLite store (~2.5 GB). Give the Docker
-builder at least 4 GB of memory — the generated polyfill metadata is a very
-large crate to compile (with colima: `colima start --memory 8`). If you only use the
+polyfill library version into a SQLite store (~2.5 GB). If you only use the
 default library version, build a slim image instead:
 
 ```sh
@@ -37,8 +35,8 @@ docker run -p 8080:8080 polyfill-service
 
 `3.25.1` is required for the `/v2` endpoints; `3.111.0` is the default for
 `/v3`; `5.3.1` is the newest library with the es2025 features.
-Requests with an explicit `version=` parameter only work for versions baked
-into the store.
+Requests naming a version that is not in the store are served with the
+fallback version (the v3 default if present, else the newest in the store).
 
 ## Run it without Docker
 
@@ -56,10 +54,10 @@ POLYFILL_DB=polyfills.db PORT=8080 ./target/release/polyfill-service
 | `PORT` | `8080` | HTTP listen port |
 | `RUST_LOG` | `info` | Log filter (tracing-subscriber syntax) |
 
-The service itself does no TLS, compression, or caching — run it behind your
-regular reverse proxy / CDN and let that layer handle those. Responses carry
-long-lived `Cache-Control` headers and `Vary: User-Agent`, so any standard
-HTTP cache in front of it will do the heavy lifting.
+The service compresses responses (gzip/brotli/zstd, by `Accept-Encoding`) but
+does no TLS or caching — run it behind your regular reverse proxy / CDN.
+Responses carry long-lived `Cache-Control` headers and `Vary: User-Agent`, so
+any standard HTTP cache in front of it will do the heavy lifting.
 
 ## Tests
 

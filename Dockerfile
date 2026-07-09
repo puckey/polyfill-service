@@ -3,8 +3,8 @@
 # POLYFILL_VERSIONS controls which library versions are baked into the store:
 #   all (default)          — every version under polyfill-libraries/ (~2.5 GB image)
 #   5.3.1,3.111.0,3.25.1   — newest library (es2025), the v3 default, and the v2 fallback
-# Note: requests for a version missing from the store fail at runtime, so only
-# trim this list if you know which `version=` parameters your sites use.
+# Requests for a version missing from the store are served with the fallback
+# version (the v3 default if present, else the newest in the store).
 
 FROM rust:1-slim AS build
 
@@ -12,13 +12,9 @@ WORKDIR /app
 COPY Cargo.toml Cargo.lock ./
 COPY library ./library
 COPY service ./service
-# The library crate embeds polyfill metadata (aliases.json) at compile time.
-COPY polyfill-libraries ./polyfill-libraries
-
-# Debuginfo roughly doubles compile memory and bloats the image; skip it here.
-ENV CARGO_PROFILE_RELEASE_DEBUG=false
 RUN cargo build --release
 
+COPY polyfill-libraries ./polyfill-libraries
 ARG POLYFILL_VERSIONS=all
 RUN ./target/release/build-db \
     --libraries ./polyfill-libraries \
