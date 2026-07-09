@@ -1,4 +1,5 @@
 [workspace]
+resolver = "2"
 members = [
     "service",
     "library",
@@ -8,5 +9,10 @@ members = [
 debug = true
 
 [workspace.dependencies]
-worker = { version = "0.5", features = ["d1"] }
-wasm-bindgen = "0.2"
+prometheus = "0.14"
+r2d2 = "0.8"
+r2d2_sqlite = "0.35"
+rusqlite = { version = "0.40", features = ["bundled"] }
+tokio = { version = "1", features = ["full"] }
+tracing = "0.1"
+url = "2"

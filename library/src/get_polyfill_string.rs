@@ -12,8 +12,6 @@ use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
 use std::str;
 
-const D1_RETRIES: usize = 10;
-
 macro_rules! lookup_file {
     ( $fn:ident, $file:expr ) => {{
         Ok(meta::$fn($file).map(Buffer::from_str))
@@ -62,7 +60,7 @@ pub(crate) fn lookup_file(version: &str, n: &str) -> Result<Option<Buffer>, BoxE
             "4.8.0" => lookup_file!(lookup_4_8_0, n),
 
             v => {
-                worker::console_warn!("no meta database for version {v}");
+                tracing::warn!("no meta database for version {v}");
                 Ok(None)
             }
         };
@@ -99,13 +97,13 @@ pub(crate) fn lookup_file(version: &str, n: &str) -> Result<Option<Buffer>, BoxE
             "3.25.1" => get_alias!("3.25.1"),
 
             v => {
-                worker::console_warn!("no aliases for version {v}");
+                tracing::warn!("no aliases for version {v}");
                 Ok(None)
             }
         };
     }
 
-    worker::console_warn!("lookup {n}: not found");
+    tracing::warn!("lookup {n}: not found");
     Ok(None)
 }
 
@@ -570,12 +568,6 @@ pub async fn get_polyfill_string_stream(
     Ok(())
 }
 
-#[derive(serde::Deserialize)]
-struct File {
-    name: String,
-    value: String,
-}
-
 async fn polyfill_sources(
     env: Arc<Env>,
     feature_names: &[String],
@@ -587,60 +579,66 @@ async fn polyfill_sources(
         .map(|feature_name| format!("/{feature_name}/{format}.js"))
         .collect::<Vec<String>>();
     let params = serde_json::to_string(&params_names)?;
-    let params = wasm_bindgen::JsValue::from_str(&params);
 
-    for i in 0..D1_RETRIES {
-        match fetch_polyfill_sources(Arc::clone(&env), version, &params).await {
-            Ok(d1_res) => {
-                if d1_res.success() {
-                    let mut sources = HashMap::new();
-                    env.d1_query_metric.with_label_values(&["ok"]).inc();
+    let query_env = Arc::clone(&env);
+    let query_version = version.to_owned();
+    let result = tokio::task::spawn_blocking(move || {
+        fetch_polyfill_sources(&query_env, &query_version, &params)
+    })
+    .await
+    .map_err(|err| format!("polyfill store query panicked: {err}"))?;
 
-                    let results = d1_res.results::<File>()?;
+    match result {
+        Ok(files) => {
+            env.store_query_metric.with_label_values(&["ok"]).inc();
 
-                    for result in results {
-                        sources.insert(result.name, Buffer::from_string(result.value));
-                    }
-
-                    return Ok(sources);
-                } else {
-                    env.d1_query_metric.with_label_values(&["d1_err"]).inc();
-                    worker::console_error!("retry {i}/5: D1 error: {:?}", d1_res.error());
-                    continue;
-                }
+            let mut sources = HashMap::new();
+            for (name, value) in files {
+                sources.insert(name, Buffer::from_string(value));
             }
-            Err(err) => {
-                env.d1_query_metric.with_label_values(&["int_err"]).inc();
-                worker::console_error!("retry {i}/5: failed to query D1: {:?}", err);
-                continue;
-            }
+
+            Ok(sources)
+        }
+        Err(err) => {
+            env.store_query_metric.with_label_values(&["err"]).inc();
+            tracing::error!("failed to query polyfill store: {err}");
+
+            Err(format!(
+                "failed to retrieve polyfill sources (version {version} params {params_names:?})"
+            )
+            .into())
         }
     }
-
-    Err(
-        format!("failed to retrieve polyfill sources (version {version} params {params_names:?})")
-            .into(),
-    )
 }
 
-async fn fetch_polyfill_sources(
-    env: Arc<Env>,
+fn fetch_polyfill_sources(
+    env: &Env,
     version: &str,
-    params: &wasm_bindgen::JsValue,
-) -> Result<worker::D1Result, BoxError> {
+    params: &str,
+) -> Result<Vec<(String, String)>, String> {
     let safe_version = version.replace(".", "_");
-    let stmt = env.polyfill_store.prepare(format!(
-        r#"
+    let conn = env
+        .polyfill_store
+        .get()
+        .map_err(|err| format!("failed to get store connection: {err}"))?;
+
+    let mut stmt = conn
+        .prepare_cached(&format!(
+            r#"
               SELECT
                   name,
                   cast(value as char) as value
               FROM files_{safe_version}
               WHERE name IN (SELECT value FROM json_each(?))
         "#
-    ));
+        ))
+        .map_err(|err| format!("failed to prepare store query: {err}"))?;
 
-    stmt.bind(&[params.to_owned()])?
-        .all()
-        .await
-        .map_err(|err| format!("failed to query D1: {err}").into())
+    let rows = stmt
+        .query_map([params], |row| Ok((row.get(0)?, row.get(1)?)))
+        .map_err(|err| format!("failed to query store: {err}"))?
+        .collect::<Result<Vec<(String, String)>, _>>()
+        .map_err(|err| format!("failed to read store rows: {err}"))?;
+
+    Ok(rows)
 }

@@ -1,0 +1,12 @@
+services:
+  polyfill:
+    build:
+      context: .
+      args:
+        # See Dockerfile: "all" or a comma-separated list like "3.111.0,3.25.1"
+        POLYFILL_VERSIONS: all
+    ports:
+      - "8080:8080"
+    environment:
+      RUST_LOG: info
+    restart: unless-stopped

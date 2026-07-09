@@ -19,8 +19,7 @@ pub struct PolyfillParameters {
     pub strict: bool,
 }
 
-pub fn get_polyfill_parameters(request: &worker::Request) -> PolyfillParameters {
-    let url = request.url().unwrap();
+pub fn get_polyfill_parameters(url: &url::Url, user_agent: Option<&str>) -> PolyfillParameters {
     let query = url
         .query_pairs()
         .into_owned()
@@ -60,14 +59,7 @@ pub fn get_polyfill_parameters(request: &worker::Request) -> PolyfillParameters 
     let ua_string = query
         .get("ua")
         .map(std::clone::Clone::clone)
-        .unwrap_or_else(|| {
-            request
-                .headers()
-                .get("user-agent")
-                .unwrap_or_default()
-                .to_owned()
-                .unwrap_or_default()
-        });
+        .unwrap_or_else(|| user_agent.unwrap_or_default().to_owned());
     let flags = query
         .get("flags")
         .map_or_else(String::new, std::clone::Clone::clone);

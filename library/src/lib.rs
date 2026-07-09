@@ -13,8 +13,8 @@ pub mod useragent;
 pub(crate) type BoxError = Box<dyn std::error::Error>;
 
 pub struct Env {
-    pub polyfill_store: worker::D1Database,
-    pub d1_query_metric: prometheus::IntCounterVec,
+    pub polyfill_store: r2d2::Pool<r2d2_sqlite::SqliteConnectionManager>,
+    pub store_query_metric: prometheus::IntCounterVec,
     pub up_to_date_ua_metric: prometheus::IntCounter,
     pub injected_polyfill_metric: prometheus::IntCounter,
     pub bytes_out_metric: prometheus::IntCounter,

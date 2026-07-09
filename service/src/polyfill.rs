@@ -1,3 +1,6 @@
+use crate::routes::resp;
+use axum::http::StatusCode;
+use axum::response::Response;
 use polyfill_library::{
     buffer::Buffer, get_polyfill_string::get_polyfill_string_stream,
     polyfill_parameters::get_polyfill_parameters, Env,
@@ -11,51 +14,45 @@ const SUPPORTED_VERSIONS: &[&str] = &[
     "4.8.0",
 ];
 
-fn parse_library_version(version: &str) -> Option<String> {
+fn parse_library_version(version: &str) -> String {
     if SUPPORTED_VERSIONS.contains(&version) {
-        Some(version.to_owned())
+        version.to_owned()
     } else {
-        worker::console_warn!("unknown version: {version}, using fallback.");
-        Some("3.111.0".to_owned()) // fallback to default version
+        tracing::warn!("unknown version: {version}, using fallback.");
+        "3.111.0".to_owned() // fallback to default version
     }
 }
 
-pub(crate) async fn polyfill(
-    request: &worker::Request,
-    env: Arc<Env>,
-) -> worker::Result<worker::Response> {
-    let parameters = get_polyfill_parameters(request);
+pub(crate) async fn polyfill(url: &url::Url, user_agent: Option<&str>, env: Arc<Env>) -> Response {
+    let parameters = get_polyfill_parameters(url, user_agent);
 
-    let version = match parse_library_version(&parameters.version) {
-        Some(library) => library,
-        None => {
-            let mut headers = worker::Headers::new();
-            headers.set("Cache-Control", "public, s-maxage=31536000, max-age=604800, stale-while-revalidate=604800, stale-if-error=604800, immutable")?;
+    let version = parse_library_version(&parameters.version);
 
-            return worker::Response::error(
-                format!("requested version {} does not exist", parameters.version),
-                400,
-            );
-        }
-    };
-    let mut headers = worker::Headers::new();
-    headers.set("Access-Control-Allow-Origin", "*")?;
-    headers.set("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS")?;
-    headers.set("X-Compress-Hint", "on")?;
-    headers.set("Content-Type", "text/javascript; charset=UTF-8")?;
-    headers.set("Cache-Control", "public, s-maxage=31536000, max-age=604800, stale-while-revalidate=604800, stale-if-error=604800, immutable")?;
-    // We need "Vary: User-Agent" in the browser cache because a browser
-    // may update itself to a version which needs different polyfills
-    // So we need to have it ignore the browser cached bundle when the user-agent changes.
-    headers.set("Vary", "User-Agent, Accept-Encoding")?;
-    headers.set("Cf-Polyfill-Version", &version)?;
     let mut res_body = Buffer::new();
-
-    get_polyfill_string_stream(&mut res_body, &parameters, env, &version)
-        .await
-        .map_err(|err| {
-            worker::Error::RustError(format!("failed to get_polyfill_string_stream: {err}"))
-        })?;
-
-    Ok(worker::Response::ok(res_body.into_str())?.with_headers(headers))
+    match get_polyfill_string_stream(&mut res_body, &parameters, env, &version).await {
+        Ok(()) => resp(
+            StatusCode::OK,
+            &[
+                ("Access-Control-Allow-Origin", "*"),
+                ("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS"),
+                ("X-Compress-Hint", "on"),
+                ("Content-Type", "text/javascript; charset=UTF-8"),
+                ("Cache-Control", "public, s-maxage=31536000, max-age=604800, stale-while-revalidate=604800, stale-if-error=604800, immutable"),
+                // We need "Vary: User-Agent" in the browser cache because a browser
+                // may update itself to a version which needs different polyfills
+                // So we need to have it ignore the browser cached bundle when the user-agent changes.
+                ("Vary", "User-Agent, Accept-Encoding"),
+                ("X-Polyfill-Version", &version),
+            ],
+            res_body.into_str(),
+        ),
+        Err(err) => {
+            tracing::error!("failed to build polyfill bundle: {err}");
+            resp(
+                StatusCode::INTERNAL_SERVER_ERROR,
+                &[],
+                "Internal Server Error\n",
+            )
+        }
+    }
 }
