@@ -1,5 +1,6 @@
 #![warn(clippy::all, clippy::pedantic, clippy::cargo)]
 #![allow(clippy::missing_docs_in_private_items)]
+mod config;
 mod pages;
 mod polyfill;
 mod routes;
@@ -14,15 +15,7 @@ use std::sync::Arc;
 pub struct AppState {
     pub env: Arc<Env>,
     pub registry: prometheus::Registry,
-    pub versions: Arc<StoreVersions>,
-    pub defaults: Arc<polyfill_library::polyfill_parameters::ParameterDefaults>,
-}
-
-/// Library versions actually present in the polyfill store.
-pub struct StoreVersions {
-    pub available: Vec<String>,
-    /// Served when a request names a version the store does not have.
-    pub fallback: String,
+    pub config: Arc<config::ServiceConfig>,
 }
 
 #[tokio::main]
@@ -33,6 +26,9 @@ async fn main() {
                 .unwrap_or_else(|_| tracing_subscriber::EnvFilter::new("info")),
         )
         .init();
+
+    let config_path = std::env::var("POLYFILL_CONFIG").unwrap_or_else(|_| "polyfill.toml".to_owned());
+    let config = Arc::new(config::load(&config_path));
 
     let db_path = std::env::var("POLYFILL_DB").unwrap_or_else(|_| "polyfills.db".to_owned());
     let port = std::env::var("PORT")
@@ -48,33 +44,7 @@ async fn main() {
         .build(manager)
         .unwrap_or_else(|err| panic!("failed to open polyfill store at {db_path}: {err}"));
 
-    let versions = Arc::new(discover_store_versions(&pool, &db_path));
-
-    let default_version = match std::env::var("DEFAULT_VERSION") {
-        Ok(version) => {
-            assert!(
-                versions.available.iter().any(|v| v == &version),
-                "DEFAULT_VERSION {} is not in the polyfill store (available: {})",
-                version,
-                versions.available.join(", ")
-            );
-            version
-        }
-        Err(_) => versions.fallback.clone(),
-    };
-    let default_unknown =
-        std::env::var("DEFAULT_UNKNOWN").unwrap_or_else(|_| "polyfill".to_owned());
-    assert!(
-        default_unknown == "polyfill" || default_unknown == "ignore",
-        "DEFAULT_UNKNOWN must be \"polyfill\" or \"ignore\", got {default_unknown:?}"
-    );
-    tracing::info!(
-        "serving version {default_version} by default; unknown user agents default to unknown={default_unknown}"
-    );
-    let defaults = Arc::new(polyfill_library::polyfill_parameters::ParameterDefaults {
-        version: default_version,
-        unknown: default_unknown,
-    });
+    ensure_version_in_store(&pool, &db_path, &config.version);
 
     let registry = prometheus::Registry::new();
     let store_query_metric = prometheus::IntCounterVec::new(
@@ -120,11 +90,18 @@ async fn main() {
         bytes_out_metric,
     });
 
+    validate_features(&env, &config).await;
+
+    tracing::info!(
+        "serving polyfill-library {} with features: {}",
+        config.version,
+        config.feature_list.join(", ")
+    );
+
     let state = AppState {
         env,
         registry,
-        versions,
-        defaults,
+        config,
     };
 
     let app = axum::Router::new()
@@ -140,17 +117,18 @@ async fn main() {
     axum::serve(listener, app).await.expect("server failed");
 }
 
-fn discover_store_versions(
+fn ensure_version_in_store(
     pool: &r2d2::Pool<r2d2_sqlite::SqliteConnectionManager>,
     db_path: &str,
-) -> StoreVersions {
+    version: &str,
+) {
     let conn = pool.get().expect("failed to get store connection");
     let mut stmt = conn
         .prepare(
             "SELECT name FROM sqlite_master WHERE type = 'table' AND name LIKE 'files_%' ORDER BY name",
         )
         .expect("failed to inspect polyfill store");
-    let mut available = stmt
+    let available = stmt
         .query_map([], |row| row.get::<_, String>(0))
         .expect("failed to inspect polyfill store")
         .filter_map(Result::ok)
@@ -158,42 +136,45 @@ fn discover_store_versions(
         .collect::<Vec<_>>();
 
     assert!(
-        !available.is_empty(),
-        "polyfill store at {} contains no files_* tables — build it with the build-db binary",
-        db_path
-    );
-    available.sort_by_key(|version| numeric_version_key(version));
-
-    // Prefer the upstream default so unversioned requests behave like the
-    // production service; otherwise serve the newest version in the store.
-    let fallback = if available.iter().any(|v| v == "3.111.0") {
-        "3.111.0".to_owned()
-    } else {
-        available.last().cloned().unwrap()
-    };
-
-    tracing::info!(
-        "polyfill store {} provides versions: {} (fallback: {})",
+        available.iter().any(|v| v == version),
+        "configured version {} is not in the polyfill store at {} (available: {}) — rebuild it with build-db",
+        version,
         db_path,
-        available.join(", "),
-        fallback
+        if available.is_empty() {
+            "none".to_owned()
+        } else {
+            available.join(", ")
+        }
     );
-
-    StoreVersions {
-        available,
-        fallback,
-    }
 }
 
-fn numeric_version_key(version: &str) -> (u64, u64, u64) {
-    let mut parts = version
-        .split('.')
-        .map(|part| part.parse::<u64>().unwrap_or(0));
-    (
-        parts.next().unwrap_or(0),
-        parts.next().unwrap_or(0),
-        parts.next().unwrap_or(0),
-    )
+/// Fail fast on typos: every configured feature must be a polyfill or an
+/// alias known to the configured library version.
+async fn validate_features(env: &Arc<Env>, config: &config::ServiceConfig) {
+    let meta = polyfill_library::meta_store::version_meta(env, &config.version)
+        .await
+        .unwrap_or_else(|err| panic!("failed to load metadata: {err}"));
+
+    let unknown = config
+        .features
+        .keys()
+        .filter(|name| {
+            meta.polyfill_meta(name).is_none() && meta.config_aliases(name).is_none()
+        })
+        .cloned()
+        .collect::<Vec<_>>();
+    assert!(
+        unknown.is_empty(),
+        "configured features not known to polyfill-library {}: {}",
+        config.version,
+        unknown.join(", ")
+    );
+
+    for exclude in &config.excludes {
+        if meta.polyfill_meta(exclude).is_none() {
+            tracing::warn!("configured exclude {exclude} is not a known polyfill");
+        }
+    }
 }
 
 async fn metrics(State(state): State<AppState>) -> Response {

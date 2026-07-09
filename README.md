@@ -1,14 +1,35 @@
 # polyfill-service (self-hosted)
 
-A self-hostable fork of [cdnjs/polyfill-service](https://github.com/cdnjs/polyfill-service) — the polyfill.io replacement Cloudflare runs at `https://cdnjs.cloudflare.com/polyfill`. Upstream is in maintenance mode ([cdnjs/polyfill-service#21](https://github.com/cdnjs/polyfill-service/issues/21)) and only runs on Cloudflare Workers; this fork replaces the Workers runtime with a plain HTTP server so the service runs anywhere Docker runs.
+A self-hostable fork of [cdnjs/polyfill-service](https://github.com/cdnjs/polyfill-service) — the polyfill.io replacement Cloudflare runs at `https://cdnjs.cloudflare.com/polyfill`. Upstream is in maintenance mode ([cdnjs/polyfill-service#21](https://github.com/cdnjs/polyfill-service/issues/21)) and only runs on Cloudflare Workers; this fork runs anywhere Docker runs.
+
+Unlike upstream, the bundle is **defined on the server, not in the URL**. A single `polyfill.toml` names one library version and the polyfills to serve; clients just load `/polyfill.min.js` and get what their browser needs. Query parameters are ignored — there is no per-request feature selection, no version switching, no callback injection surface.
 
 What changed relative to upstream:
 
-- The Cloudflare Workers HTTP layer (`worker` crate) was replaced with [axum](https://github.com/tokio-rs/axum); the service is now a normal native binary.
-- The D1 database holding the polyfill sources was replaced with a local SQLite file, built from `polyfill-libraries/` by the included `build-db` binary (same schema, same queries).
-- Prometheus metrics are exposed at `/metrics`.
-- All the polyfill bundling logic (UA detection, feature resolution, dependency sorting) is unchanged upstream code.
-- Polyfill library [5.3.1](https://github.com/mrhenry/polyfill-library) was added (upstream stops at 4.8.0), bringing the es2025 features requested in [cdnjs/polyfill-service#15](https://github.com/cdnjs/polyfill-service/issues/15): `Promise.try`, the `Set` methods (`union`, `intersection`, …), and the Iterator helpers. Use them with `?version=5.3.1&features=es2025` (or individual feature names).
+- The Cloudflare Workers HTTP layer was replaced with [axum](https://github.com/tokio-rs/axum); the D1 database with a local SQLite file built by the included `build-db` binary.
+- Bundle configuration moved from URL parameters to `polyfill.toml` (version, features, unknown-UA policy, excludes). The server validates the config against the library metadata at startup, so a typo'd feature name fails the deploy instead of silently serving nothing.
+- Polyfill library [5.3.1](https://github.com/mrhenry/polyfill-library) is vendored (upstream stops at 4.8.0), adding the es2025 features from [cdnjs/polyfill-service#15](https://github.com/cdnjs/polyfill-service/issues/15): `Promise.try`, the `Set` methods, and the Iterator helpers.
+- Hot paths were fixed (cached regexes, metadata parsed once at startup): a bundle response costs ~1–4 ms of CPU. Responses are compressed (gzip/brotli/zstd). Prometheus metrics at `/metrics`.
+- The polyfill bundling logic itself (UA detection, feature resolution, dependency sorting) is unchanged upstream code.
+
+## Configure
+
+Edit `polyfill.toml`:
+
+```toml
+version = "5.3.1"
+
+features = [
+    "default",              # the library's curated baseline set
+    "fetch",
+    # "IntersectionObserver",
+    # "Array.from|always",  # flags: |always, |gated
+]
+
+# What unrecognized user agents (bots) get: "polyfill" (everything,
+# feature-gated — safe but big) or "ignore" (empty bundle).
+unknown = "polyfill"
+```
 
 ## Run it
 
@@ -16,63 +37,52 @@ What changed relative to upstream:
 docker compose up
 ```
 
-Then use it exactly like the hosted service:
+Then point your pages at it:
 
-```
-http://localhost:8080/v3/polyfill.min.js
-http://localhost:8080/v3/polyfill.min.js?features=fetch,Promise
-http://localhost:8080/v2/polyfill.min.js        (legacy v2 API)
+```html
+<script src="https://your-host/polyfill.min.js"></script>
 ```
 
-The first build takes a while: it compiles the Rust workspace and packs every
-polyfill library version into a SQLite store (~2.5 GB). If you only use the
-default library version, build a slim image instead:
+`/polyfill.js` serves the readable variant with per-feature license comments.
+`/v3/polyfill.min.js` and `/v3/polyfill.js` are aliases so existing
+polyfill.io-style embed URLs keep working after a domain swap — their query
+parameters are ignored.
 
-```sh
-docker build --build-arg POLYFILL_VERSIONS=5.3.1,3.111.0,3.25.1 -t polyfill-service .
-docker run -p 8080:8080 polyfill-service
-```
-
-`3.25.1` is required for the `/v2` endpoints; `3.111.0` is the default for
-`/v3`; `5.3.1` is the newest library with the es2025 features.
-Requests naming a version that is not in the store are served with the
-fallback version (the v3 default if present, else the newest in the store).
+To change the bundle, edit `polyfill.toml` and restart the container (it is
+mounted, not baked). If you change `version`, rebuild the image with a
+matching store: `docker compose build --build-arg POLYFILL_VERSIONS=<version>`.
 
 ## Run it without Docker
 
 ```sh
 cargo build --release
-./target/release/build-db --libraries ./polyfill-libraries --db polyfills.db --versions 5.3.1,3.111.0,3.25.1
-POLYFILL_DB=polyfills.db PORT=8080 ./target/release/polyfill-service
+./target/release/build-db --libraries ./polyfill-libraries --db polyfills.db --versions 5.3.1
+./target/release/polyfill-service
 ```
 
-## Configuration
+## Configuration reference
 
 | Environment variable | Default | Meaning |
 | --- | --- | --- |
+| `POLYFILL_CONFIG` | `polyfill.toml` | Path to the bundle definition |
 | `POLYFILL_DB` | `polyfills.db` | Path to the SQLite store built by `build-db` |
 | `PORT` | `8080` | HTTP listen port |
 | `RUST_LOG` | `info` | Log filter (tracing-subscriber syntax) |
-| `DEFAULT_VERSION` | `3.111.0` if in store, else newest | Library version served when the URL has no `version=` parameter. Set to `5.3.1` to serve the newest library (es2025) by default — note this changes bundles for existing embed URLs. |
-| `DEFAULT_UNKNOWN` | `polyfill` | What unrecognized user agents get when the URL has no `unknown=` parameter: `polyfill` serves every requested feature behind runtime feature-detect gates (large bundles — and bots are unrecognized UAs, so they hit this path); `ignore` serves them nothing. |
 
-The service compresses responses (gzip/brotli/zstd, by `Accept-Encoding`) but
-does no TLS or caching — run it behind your regular reverse proxy / CDN.
-Responses carry long-lived `Cache-Control` headers and `Vary: User-Agent`, so
-any standard HTTP cache in front of it will do the heavy lifting.
+The service compresses responses but does no TLS or caching — run it behind
+your regular reverse proxy / CDN. Responses carry long-lived `Cache-Control`
+headers and `Vary: User-Agent`, so any standard HTTP cache in front of it
+will do the heavy lifting.
 
 ## Tests
 
-The upstream integration suite runs against a live server on port 7676:
-
 ```sh
-PORT=7676 POLYFILL_DB=polyfills.db ./target/release/polyfill-service &
-cd test && npm install && npx mocha integration/**/*.test.js --timeout 60000
+PORT=7676 ./target/release/polyfill-service &   # with the sample polyfill.toml
+cd test && npm install && npm test
 ```
 
 ---
 
-Upstream README: this repository is a fork of the cdnjs polyfill service
-(<https://cdnjs.cloudflare.com/polyfill>), which is itself a maintained fork of
-the original polyfill.io. See the announcements from Cloudflare:
-<https://blog.cloudflare.com/polyfill-io-now-available-on-cdnjs-reduce-your-supply-chain-risk>.
+This repository is a fork of the cdnjs polyfill service
+(<https://cdnjs.cloudflare.com/polyfill>), which is itself a maintained fork
+of the original polyfill.io.

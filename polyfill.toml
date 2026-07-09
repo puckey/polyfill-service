@@ -1,0 +1,26 @@
+# Polyfill service configuration.
+#
+# The service serves exactly one bundle shape, defined here — clients cannot
+# change it through the URL. Feature names and aliases come from the
+# polyfill-library version below; the server refuses to start if a name is
+# unknown, so typos are caught at deploy time.
+
+# Library version to serve. Must be present in the SQLite store
+# (see build-db / the POLYFILL_VERSIONS Docker build arg).
+version = "5.3.1"
+
+# Polyfills and aliases to serve. An entry may carry flags after a pipe:
+#   "Array.from|always"  always include, even for browsers that have it
+#   "fetch|gated"        wrap in a runtime feature-detect regardless of UA
+features = [
+    "default",  # the library's curated baseline set
+    "fetch",
+]
+
+# What unrecognized user agents (bots, exotic browsers) receive:
+#   "polyfill"  every configured feature, each behind a runtime detect (safe, big)
+#   "ignore"    an empty bundle (cheap; fine when your pages feature-detect)
+unknown = "polyfill"
+
+# Polyfills to exclude even when an alias above would pull them in.
+# excludes = []
