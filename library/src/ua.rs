@@ -26,6 +26,13 @@ pub struct UA {
     family: String,
 }
 
+impl UA {
+    #[must_use]
+    pub fn get_version(&self) -> &str {
+        &self.version
+    }
+}
+
 impl UserAgent for UA {
     fn new(ua_string: &str) -> Self {
         // println!("ua_string: {}", ua_string);

@@ -77,8 +77,25 @@ will do the heavy lifting.
 ## Tests
 
 ```sh
+cargo test                                      # UA table + resolution-loop tests
 PORT=7676 ./target/release/polyfill-service &   # with the sample polyfill.toml
-cd test && npm install && npm test
+cd test && npm install && npm test              # API + golden-bundle tests
+```
+
+With a fixed `polyfill.toml` and store, a bundle is a pure function of the
+User-Agent string. `test/integration/goldens.json` pins that function for
+30 representative UAs (browsers straddling feature cutoffs, in-app webviews,
+bots, garbage): the resolved feature list, the minified bundle's hash, and —
+for most entries — that the bundle actually executes in a jsdom window and
+installs the expected globals. `library/tests/fixtures/ua_table.json` pins
+UA-string → family/version normalization the same way.
+
+If you change the config, the library version, or resolution behavior,
+snapshots will fail by design. Explain the diff, then re-bless:
+
+```sh
+cd test && node integration/update-goldens.js
+UPDATE_UA_TABLE=1 cargo test -p polyfill-library --test ua_table
 ```
 
 ---
