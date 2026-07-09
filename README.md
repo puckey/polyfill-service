@@ -24,7 +24,9 @@ http://localhost:8080/v2/polyfill.min.js        (legacy v2 API)
 ```
 
 The first build takes a while: it compiles the Rust workspace and packs every
-polyfill library version into a SQLite store (~2.5 GB). If you only use the
+polyfill library version into a SQLite store (~2.5 GB). Give the Docker
+builder at least 4 GB of memory — the generated polyfill metadata is a very
+large crate to compile (with colima: `colima start --memory 8`). If you only use the
 default library version, build a slim image instead:
 
 ```sh

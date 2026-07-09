@@ -15,6 +15,8 @@ COPY service ./service
 # The library crate embeds polyfill metadata (aliases.json) at compile time.
 COPY polyfill-libraries ./polyfill-libraries
 
+# Debuginfo roughly doubles compile memory and bloats the image; skip it here.
+ENV CARGO_PROFILE_RELEASE_DEBUG=false
 RUN cargo build --release
 
 ARG POLYFILL_VERSIONS=all
