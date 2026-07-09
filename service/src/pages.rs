@@ -71,7 +71,7 @@ fn layout(content: Markup) -> Markup {
 }
 
 pub(crate) fn home() -> String {
-    let data: PolyfillData = serde_json::from_str(include_str!("json/library-4.8.0.json")).unwrap();
+    let data: PolyfillData = serde_json::from_str(include_str!("json/library-5.3.1.json")).unwrap();
     let mut aliases: IndexMap<String, Vec<String>> = data.polyfill_aliases.into_iter().collect();
     aliases.sort_keys();
     layout(html! {
@@ -90,7 +90,7 @@ pub(crate) fn home() -> String {
                     output {
                         pre {
                             code id="polyfill-bundle-url" {
-                                "https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?version=4.8.0"
+                                "/v3/polyfill.min.js?version=5.3.1"
                             }
                         }
                     }
@@ -100,7 +100,8 @@ pub(crate) fn home() -> String {
                     label for="library-version" {
                         "Polyfill Library Version";
                         select id="library-version" {
-                            option value="4.8.0" selected="" {"4.8.0";}
+                            option value="5.3.1" selected="" {"5.3.1";}
+                            option value="4.8.0" {"4.8.0";}
                             option value="3.111.0" {"3.111.0";}
                             option value="3.101.0" {"3.101.0";}
                             option value="3.103.0" {"3.103.0";}

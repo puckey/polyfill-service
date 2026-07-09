@@ -1,0 +1,1 @@
+function ToInt32(a){var a=Number(a);return isNaN(a)||1/a==1/0||1/a==-1/0||a===1/0||a===-1/0?0:(a=(a<0?-1:1)*Math.floor(Math.abs(a))%Math.pow(2,32))>=Math.pow(2,31)?a-Math.pow(2,32):a}

@@ -1,0 +1,1 @@
+self.Element.prototype.getAttributeNames=function t(){for(var e=this.attributes,r=e.length,n=new Array(r),a=0;a<r;a++)n[a]=e[a].name;return n};

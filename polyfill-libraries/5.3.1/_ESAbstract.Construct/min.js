@@ -1,0 +1,1 @@
+function Construct(r){var t=2<arguments.length?arguments[2]:r,o=1<arguments.length?arguments[1]:[];if(!IsConstructor(r))throw new TypeError("F must be a constructor.");if(IsConstructor(t))return t===r?new(Function.prototype.bind.apply(r,[null].concat(o))):(t=OrdinaryCreateFromConstructor(t,Object.prototype),Call(r,t,o));throw new TypeError("newTarget must be a constructor.")}

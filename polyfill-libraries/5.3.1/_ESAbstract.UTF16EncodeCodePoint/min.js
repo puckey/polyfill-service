@@ -1,0 +1,1 @@
+function UTF16EncodeCodePoint(o){return o<=65535?String.fromCharCode(o):String.fromCharCode(Math.floor((o-65536)/1024)+55296)+String.fromCharCode((o-65536)%1024+56320)}

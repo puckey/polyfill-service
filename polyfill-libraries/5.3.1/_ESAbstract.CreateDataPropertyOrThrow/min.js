@@ -1,0 +1,1 @@
+function CreateDataPropertyOrThrow(t,o,r){if(!CreateDataProperty(t,o,r))throw new TypeError("Cannot assign value `"+Object.prototype.toString.call(r)+"` to property `"+Object.prototype.toString.call(o)+"` on object `"+Object.prototype.toString.call(t)+"`")}

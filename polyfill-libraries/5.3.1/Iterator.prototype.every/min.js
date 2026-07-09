@@ -1,0 +1,1 @@
+CreateMethodProperty(Iterator.prototype,"every",function e(r){return IteratorHelpers.iteratorPrototype.every(this,r)});

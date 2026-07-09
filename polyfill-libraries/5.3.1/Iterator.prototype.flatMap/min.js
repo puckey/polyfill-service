@@ -1,0 +1,1 @@
+CreateMethodProperty(Iterator.prototype,"flatMap",function t(r){return IteratorHelpers.iteratorPrototype.flatMap(this,r)});

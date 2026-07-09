@@ -1,0 +1,1 @@
+function UnicodeEscape(t){t=String.prototype.charCodeAt.call(t,0),t=Number.prototype.toString.call(t,16);return"\\u"+StringPad(t,4,"0","START")}

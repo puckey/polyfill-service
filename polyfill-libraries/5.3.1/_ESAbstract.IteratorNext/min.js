@@ -1,0 +1,1 @@
+function IteratorNext(e){var t;try{t=arguments.length<2?Call(e["[[NextMethod]]"],e["[[Iterator]]"]):Call(e["[[NextMethod]]"],e["[[Iterator]]"],[arguments[1]])}catch(t){throw e["[[Done]]"]=!0,t}if("object"!==Type(t))throw e["[[Done]]"]=!0,new TypeError("bad iterator");return t}

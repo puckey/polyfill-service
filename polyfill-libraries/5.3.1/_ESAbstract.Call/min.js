@@ -1,0 +1,1 @@
+function Call(t,l){var n=2<arguments.length?arguments[2]:[];if(!1===IsCallable(t))throw new TypeError(Object.prototype.toString.call(t)+"is not a function.");return t.apply(l,n)}

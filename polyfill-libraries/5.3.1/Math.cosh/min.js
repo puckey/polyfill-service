@@ -1,0 +1,1 @@
+CreateMethodProperty(Math,"cosh",function a(t){var e;return isNaN(t)?NaN:0===t&&1/t==1/0||0===t&&1/t==-1/0?1:t===1/0||t===-1/0?1/0:709<(t=Math.abs(t))?(e=Math.exp(.5*t))/2*e:((e=Math.exp(t))+1/e)/2});

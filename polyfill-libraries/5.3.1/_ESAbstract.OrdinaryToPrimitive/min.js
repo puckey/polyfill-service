@@ -1,0 +1,1 @@
+function OrdinaryToPrimitive(r,t){for(var e="string"===t?["toString","valueOf"]:["valueOf","toString"],i=0;i<e.length;++i){var n=e[i],n=Get(r,n);if(IsCallable(n)){n=Call(n,r);if("object"!==Type(n))return n}}throw new TypeError("Cannot convert to primitive.")}

@@ -1,0 +1,1 @@
+function CreateDataProperty(e,r,t){t={value:t,writable:!0,enumerable:!0,configurable:!0};try{return Object.defineProperty(e,r,t),!0}catch(e){return!1}}

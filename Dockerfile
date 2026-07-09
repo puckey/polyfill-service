@@ -2,7 +2,7 @@
 #
 # POLYFILL_VERSIONS controls which library versions are baked into the store:
 #   all (default)          — every version under polyfill-libraries/ (~2.5 GB image)
-#   3.111.0,3.25.1         — just the default v3 version and the v2 fallback (~150 MB image)
+#   5.3.1,3.111.0,3.25.1   — newest library (es2025), the v3 default, and the v2 fallback
 # Note: requests for a version missing from the store fail at runtime, so only
 # trim this list if you know which `version=` parameters your sites use.
 

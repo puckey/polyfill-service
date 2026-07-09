@@ -1,0 +1,1 @@
+CreateMethodProperty(Iterator.prototype,"reduce",function e(t){return 1<arguments.length?IteratorHelpers.iteratorPrototype.reduce(this,t,arguments[1]):IteratorHelpers.iteratorPrototype.reduce(this,t)});

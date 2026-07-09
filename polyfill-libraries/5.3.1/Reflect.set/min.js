@@ -1,0 +1,1 @@
+CreateMethodProperty(Reflect,"set",function t(e,r,o){var n=arguments[3];if("object"!==Type(e))throw new TypeError(Object.prototype.toString.call(e)+" is not an Object");return function t(e,r,o,n){var c=Object.getOwnPropertyDescriptor(n,e);try{return c&&c.set?Call(c.set,o,[r]):(n[e]=r,!0)}catch(t){return!1}}(ToPropertyKey(r),o,n=3 in arguments?n:e,e)});

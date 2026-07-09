@@ -1,0 +1,1 @@
+CreateMethodProperty(Math,"cbrt",function t(a){var r;return isNaN(a)?NaN:0===a&&1/a==1/0?0:0===a&&1/a==-1/0?-0:a===1/0?1/0:a===-1/0?-1/0:(r=Math.pow(Math.abs(a),1/3),a<0?-r:r)});

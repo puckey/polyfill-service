@@ -1,0 +1,1 @@
+CreateMethodProperty(Iterator.prototype,"drop",function r(t){return IteratorHelpers.iteratorPrototype.drop(this,t)});

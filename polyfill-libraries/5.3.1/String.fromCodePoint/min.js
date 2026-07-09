@@ -1,0 +1,1 @@
+CreateMethodProperty(String,"fromCodePoint",function o(r){for(var t="",e=arguments,n=0;n<e.length;n++){var i=ToNumber(e[n]);if(!1===IsInteger(i))throw new RangeError("Invalid code point "+Object.prototype.toString.call(i));if(i<0||1114111<i)throw new RangeError("Invalid code point "+Object.prototype.toString.call(i));t+=UTF16EncodeCodePoint(i)}return t});

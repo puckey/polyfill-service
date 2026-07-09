@@ -1,0 +1,1 @@
+CreateMethodProperty(Iterator,"from",function r(t){return IteratorHelpers.iterator.from(t)});

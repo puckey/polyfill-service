@@ -1,0 +1,1 @@
+CreateMethodProperty(Iterator.prototype,"find",function t(r){return IteratorHelpers.iteratorPrototype.find(this,r)});

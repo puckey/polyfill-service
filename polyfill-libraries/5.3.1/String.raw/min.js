@@ -1,0 +1,1 @@
+CreateMethodProperty(String,"raw",function r(t){var e=Array.prototype.slice.call(arguments,1),o=e.length,t=ToObject(t),r=ToObject(Get(t,"raw")),n=ToLength(Get(r,"length"));if(n<=0)return"";for(var i=[],a=0;;){var g=ToString(a),g=ToString(Get(r,g));if(i.push(g),a+1==n)return i.join("");g=a<o?e[a]:"",g=ToString(g);i.push(g),a+=1}});

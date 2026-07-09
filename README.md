@@ -8,6 +8,7 @@ What changed relative to upstream:
 - The D1 database holding the polyfill sources was replaced with a local SQLite file, built from `polyfill-libraries/` by the included `build-db` binary (same schema, same queries).
 - Prometheus metrics are exposed at `/metrics`.
 - All the polyfill bundling logic (UA detection, feature resolution, dependency sorting) is unchanged upstream code.
+- Polyfill library [5.3.1](https://github.com/mrhenry/polyfill-library) was added (upstream stops at 4.8.0), bringing the es2025 features requested in [cdnjs/polyfill-service#15](https://github.com/cdnjs/polyfill-service/issues/15): `Promise.try`, the `Set` methods (`union`, `intersection`, …), and the Iterator helpers. Use them with `?version=5.3.1&features=es2025` (or individual feature names).
 
 ## Run it
 
@@ -30,11 +31,12 @@ large crate to compile (with colima: `colima start --memory 8`). If you only use
 default library version, build a slim image instead:
 
 ```sh
-docker build --build-arg POLYFILL_VERSIONS=3.111.0,3.25.1 -t polyfill-service .
+docker build --build-arg POLYFILL_VERSIONS=5.3.1,3.111.0,3.25.1 -t polyfill-service .
 docker run -p 8080:8080 polyfill-service
 ```
 
-`3.25.1` is required for the `/v2` endpoints; `3.111.0` is the default for `/v3`.
+`3.25.1` is required for the `/v2` endpoints; `3.111.0` is the default for
+`/v3`; `5.3.1` is the newest library with the es2025 features.
 Requests with an explicit `version=` parameter only work for versions baked
 into the store.
 
@@ -42,7 +44,7 @@ into the store.
 
 ```sh
 cargo build --release
-./target/release/build-db --libraries ./polyfill-libraries --db polyfills.db --versions 3.111.0,3.25.1
+./target/release/build-db --libraries ./polyfill-libraries --db polyfills.db --versions 5.3.1,3.111.0,3.25.1
 POLYFILL_DB=polyfills.db PORT=8080 ./target/release/polyfill-service
 ```
 

@@ -1,0 +1,1 @@
+CreateMethodProperty(Iterator.prototype,"some",function t(e){return IteratorHelpers.iteratorPrototype.some(this,e)});

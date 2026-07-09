@@ -1,0 +1,1 @@
+CreateMethodProperty(Iterator.prototype,"toArray",function r(){return IteratorHelpers.iteratorPrototype.toArray(this)});

@@ -1,0 +1,1 @@
+function GetIterator(t){var e=1<arguments.length?arguments[1]:GetMethod(t,Symbol.iterator),e=Call(e,t);if("object"!==Type(e))throw new TypeError("bad iterator");var t=GetV(e,"next"),r=Object.create(null);return r["[[Iterator]]"]=e,r["[[NextMethod]]"]=t,r["[[Done]]"]=!1,r}

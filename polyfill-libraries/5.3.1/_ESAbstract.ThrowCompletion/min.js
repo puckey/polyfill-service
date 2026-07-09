@@ -1,0 +1,1 @@
+function ThrowCompletion(o){return{"[[Type]]":"throw","[[Value]]":o}}

@@ -1,0 +1,1 @@
+CreateMethodProperty(Iterator.prototype,"forEach",function r(t){return IteratorHelpers.iteratorPrototype.forEach(this,t)});

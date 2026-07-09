@@ -1,0 +1,1 @@
+CreateMethodProperty(Map,"groupBy",function e(r,t){for(var o=GroupBy(r,t,"zero"),a=Construct(Map),u=0;u<o.length;u++){var n=o[u],y=n["[[Elements]]"],n={"[[Key]]":n["[[Key]]"],"[[Value]]":y};a.set(n["[[Key]]"],n["[[Value]]"])}return a});

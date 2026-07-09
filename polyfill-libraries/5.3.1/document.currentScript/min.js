@@ -1,0 +1,1 @@
+!function(t){var e="currentScript",n=t.getElementsByTagName("script");e in t||Object.defineProperty(t,e,{get:function(){try{throw new Error}catch(t){for(var e=0,r=(/.*at [^(]*\((.*):.+:.+\)$/gi.exec(t.stack)||[!1])[1],e=0;e<n.length;e++)if(n[e].src==r||"interactive"==n[e].readyState)return n[e];return null}}})}(document);

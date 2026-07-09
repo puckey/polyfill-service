@@ -1,0 +1,1 @@
+CreateMethodProperty(String.prototype,Symbol.iterator,function(){var r=RequireObjectCoercible(this),r=ToString(r);return new StringIterator(r)});

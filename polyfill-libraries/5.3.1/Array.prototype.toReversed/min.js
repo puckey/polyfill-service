@@ -1,0 +1,1 @@
+CreateMethodProperty(Array.prototype,"toReversed",function r(){for(var e=ToObject(this),t=LengthOfArrayLike(e),o=ArrayCreate(t),a=0;a<t;){var n=ToString(t-a-1),y=ToString(a),n=Get(e,n);CreateDataPropertyOrThrow(o,y,n),a+=1}return o});

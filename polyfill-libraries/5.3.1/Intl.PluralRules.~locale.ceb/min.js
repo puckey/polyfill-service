@@ -1,0 +1,1 @@
+Intl.PluralRules&&"function"==typeof Intl.PluralRules.__addLocaleData&&Intl.PluralRules.__addLocaleData({data:{categories:{cardinal:["one","other"],ordinal:["other"]},fn:function(l,a){var l=String(l).split("."),e=l[0],t=l[1]||"",l=!l[1],n=e.slice(-1),t=t.slice(-1);return!a&&(l&&(1==e||2==e||3==e)||l&&4!=n&&6!=n&&9!=n||!l&&4!=t&&6!=t&&9!=t)?"one":"other"}},locale:"ceb"});

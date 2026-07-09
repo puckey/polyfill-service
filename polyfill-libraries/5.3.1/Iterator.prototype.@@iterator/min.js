@@ -1,0 +1,1 @@
+CreateMethodProperty(Iterator.prototype,Symbol.iterator,function(){return this});

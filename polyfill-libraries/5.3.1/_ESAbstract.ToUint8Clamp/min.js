@@ -1,0 +1,1 @@
+function ToUint8Clamp(r){var a,r=Number(r);return isNaN(r)||r<=0?0:255<=r?255:(a=Math.floor(r))+.5<r||!(r<a+.5)&&a%2==1?a+1:a}

@@ -1,0 +1,1 @@
+CreateMethodProperty(String.prototype,"isWellFormed",function e(){var r=RequireObjectCoercible(this),r=ToString(r);return IsStringWellFormedUnicode(r)});

@@ -1,0 +1,1 @@
+CreateMethodProperty(RegExp,"escape",function e(r){if("string"!=typeof r)throw new TypeError("S must be a string");for(var t="",o=StringToCodePoints(r),n=0;n<o.length;n++){var p=o[n];""===t&&(48<=p&&p<=57||65<=p&&p<=90||97<=p&&p<=122)?t="\\x"+Number.prototype.toString.call(p,16):t+=EncodeForRegExpEscape(p)}return t});

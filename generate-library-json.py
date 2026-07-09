@@ -9,10 +9,12 @@ out_json["polyfills"] = []
 out_json["polyfillAliases"] = {}
 out_json["version"] = "add version here"
 
+import os
+
 for polyfill_folder in glob(folder + "/*"):
     polyfill = polyfill_folder.replace(folder + "/", "")
 
-    if polyfill == "aliases.json":
+    if not os.path.isdir(polyfill_folder):
         continue
     if polyfill.startswith("_"):
         continue

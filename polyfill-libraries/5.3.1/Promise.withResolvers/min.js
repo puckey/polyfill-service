@@ -1,0 +1,1 @@
+CreateMethodProperty(Promise,"withResolvers",function e(){var r=NewPromiseCapability(this),t={};return CreateDataPropertyOrThrow(t,"promise",r["[[Promise]]"]),CreateDataPropertyOrThrow(t,"resolve",r["[[Resolve]]"]),CreateDataPropertyOrThrow(t,"reject",r["[[Reject]]"]),t});

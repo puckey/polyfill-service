@@ -58,6 +58,7 @@ pub(crate) fn lookup_file(version: &str, n: &str) -> Result<Option<Buffer>, BoxE
             "3.98.0" => lookup_file!(lookup_3_98_0, n),
             "3.25.1" => lookup_file!(lookup_3_25_1, n),
             "4.8.0" => lookup_file!(lookup_4_8_0, n),
+            "5.3.1" => lookup_file!(lookup_5_3_1, n),
 
             v => {
                 tracing::warn!("no meta database for version {v}");
@@ -95,6 +96,7 @@ pub(crate) fn lookup_file(version: &str, n: &str) -> Result<Option<Buffer>, BoxE
             "3.98.0" => get_alias!("3.98.0"),
             "4.8.0" => get_alias!("4.8.0"),
             "3.25.1" => get_alias!("3.25.1"),
+            "5.3.1" => get_alias!("5.3.1"),
 
             v => {
                 tracing::warn!("no aliases for version {v}");

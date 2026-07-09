@@ -1,0 +1,1 @@
+!function(c){CreateMethodProperty(Object,"isSealed",function e(t){return"object"!==Type(t)||!!c&&c(t)})}(Object.isSealed);

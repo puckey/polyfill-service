@@ -1,0 +1,1 @@
+CreateMethodProperty(Error,"isError",function r(o){return"object"===Type(o)&&(o instanceof Error||!("Symbol"in self&&"toStringTag"in Symbol&&Symbol.toStringTag in o||"[object Error]"!==(o=Object.prototype.toString.call(o))&&"[object DOMException]"!==o))});

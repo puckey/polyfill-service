@@ -1,0 +1,1 @@
+function GetPrototypeFromConstructor(t,o){t=Get(t,"prototype");return t="object"!==Type(t)?o:t}

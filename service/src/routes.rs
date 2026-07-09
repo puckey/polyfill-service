@@ -182,6 +182,9 @@ pub async fn handle_request(State(state): State<AppState>, req: axum::extract::R
         "/v3/json/library-4.8.0.json" => {
             library_json!("json/library-4.8.0.json")
         }
+        "/v3/json/library-5.3.1.json" => {
+            library_json!("json/library-5.3.1.json")
+        }
 
         _ => {
             let user_agent = req
