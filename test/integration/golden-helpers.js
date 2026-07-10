@@ -5,3 +5,32 @@ export function extractFeatures(rawBundle) {
 	const comment = rawBundle.split("*/")[0];
 	return [...comment.matchAll(/^ \* - ([^,]+), License/gm)].map(match => match[1]);
 }
+
+// Guard for both the test run and the bless script: whatever answers on the
+// test port must be this service running the repository's sample
+// polyfill.toml, otherwise golden comparisons — and worse, re-blessing —
+// are meaningless. The markers are the exact structural fragments the info
+// page renders for this config, not incidental substrings.
+export async function assertServerMatchesRepoConfig(axios) {
+	let response;
+	try {
+		response = await axios.get("/");
+	} catch (error) {
+		throw new Error(
+			`no server responding at ${axios.defaults.baseURL} — start one with the repo's polyfill.toml (PORT=7676 ./target/release/polyfill-service)`
+		);
+	}
+	const fingerprint = [
+		"<title>polyfill service</title>",
+		"polyfill-library 5.3.1",
+		"<li><code>default</code></li>",
+		"<li><code>fetch</code></li>",
+	];
+	for (const marker of fingerprint) {
+		if (response.status !== 200 || !response.data.includes(marker)) {
+			throw new Error(
+				`server at ${axios.defaults.baseURL} is not running the repo's polyfill.toml (missing ${JSON.stringify(marker)}) — refusing to compare or re-bless goldens against it`
+			);
+		}
+	}
+}

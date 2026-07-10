@@ -11,7 +11,11 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import axios from "./helpers.js";
-import { extractFeatures } from "./golden-helpers.js";
+import { assertServerMatchesRepoConfig, extractFeatures } from "./golden-helpers.js";
+
+// Re-blessing against the wrong server would silently rewrite the fixture
+// everything else trusts — refuse before touching anything.
+await assertServerMatchesRepoConfig(axios);
 
 const goldensPath = path.join(path.dirname(fileURLToPath(import.meta.url)), "goldens.json");
 const goldens = JSON.parse(readFileSync(goldensPath, "utf8"));
