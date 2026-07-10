@@ -67,11 +67,21 @@ fn build_fixture_store(test_name: &str) -> std::path::PathBuf {
     path
 }
 
-fn test_env(test_name: &str) -> Arc<Env> {
+/// Deletes the fixture database when the test finishes.
+struct StoreGuard(std::path::PathBuf);
+
+impl Drop for StoreGuard {
+    fn drop(&mut self) {
+        let _ = std::fs::remove_file(&self.0);
+    }
+}
+
+fn test_env(test_name: &str) -> (Arc<Env>, StoreGuard) {
     let path = build_fixture_store(test_name);
     let manager = r2d2_sqlite::SqliteConnectionManager::file(&path);
     let pool = r2d2::Pool::builder().max_size(2).build(manager).unwrap();
-    Arc::new(Env {
+    let guard = StoreGuard(path);
+    let env = Arc::new(Env {
         polyfill_store: pool,
         version_meta_cache: std::sync::RwLock::new(std::collections::HashMap::new()),
         store_query_metric: prometheus::IntCounterVec::new(
@@ -82,7 +92,8 @@ fn test_env(test_name: &str) -> Arc<Env> {
         up_to_date_ua_metric: prometheus::IntCounter::new("u", "u").unwrap(),
         injected_polyfill_metric: prometheus::IntCounter::new("i", "i").unwrap(),
         bytes_out_metric: prometheus::IntCounter::new("b", "b").unwrap(),
-    })
+    });
+    (env, guard)
 }
 
 fn params(features: &str, ua: &str) -> PolyfillParameters {
@@ -110,7 +121,7 @@ async fn bundle(env: &Arc<Env>, parameters: &PolyfillParameters) -> String {
 
 #[tokio::test]
 async fn transitive_dependencies_are_included_in_order() {
-    let env = test_env("deps");
+    let (env, _store) = test_env("deps");
     let out = bundle(&env, &params("A", OLD_CHROME)).await;
 
     let d = out.find("RAW_D").expect("D (dependency of B) missing");
@@ -121,7 +132,7 @@ async fn transitive_dependencies_are_included_in_order() {
 
 #[tokio::test]
 async fn excludes_beat_always() {
-    let env = test_env("excludes");
+    let (env, _store) = test_env("excludes");
     let mut parameters = params("A|always", OLD_CHROME);
     parameters.excludes = vec!["A".to_owned()];
     let out = bundle(&env, &parameters).await;
@@ -131,7 +142,7 @@ async fn excludes_beat_always() {
 
 #[tokio::test]
 async fn alias_of_alias_expands() {
-    let env = test_env("alias");
+    let (env, _store) = test_env("alias");
     let out = bundle(&env, &params("alias1", OLD_CHROME)).await;
 
     assert!(out.contains("RAW_A"), "A (via alias1 -> alias2) missing");
@@ -140,7 +151,7 @@ async fn alias_of_alias_expands() {
 
 #[tokio::test]
 async fn gated_features_are_wrapped_in_detects() {
-    let env = test_env("gated");
+    let (env, _store) = test_env("gated");
     let out = bundle(&env, &params("A|gated", OLD_CHROME)).await;
 
     assert!(
@@ -151,7 +162,7 @@ async fn gated_features_are_wrapped_in_detects() {
 
 #[tokio::test]
 async fn unknown_ua_gets_gated_bundle_or_nothing() {
-    let env = test_env("unknown");
+    let (env, _store) = test_env("unknown");
 
     let served = bundle(&env, &params("A", "SomeBot/1.0")).await;
     assert!(served.contains("RAW_A"), "unknown=polyfill should serve A");
@@ -172,7 +183,7 @@ async fn unknown_ua_gets_gated_bundle_or_nothing() {
 
 #[tokio::test]
 async fn browser_outside_range_gets_nothing() {
-    let env = test_env("range");
+    let (env, _store) = test_env("range");
     let out = bundle(&env, &params("A", NEW_CHROME)).await;
 
     assert!(!out.contains("RAW_A"), "chrome 60 matched a <50 range");
@@ -181,7 +192,7 @@ async fn browser_outside_range_gets_nothing() {
 
 #[tokio::test]
 async fn always_flag_overrides_browser_targeting() {
-    let env = test_env("always");
+    let (env, _store) = test_env("always");
     let out = bundle(&env, &params("A|always", NEW_CHROME)).await;
 
     assert!(
@@ -192,8 +203,20 @@ async fn always_flag_overrides_browser_targeting() {
 
 #[tokio::test]
 async fn default_alias_expands() {
-    let env = test_env("default");
+    let (env, _store) = test_env("default");
     let out = bundle(&env, &params("default", OLD_CHROME)).await;
 
     assert!(out.contains("RAW_A") && out.contains("RAW_B"), "default alias incomplete");
+}
+
+#[tokio::test]
+async fn feature_without_browser_entry_is_not_served_to_known_browsers() {
+    let (env, _store) = test_env("no-browsers");
+    let out = bundle(&env, &params("C", OLD_CHROME)).await;
+
+    assert!(
+        !out.contains("RAW_C"),
+        "feature with no browsers map was served to a known browser: {out}"
+    );
+    assert!(out.contains("No polyfills needed"));
 }

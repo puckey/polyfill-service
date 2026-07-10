@@ -61,3 +61,72 @@ pub fn load(path: &str) -> ServiceConfig {
         excludes: raw.excludes,
     }
 }
+
+#[cfg(test)]
+mod tests {
+    fn write_config(name: &str, contents: &str) -> String {
+        let path = std::env::temp_dir().join(format!(
+            "polyfill-config-test-{}-{name}.toml",
+            std::process::id()
+        ));
+        std::fs::write(&path, contents).unwrap();
+        path.to_string_lossy().into_owned()
+    }
+
+    #[test]
+    fn minimal_config_parses_with_defaults() {
+        let path = write_config("minimal", "version = \"5.3.1\"\nfeatures = [\"fetch\"]\n");
+        let config = super::load(&path);
+        let _ = std::fs::remove_file(&path);
+
+        assert_eq!(config.version, "5.3.1");
+        assert_eq!(config.unknown, "polyfill");
+        assert!(config.excludes.is_empty());
+        assert!(config.features.contains_key("fetch"));
+    }
+
+    #[test]
+    fn feature_flags_are_parsed() {
+        let path = write_config(
+            "flags",
+            "version = \"5.3.1\"\nfeatures = [\"Array.from|always\"]\n",
+        );
+        let config = super::load(&path);
+        let _ = std::fs::remove_file(&path);
+
+        assert!(config.features["Array.from"].contains("always"));
+    }
+
+    #[test]
+    #[should_panic(expected = "`unknown` must be")]
+    fn invalid_unknown_policy_is_rejected() {
+        let path = write_config(
+            "unknown",
+            "version = \"5.3.1\"\nfeatures = [\"fetch\"]\nunknown = \"whatever\"\n",
+        );
+        super::load(&path);
+    }
+
+    #[test]
+    #[should_panic(expected = "must list at least one")]
+    fn empty_features_are_rejected() {
+        let path = write_config("empty", "version = \"5.3.1\"\nfeatures = []\n");
+        super::load(&path);
+    }
+
+    #[test]
+    #[should_panic(expected = "invalid config")]
+    fn unknown_keys_are_rejected() {
+        let path = write_config(
+            "typo",
+            "version = \"5.3.1\"\nfeatures = [\"fetch\"]\nfeaturez = []\n",
+        );
+        super::load(&path);
+    }
+
+    #[test]
+    #[should_panic(expected = "failed to read config")]
+    fn missing_file_is_rejected() {
+        super::load("/definitely/not/a/real/polyfill.toml");
+    }
+}

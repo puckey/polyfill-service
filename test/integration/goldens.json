@@ -2,7 +2,6 @@
 	{
 		"name": "chrome-25",
 		"ua": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.172 Safari/537.22",
-		"exec": true,
 		"features": [
 			"ArrayBuffer",
 			"DocumentFragment",
@@ -131,7 +130,6 @@
 	{
 		"name": "chrome-29",
 		"ua": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36",
-		"exec": true,
 		"features": [
 			"ArrayBuffer",
 			"Element.prototype.matches",
@@ -245,7 +243,6 @@
 	{
 		"name": "chrome-42",
 		"ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36",
-		"exec": true,
 		"features": [
 			"Event.hashchange",
 			"Reflect",
@@ -343,7 +340,6 @@
 	{
 		"name": "chrome-109",
 		"ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36",
-		"exec": true,
 		"features": [],
 		"minBytes": 102,
 		"minSha256": "00349f789dc2fefa3f7537c2c51df03dcf67a18fe3cf719facde5bea11eaea7b"
@@ -351,7 +347,6 @@
 	{
 		"name": "chrome-140",
 		"ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
-		"exec": true,
 		"features": [],
 		"minBytes": 102,
 		"minSha256": "00349f789dc2fefa3f7537c2c51df03dcf67a18fe3cf719facde5bea11eaea7b"
@@ -359,7 +354,6 @@
 	{
 		"name": "chrome-ios-120",
 		"ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/120.0.6099.119 Mobile/15E148 Safari/604.1",
-		"exec": true,
 		"features": [
 			"DocumentFragment.prototype.replaceChildren",
 			"Element.prototype.replaceChildren",
@@ -387,7 +381,6 @@
 	{
 		"name": "firefox-28",
 		"ua": "Mozilla/5.0 (Windows NT 6.1; rv:28.0) Gecko/20100101 Firefox/28.0",
-		"exec": true,
 		"features": [
 			"ArrayBuffer",
 			"DocumentFragment",
@@ -516,7 +509,6 @@
 	{
 		"name": "firefox-45",
 		"ua": "Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0",
-		"exec": false,
 		"features": [
 			"Event.focusin",
 			"Event.hashchange",
@@ -576,12 +568,12 @@
 		],
 		"minBytes": 311976,
 		"minSha256": "fe095a7cfd1ea10078eac57980457cc3e00de8749e9d6b99867fb382135a623b",
-		"note": "parse-only: bundle redefines well-known Symbols that are non-configurable in modern V8 (fine in the real target browser)"
+		"note": "parse-only: bundle redefines well-known Symbols that are non-configurable in modern V8 (fine in the real target browser)",
+		"parseOnly": true
 	},
 	{
 		"name": "firefox-140",
 		"ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14.4; rv:140.0) Gecko/20100101 Firefox/140.0",
-		"exec": true,
 		"features": [],
 		"minBytes": 102,
 		"minSha256": "00349f789dc2fefa3f7537c2c51df03dcf67a18fe3cf719facde5bea11eaea7b"
@@ -589,7 +581,6 @@
 	{
 		"name": "safari-7",
 		"ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/537.75.14",
-		"exec": true,
 		"features": [
 			"ArrayBuffer",
 			"DocumentFragment",
@@ -718,7 +709,6 @@
 	{
 		"name": "safari-9",
 		"ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9",
-		"exec": false,
 		"features": [
 			"Reflect",
 			"String.prototype.normalize",
@@ -801,12 +791,12 @@
 		],
 		"minBytes": 455813,
 		"minSha256": "5a3d3be6e5899d1dd0e4e1b4831ef847e64b3d879ae7797b7dcdabaf31f2f4d1",
-		"note": "parse-only: bundle redefines well-known Symbols that are non-configurable in modern V8 (fine in the real target browser)"
+		"note": "parse-only: bundle redefines well-known Symbols that are non-configurable in modern V8 (fine in the real target browser)",
+		"parseOnly": true
 	},
 	{
 		"name": "safari-15",
 		"ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Safari/605.1.15",
-		"exec": true,
 		"features": [],
 		"minBytes": 102,
 		"minSha256": "00349f789dc2fefa3f7537c2c51df03dcf67a18fe3cf719facde5bea11eaea7b"
@@ -814,7 +804,6 @@
 	{
 		"name": "safari-26",
 		"ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",
-		"exec": true,
 		"features": [],
 		"minBytes": 102,
 		"minSha256": "00349f789dc2fefa3f7537c2c51df03dcf67a18fe3cf719facde5bea11eaea7b"
@@ -822,7 +811,6 @@
 	{
 		"name": "ios-safari-10",
 		"ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1",
-		"exec": true,
 		"features": [
 			"DocumentFragment.prototype.replaceChildren",
 			"Element.prototype.replaceChildren",
@@ -851,7 +839,6 @@
 	{
 		"name": "ios-safari-26",
 		"ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 26_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Mobile/15E148 Safari/604.1",
-		"exec": true,
 		"features": [],
 		"minBytes": 102,
 		"minSha256": "00349f789dc2fefa3f7537c2c51df03dcf67a18fe3cf719facde5bea11eaea7b"
@@ -859,7 +846,6 @@
 	{
 		"name": "ie-8",
 		"ua": "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0)",
-		"exec": true,
 		"features": [
 			"DocumentFragment",
 			"Element.prototype.matches",
@@ -953,7 +939,6 @@
 	{
 		"name": "ie-9",
 		"ua": "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)",
-		"exec": true,
 		"features": [
 			"ArrayBuffer",
 			"DocumentFragment",
@@ -1077,7 +1062,6 @@
 	{
 		"name": "ie-11",
 		"ua": "Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko",
-		"exec": true,
 		"features": [
 			"ArrayBuffer",
 			"DocumentFragment",
@@ -1197,7 +1181,6 @@
 	{
 		"name": "edge-legacy-12",
 		"ua": "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10240",
-		"exec": true,
 		"features": [
 			"ArrayBuffer",
 			"CustomEvent",
@@ -1295,7 +1278,6 @@
 	{
 		"name": "edge-120",
 		"ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.2210.91",
-		"exec": true,
 		"features": [],
 		"minBytes": 102,
 		"minSha256": "00349f789dc2fefa3f7537c2c51df03dcf67a18fe3cf719facde5bea11eaea7b"
@@ -1303,7 +1285,6 @@
 	{
 		"name": "samsung-4",
 		"ua": "Mozilla/5.0 (Linux; Android 5.0.2; SAMSUNG SM-G925F Build/LRX22G) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/4.0 Chrome/44.0.2403.133 Mobile Safari/537.36",
-		"exec": true,
 		"features": [
 			"Event.hashchange",
 			"Reflect",
@@ -1399,7 +1380,6 @@
 	{
 		"name": "samsung-26",
 		"ua": "Mozilla/5.0 (Linux; Android 13; SM-G991B) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/26.0 Chrome/122.0.0.0 Mobile Safari/537.36",
-		"exec": true,
 		"features": [],
 		"minBytes": 102,
 		"minSha256": "00349f789dc2fefa3f7537c2c51df03dcf67a18fe3cf719facde5bea11eaea7b"
@@ -1407,7 +1387,6 @@
 	{
 		"name": "opera-presto-12",
 		"ua": "Opera/9.80 (Windows NT 6.1; WOW64) Presto/2.12.388 Version/12.16",
-		"exec": true,
 		"features": [
 			"ArrayBuffer",
 			"DocumentFragment",
@@ -1536,7 +1515,6 @@
 	{
 		"name": "opera-110",
 		"ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 OPR/110.0.0.0",
-		"exec": true,
 		"features": [],
 		"minBytes": 102,
 		"minSha256": "00349f789dc2fefa3f7537c2c51df03dcf67a18fe3cf719facde5bea11eaea7b"
@@ -1544,7 +1522,6 @@
 	{
 		"name": "android-4.4",
 		"ua": "Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36",
-		"exec": true,
 		"features": [
 			"ArrayBuffer",
 			"Element.prototype.matches",
@@ -1658,7 +1635,13 @@
 	{
 		"name": "facebook-inapp-ios",
 		"ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 [FBAN/FBIOS;FBAV/442.0.0.23.114;FBBV/546462966;FBDV/iPhone15,3]",
-		"exec": true,
+		"features": [],
+		"minBytes": 102,
+		"minSha256": "00349f789dc2fefa3f7537c2c51df03dcf67a18fe3cf719facde5bea11eaea7b"
+	},
+	{
+		"name": "instagram-inapp-ios",
+		"ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Instagram 325.0.3.31.90 (iPhone14,5; iOS 17_4_1; en_US; en; scale=3.00; 1170x2532; 585196630)",
 		"features": [],
 		"minBytes": 102,
 		"minSha256": "00349f789dc2fefa3f7537c2c51df03dcf67a18fe3cf719facde5bea11eaea7b"
@@ -1666,7 +1649,6 @@
 	{
 		"name": "googlebot",
 		"ua": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
-		"exec": true,
 		"features": [
 			"Event.hashchange",
 			"Reflect",
@@ -1764,7 +1746,6 @@
 	{
 		"name": "curl",
 		"ua": "curl/8.5.0",
-		"exec": true,
 		"features": [
 			"ArrayBuffer",
 			"DocumentFragment",
@@ -1893,7 +1874,6 @@
 	{
 		"name": "empty-ua",
 		"ua": "",
-		"exec": true,
 		"features": [
 			"ArrayBuffer",
 			"DocumentFragment",
@@ -2022,7 +2002,6 @@
 	{
 		"name": "garbage",
 		"ua": "definitely not a browser",
-		"exec": true,
 		"features": [
 			"ArrayBuffer",
 			"DocumentFragment",

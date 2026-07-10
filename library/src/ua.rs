@@ -50,8 +50,10 @@ impl UserAgent for UA {
             let ua_string = crate::regex_cache::cached_regex(r"(?i) GSA\/[\d.]+")
                 .replace(ua_string, "");
 
-            // Instagram should be detected as the underlying browser, which is safari on ios
-            let ua_string = crate::regex_cache::cached_regex(r"(?i) Instagram [\d.]+")
+            // Instagram should be detected as the underlying browser, which is safari on ios.
+            // Strip the trailing device parenthetical too — leaving it behind derails
+            // parsing into the WebKit-version fallback (iOS 17 was classified as iOS 11).
+            let ua_string = crate::regex_cache::cached_regex(r"(?i) Instagram [\d.]+( \([^)]*\))?")
                 .replace(&ua_string, "");
 
             // WebPageTest is not a real browser, remove the token to find the underlying browser

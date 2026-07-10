@@ -1,0 +1,3 @@
+# Node 26 currently breaks mocha; the test suite is verified on 24 LTS.
+[tools]
+node = "24"

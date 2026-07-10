@@ -49,6 +49,15 @@ describe("method handling", function () {
 		assert.equal(response.status, 405);
 		assert.equal(response.headers["allow"], "GET, HEAD");
 	});
+
+	it("HEAD responds with headers and no body", async () => {
+		const response = await axios.head("/polyfill.min.js", {
+			headers: { "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko" },
+		});
+		assert.equal(response.status, 200);
+		assert.match(response.headers["content-type"], /text\/javascript/);
+		assert.equal(response.data, "");
+	});
 });
 
 describe("GET /polyfill.min.js", function () {

@@ -155,7 +155,10 @@
             }
         };
         return [ family, major, minor, patch ];
-    } else if let Some(result) = crate::regex_cache::cached_regex(r"(iPod|iPhone|iPad).+OS (\d+)_(\d+) like Mac OS X\) AppleWebKit\/605\.1(?:\.\d+|) \(KHTML, like Gecko\) Mobile\/\w+").captures(ua) {
+    // The OS version may have a patch component ("OS 17_4_1") — accept it,
+    // otherwise in-app webviews on patch-level iOS releases fall through to
+    // the WebKit-version fallback table, which tops out around iOS 11.
+    } else if let Some(result) = crate::regex_cache::cached_regex(r"(iPod|iPhone|iPad).+OS (\d+)_(\d+)(?:_\d+)? like Mac OS X\) AppleWebKit\/605\.1(?:\.\d+|) \(KHTML, like Gecko\) Mobile\/\w+").captures(ua) {
         let family = "Mobile Safari/WKWebView".to_owned();
         let major = match result.get(2) {
             Some(r) => {

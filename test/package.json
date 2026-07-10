@@ -1,5 +1,8 @@
 {
     "type": "module",
+    "engines": {
+        "node": ">=20 <26"
+    },
     "scripts": {
         "test": "mocha integration/*.test.js --check-leaks --timeout 60000 --exit"
     },

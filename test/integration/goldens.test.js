@@ -53,7 +53,10 @@ describe("golden bundles", function () {
 				new vm.Script(raw.data);
 			});
 
-			if (entry.exec) {
+			// Execution is the default; entries opt out with parseOnly (and
+			// must say why in a note) so a forgotten flag fails loudly
+			// instead of silently skipping.
+			if (!entry.parseOnly) {
 				it("executes and installs the expected globals", () => {
 					const dom = new JSDOM("", { runScripts: "outside-only" });
 					const context = dom.getInternalVMContext();

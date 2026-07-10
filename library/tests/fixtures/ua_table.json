@@ -257,7 +257,7 @@
   {
     "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Instagram 325.0.3.31.90 (iPhone14,5; iOS 17_4_1; en_US; en; scale=3.00; 1170x2532; 585196630)",
     "family": "ios_saf",
-    "version": "11.0.0"
+    "version": "17.4.0"
   },
   {
     "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 [FBAN/FBIOS;FBAV/442.0.0.23.114;FBBV/546462966;FBDV/iPhone15,3]",
