@@ -51,7 +51,7 @@ fn remove_feature(
     feature_names: &mut IndexSet<String>,
     targeted_features: &mut HashMap<String, FeatureProperties>,
 ) -> bool {
-    feature_names.remove(feature_name);
+    feature_names.swap_remove(feature_name);
     targeted_features.remove(feature_name).is_some()
 }
 
@@ -141,7 +141,7 @@ fn get_polyfills(
                 .unwrap_or_default();
 
             if !alias.is_empty() {
-                feature_names.remove(&feature_name);
+                feature_names.swap_remove(&feature_name);
                 for aliased_feature in &alias {
                     if add_feature(
                         aliased_feature,
@@ -170,7 +170,7 @@ fn get_polyfills(
             }
 
             let Some(meta) = meta_db.polyfill_meta(&feature_name).cloned() else {
-                feature_names.remove(&feature_name);
+                feature_names.swap_remove(&feature_name);
                 if add_feature(
                     &feature_name,
                     IndexSet::new(),
@@ -185,21 +185,18 @@ fn get_polyfills(
                 continue;
             };
 
-            if !targeted {
-                if let Some(browsers) = meta.browsers {
-                    let is_browser_match =
-                        browsers.get(&ua.get_family()).map_or(false, |browser| {
-                            ua.satisfies(browser.to_string()).unwrap_or(false)
-                        });
+            if !targeted && let Some(browsers) = meta.browsers {
+                let is_browser_match = browsers
+                    .get(&ua.get_family())
+                    .is_some_and(|browser| ua.satisfies(browser.to_string()).unwrap_or(false));
 
-                    targeted = is_browser_match;
-                }
+                targeted = is_browser_match;
             }
 
             if targeted {
                 if feature.flags.contains("always") || !seen_removed.contains(&feature_name) {
                     seen_removed.insert(feature_name.to_string());
-                    feature_names.remove(&feature_name);
+                    feature_names.swap_remove(&feature_name);
                     if add_feature(
                         &feature_name,
                         feature.flags.clone(),
@@ -286,7 +283,7 @@ pub async fn get_polyfill_string_stream(
                 feature.comment = feature
                     .comment
                     .clone()
-                    .map(|comment| format!("{feature_name}, License: {license} ({})", &comment))
+                    .map(|comment| format!("{feature_name}, License: {license} ({comment})"))
                     .or_else(|| Some(format!("{feature_name}, License: {license}")));
             }
             None => warnings.push(feature_name.to_string()),
@@ -308,7 +305,7 @@ pub async fn get_polyfill_string_stream(
             feature_name,
             polyfill_sources
                 .get(&format!("/{feature_name}/{m}.js"))
-                .expect(&format!("/{feature_name}/{m}.js is present")),
+                .unwrap_or_else(|| panic!("/{feature_name}/{m}.js is present")),
         ));
     }
     explainer_comment.push(app_version_text);

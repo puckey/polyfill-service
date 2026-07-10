@@ -7,9 +7,9 @@ use serde::Deserialize;
 struct RawConfig {
     /// Polyfill library version to serve (must be in the store).
     version: String,
-    /// Polyfills and aliases to serve, e.g. "fetch", "es2015",
-    /// "IntersectionObserver". An entry may carry flags after a pipe:
-    /// "Array.from|always" (always include), "fetch|gated" (wrap in a
+    /// Polyfills and aliases to serve, e.g. `fetch`, `es2015`,
+    /// `IntersectionObserver`. An entry may carry flags after a pipe:
+    /// `Array.from|always` (always include), `fetch|gated` (wrap in a
     /// runtime feature detect even for browsers that match).
     features: Vec<String>,
     /// What unrecognized user agents (bots, exotic browsers) receive:

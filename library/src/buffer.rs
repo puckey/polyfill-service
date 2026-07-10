@@ -2,11 +2,18 @@ type BoxError = Box<dyn std::error::Error>;
 
 pub struct Buffer(String);
 
+impl Default for Buffer {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Buffer {
     pub fn new() -> Self {
         Buffer("".to_owned())
     }
 
+    #[allow(clippy::should_implement_trait)]
     pub fn from_str(s: &str) -> Self {
         Buffer(s.to_owned())
     }

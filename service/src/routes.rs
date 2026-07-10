@@ -38,7 +38,7 @@ pub async fn handle_request(State(state): State<AppState>, req: axum::extract::R
                 "This method is not allowed\n",
             );
         }
-    };
+    }
 
     let path = req.uri().path();
     // The bundle is defined entirely by the server's polyfill.toml — any

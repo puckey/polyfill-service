@@ -1,4 +1,4 @@
-//! Per-version polyfill metadata, loaded from the SQLite store.
+//! Per-version polyfill metadata, loaded from the `SQLite` store.
 //!
 //! The store rows written by `build-db` include each feature's `meta.json`
 //! and the version's `aliases.json`. They are loaded and parsed once per
@@ -23,6 +23,7 @@ pub struct VersionMeta {
 }
 
 impl VersionMeta {
+    #[must_use]
     pub fn polyfill_meta(&self, feature_name: &str) -> Option<&PolyfillConfig> {
         if feature_name.is_empty() {
             return None;
@@ -30,6 +31,7 @@ impl VersionMeta {
         self.metas.get(feature_name)
     }
 
+    #[must_use]
     pub fn config_aliases(&self, alias: &str) -> Option<&Vec<String>> {
         if alias.is_empty() {
             return None;
@@ -38,6 +40,14 @@ impl VersionMeta {
     }
 }
 
+/// # Errors
+///
+/// Fails when the store cannot be queried or its metadata rows are missing
+/// or unparseable (e.g. a store built by a pre-metadata `build-db`).
+///
+/// # Panics
+///
+/// Panics if the metadata cache lock is poisoned.
 pub async fn version_meta(
     env: &Arc<Env>,
     version: &str,
@@ -69,13 +79,13 @@ fn load_version_meta(env: &Env, version: &str) -> Result<VersionMeta, String> {
 
     let mut stmt = conn
         .prepare_cached(&format!(
-            r#"
+            r"
               SELECT
                   name,
                   cast(value as char) as value
               FROM files_{safe_version}
               WHERE name = '/aliases.json' OR name LIKE '%/meta.json'
-        "#
+        "
         ))
         .map_err(|err| format!("failed to prepare metadata query: {err}"))?;
 
