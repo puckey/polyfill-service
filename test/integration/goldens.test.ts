@@ -13,7 +13,7 @@ import { extractFeatures, type GoldenEntry } from "./golden-helpers.ts";
 // hash means the bundle changed for that browser — explain the diff (the
 // `features` list shows what moved), then re-bless:
 //
-//   cd test && npm run bless
+//   cd test && pnpm bless
 
 const goldensPath = path.join(path.dirname(fileURLToPath(import.meta.url)), "goldens.json");
 const goldens: GoldenEntry[] = JSON.parse(readFileSync(goldensPath, "utf8"));

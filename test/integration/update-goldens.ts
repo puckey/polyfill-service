@@ -1,7 +1,7 @@
 // Re-blesses integration/goldens.json against a running server.
 //
 //   PORT=7676 ./target/release/polyfill-service &   # with the repo's polyfill.toml
-//   cd test && npm run bless
+//   cd test && pnpm bless
 //
 // Review the diff before committing — every changed row must be explainable
 // (config change, library version bump, or an intentional behavior change).
