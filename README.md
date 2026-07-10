@@ -79,7 +79,7 @@ will do the heavy lifting.
 ```sh
 cargo test                                      # UA table + resolution-loop tests
 PORT=7676 ./target/release/polyfill-service &   # with the sample polyfill.toml
-cd test && npm install && npm test              # API + golden-bundle tests
+cd test && pnpm install && pnpm test            # API + golden-bundle tests
 ```
 
 With a fixed `polyfill.toml` and store, a bundle is a pure function of the
@@ -94,7 +94,7 @@ If you change the config, the library version, or resolution behavior,
 snapshots will fail by design. Explain the diff, then re-bless:
 
 ```sh
-cd test && npm run bless
+cd test && pnpm bless
 UPDATE_UA_TABLE=1 cargo test -p polyfill-library --test ua_table
 ```
 
