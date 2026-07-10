@@ -94,7 +94,7 @@ If you change the config, the library version, or resolution behavior,
 snapshots will fail by design. Explain the diff, then re-bless:
 
 ```sh
-cd test && node integration/update-goldens.js
+cd test && npm run bless
 UPDATE_UA_TABLE=1 cargo test -p polyfill-library --test ua_table
 ```
 

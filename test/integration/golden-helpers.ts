@@ -1,7 +1,20 @@
+import { baseURL, request } from "./helpers.ts";
+
+export interface GoldenEntry {
+	name: string;
+	ua: string;
+	/** Skip jsdom execution; `note` must say why. */
+	parseOnly?: boolean;
+	note?: string;
+	features: string[];
+	minSha256: string;
+	minBytes: number;
+}
+
 // The readable bundle lists every included polyfill in its explainer
 // comment as " * - <Name>, License: ..." lines. That list is the resolved
 // feature set for the requesting UA.
-export function extractFeatures(rawBundle) {
+export function extractFeatures(rawBundle: string): string[] {
 	const comment = rawBundle.split("*/")[0];
 	return [...comment.matchAll(/^ \* - ([^,]+), License/gm)].map(match => match[1]);
 }
@@ -11,13 +24,13 @@ export function extractFeatures(rawBundle) {
 // polyfill.toml, otherwise golden comparisons — and worse, re-blessing —
 // are meaningless. The markers are the exact structural fragments the info
 // page renders for this config, not incidental substrings.
-export async function assertServerMatchesRepoConfig(axios) {
+export async function assertServerMatchesRepoConfig(): Promise<void> {
 	let response;
 	try {
-		response = await axios.get("/");
-	} catch (error) {
+		response = await request("/");
+	} catch {
 		throw new Error(
-			`no server responding at ${axios.defaults.baseURL} — start one with the repo's polyfill.toml (PORT=7676 ./target/release/polyfill-service)`
+			`no server responding at ${baseURL} — start one with the repo's polyfill.toml (PORT=7676 ./target/release/polyfill-service)`
 		);
 	}
 	const fingerprint = [
@@ -27,9 +40,9 @@ export async function assertServerMatchesRepoConfig(axios) {
 		"<li><code>fetch</code></li>",
 	];
 	for (const marker of fingerprint) {
-		if (response.status !== 200 || !response.data.includes(marker)) {
+		if (response.status !== 200 || !response.body.includes(marker)) {
 			throw new Error(
-				`server at ${axios.defaults.baseURL} is not running the repo's polyfill.toml (missing ${JSON.stringify(marker)}) — refusing to compare or re-bless goldens against it`
+				`server at ${baseURL} is not running the repo's polyfill.toml (missing ${JSON.stringify(marker)}) — refusing to compare or re-bless goldens against it`
 			);
 		}
 	}

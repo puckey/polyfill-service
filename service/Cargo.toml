@@ -24,7 +24,7 @@ r2d2_sqlite = { workspace = true }
 rusqlite = { workspace = true }
 serde = { version = "1", features = ["derive"] }
 tokio = { workspace = true }
-toml = "0.9"
-tower-http = { version = "0.6", features = ["compression-gzip", "compression-br", "compression-zstd"] }
+toml = "1"
+tower-http = { version = "0.7", features = ["compression-gzip", "compression-br", "compression-zstd"] }
 tracing = { workspace = true }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }

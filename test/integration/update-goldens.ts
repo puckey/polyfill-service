@@ -1,39 +1,39 @@
 // Re-blesses integration/goldens.json against a running server.
 //
 //   PORT=7676 ./target/release/polyfill-service &   # with the repo's polyfill.toml
-//   cd test && node integration/update-goldens.js
+//   cd test && npm run bless
 //
 // Review the diff before committing — every changed row must be explainable
 // (config change, library version bump, or an intentional behavior change).
 
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import path from "node:path";
-import axios from "./helpers.js";
-import { assertServerMatchesRepoConfig, extractFeatures } from "./golden-helpers.js";
+import { fileURLToPath } from "node:url";
+import { request } from "./helpers.ts";
+import {
+	assertServerMatchesRepoConfig,
+	extractFeatures,
+	type GoldenEntry,
+} from "./golden-helpers.ts";
 
 // Re-blessing against the wrong server would silently rewrite the fixture
 // everything else trusts — refuse before touching anything.
-await assertServerMatchesRepoConfig(axios);
+await assertServerMatchesRepoConfig();
 
 const goldensPath = path.join(path.dirname(fileURLToPath(import.meta.url)), "goldens.json");
-const goldens = JSON.parse(readFileSync(goldensPath, "utf8"));
+const goldens: GoldenEntry[] = JSON.parse(readFileSync(goldensPath, "utf8"));
 
 for (const entry of goldens) {
-	const min = await axios.get("/polyfill.min.js", {
-		headers: { "User-Agent": entry.ua },
-	});
-	const raw = await axios.get("/polyfill.js", {
-		headers: { "User-Agent": entry.ua },
-	});
+	const min = await request("/polyfill.min.js", { userAgent: entry.ua });
+	const raw = await request("/polyfill.js", { userAgent: entry.ua });
 	if (min.status !== 200 || raw.status !== 200) {
 		throw new Error(`${entry.name}: unexpected status ${min.status}/${raw.status}`);
 	}
 
-	entry.features = extractFeatures(raw.data);
-	entry.minBytes = Buffer.byteLength(min.data);
-	entry.minSha256 = createHash("sha256").update(min.data).digest("hex");
+	entry.features = extractFeatures(raw.body);
+	entry.minBytes = Buffer.byteLength(min.body);
+	entry.minSha256 = createHash("sha256").update(min.body).digest("hex");
 	console.log(`${entry.name}: ${entry.features.length} features, ${entry.minBytes} bytes`);
 }
 
