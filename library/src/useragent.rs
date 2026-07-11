@@ -22,6 +22,14 @@
                 "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"Opera\/9\.80 \(.+(Opera Mini)\/(\d+)(?:\.(\d+)|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -34,6 +42,14 @@
             }
         };
         let minor = match result.get(3) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
             Some(r) => {
                 Into::<&str>::into(r).to_string()
             },
@@ -154,6 +170,14 @@
                 "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     // The OS version may have a patch component ("OS 17_4_1") — accept it,
     // otherwise in-app webviews on patch-level iOS releases fall through to
@@ -174,6 +198,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -212,6 +244,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(MQQBrowser)(?:\/(\d+)(?:\.(\d+)|)(?:\.(\d+)|)|)").captures(ua) {
         let family = "QQ Browser Mobile".to_owned();
@@ -229,6 +269,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -250,6 +298,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(ESPN)[%20| ]+Radio\/(\d+)\.(\d+)\.(\d+) CFNetwork").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -267,6 +323,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -310,6 +374,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"^(.*)-iPad\/(\d+)(?:\.(\d+)|)(?:\.(\d+)|)(?:\.(\d+)|) CFNetwork").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -327,6 +399,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -348,6 +428,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"^(.*)\/(\d+)(?:\.(\d+)|)(?:\.(\d+)|)(?:\.(\d+)|) CFNetwork").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -365,6 +453,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -401,6 +497,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Pingdom\.com_bot_version_)(\d+)\.(\d+)").captures(ua) {
         let family = "PingdomBot".to_owned();
@@ -418,6 +522,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -439,6 +551,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r" (PTST)\/(\d+)(?:\.(\d+)|)$").captures(ua) {
         let family = "WebPageTest.org bot".to_owned();
@@ -456,6 +576,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -480,6 +608,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Tableau)\/(\d+)\.(\d+)").captures(ua) {
         let family = "Tableau".to_owned();
@@ -499,6 +635,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Salesforce)(?:.)\/(\d+)\.(\d?)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -516,6 +660,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -538,6 +690,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -568,6 +728,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"\/((?:Ant-|)Nutch|[A-z]+[Bb]ot|[A-z]+[Ss]pider|Axtaris|fetchurl|Isara|ShopSalad|Tailsweep)[ \-](\d+)(?:\.(\d+)|)(?:\.(\d+)|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -585,6 +753,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -606,6 +782,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(MSIE) (\d+)\.(\d+)([a-z]\d|[a-z]|);.* MSIECrawler").captures(ua) {
         let family = "MSIECrawler".to_owned();
@@ -623,6 +807,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -644,6 +836,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Google-HTTP-Java-Client|Apache-HttpClient|Go-http-client|scalaj-http|http%20client|Python-urllib|HttpMonitor|TLSProber|WinHTTP|JNLP|okhttp|aihttp|reqwest|axios|unirest-(?:java|python|ruby|nodejs|php|net))(?:[ /](\d+)(?:\.(\d+)|)(?:\.(\d+)|)|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -661,6 +861,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -682,6 +890,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(CSimpleSpider|Cityreview Robot|CrawlDaddy|CrawlFire|Finderbots|Index crawler|Job Roboter|KiwiStatus Spider|Lijit Crawler|QuerySeekerSpider|ScollSpider|Trends Crawler|USyd-NLP-Spider|SiteCat Webbot|BotName\/\$BotVersion|123metaspider-Bot|1470\.net crawler|50\.nu|8bo Crawler Bot|Aboundex|Accoona-[A-z]{1,30}-Agent|AdsBot-Google(?:-[a-z]{1,30}|)|altavista|AppEngine-Google|archive.{0,30}\.org_bot|archiver|Ask Jeeves|[Bb]ai[Dd]u[Ss]pider(?:-[A-Za-z]{1,30})(?:-[A-Za-z]{1,30}|)|bingbot|BingPreview|blitzbot|BlogBridge|Bloglovin|BoardReader Blog Indexer|BoardReader Favicon Fetcher|boitho.com-dc|BotSeer|BUbiNG|\b\w{0,30}favicon\w{0,30}\b|\bYeti(?:-[a-z]{1,30}|)|Catchpoint(?: bot|)|[Cc]harlotte|Checklinks|clumboot|Comodo HTTP\(S\) Crawler|Comodo-Webinspector-Crawler|ConveraCrawler|CRAWL-E|CrawlConvera|Daumoa(?:-feedfetcher|)|Feed Seeker Bot|Feedbin|findlinks|Flamingo_SearchEngine|FollowSite Bot|furlbot|Genieo|gigabot|GomezAgent|gonzo1|(?:[a-zA-Z]{1,30}-|)Googlebot(?:-[a-zA-Z]{1,30}|)|Google SketchUp|grub-client|gsa-crawler|heritrix|HiddenMarket|holmes|HooWWWer|htdig|ia_archiver|ICC-Crawler|Icarus6j|ichiro(?:\/mobile|)|IconSurf|IlTrovatore(?:-Setaccio|)|InfuzApp|Innovazion Crawler|InternetArchive|IP2[a-z]{1,30}Bot|jbot\b|KaloogaBot|Kraken|Kurzor|larbin|LEIA|LesnikBot|Linguee Bot|LinkAider|LinkedInBot|Lite Bot|Llaut|lycos|Mail\.RU_Bot|masscan|masidani_bot|Mediapartners-Google|Microsoft .{0,30} Bot|mogimogi|mozDex|MJ12bot|msnbot(?:-media {0,2}|)|msrbot|Mtps Feed Aggregation System|netresearch|Netvibes|NewsGator[^/]{0,30}|^NING|Nutch[^/]{0,30}|Nymesis|ObjectsSearch|OgScrper|Orbiter|OOZBOT|PagePeeker|PagesInventory|PaxleFramework|Peeplo Screenshot Bot|PlantyNet_WebRobot|Pompos|Qwantify|Read%20Later|Reaper|RedCarpet|Retreiver|Riddler|Rival IQ|scooter|Scrapy|Scrubby|searchsight|seekbot|semanticdiscovery|SemrushBot|Simpy|SimplePie|SEOstats|SimpleRSS|SiteCon|Slackbot-LinkExpanding|Slack-ImgProxy|Slurp|snappy|Speedy Spider|Squrl Java|Stringer|TheUsefulbot|ThumbShotsBot|Thumbshots\.ru|Tiny Tiny RSS|Twitterbot|WhatsApp|URL2PNG|Vagabondo|VoilaBot|^vortex|Votay bot|^voyager|WASALive.Bot|Web-sniffer|WebThumb|WeSEE:[A-z]{1,30}|WhatWeb|WIRE|WordPress|Wotbox|www\.almaden\.ibm\.com|Xenu(?:.s|) Link Sleuth|Xerka [A-z]{1,30}Bot|yacy(?:bot|)|YahooSeeker|Yahoo! Slurp|Yandex\w{1,30}|YodaoBot(?:-[A-z]{1,30}|)|YottaaMonitor|Yowedo|^Zao|^Zao-Crawler|ZeBot_www\.ze\.bz|ZooShot|ZyBorg)(?:[ /]v?(\d+)(?:\.(\d+)(?:\.(\d+)|)|)|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -699,6 +915,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -720,6 +944,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"\[(FBAN\/MessengerForiOS|FB_IAB\/MESSENGER);FBAV\/(\d+)(?:\.(\d+)(?:\.(\d+)|)|)").captures(ua) {
         let family = "Facebook Messenger".to_owned();
@@ -739,6 +971,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"\[FB.*;(FBAV)\/(\d+)(?:\.(\d+)|)(?:\.(\d+)|)").captures(ua) {
         let family = "Facebook".to_owned();
@@ -756,6 +996,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -780,6 +1028,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"((?:[A-Za-z][A-Za-z0-9 -]{0,50}|)[^C][^Uu][Bb]ot)\b(?:(?:[ /]| v)(\d+)(?:\.(\d+)|)(?:\.(\d+)|)|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -797,6 +1053,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -818,6 +1082,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(HbbTV)\/(\d+)\.(\d+)\.(\d+) \(").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -835,6 +1107,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -856,6 +1136,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(SailfishBrowser)\/(\d+)\.(\d+)(?:\.(\d+)|)").captures(ua) {
         let family = "Sailfish Browser".to_owned();
@@ -873,6 +1161,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -897,6 +1193,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"Mozilla.*Mobile.*(Instagram).(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -914,6 +1218,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -935,6 +1247,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"Mozilla.*Mobile.*(Flipboard-Briefing).(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -952,6 +1272,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -973,6 +1301,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Snapchat)\/(\d+)\.(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -990,6 +1326,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1011,6 +1355,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(PaleMoon)\/(\d+)\.(\d+)(?:\.(\d+)|)").captures(ua) {
         let family = "Pale Moon".to_owned();
@@ -1028,6 +1380,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1049,6 +1409,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Fennec)\/(\d+)\.(\d+)(pre)").captures(ua) {
         let family = "Firefox Mobile".to_owned();
@@ -1066,6 +1434,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1087,6 +1463,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(?:Mobile|Tablet);.*(Firefox)\/(\d+)\.(\d+)").captures(ua) {
         let family = "Firefox Mobile".to_owned();
@@ -1104,6 +1488,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1125,6 +1517,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Firefox)\/(\d+)\.(\d+)(a\d+[a-z]*)").captures(ua) {
         let family = "Firefox Alpha".to_owned();
@@ -1142,6 +1542,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1163,6 +1571,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Firefox)-(?:\d+\.\d+|)\/(\d+)\.(\d+)(a\d+[a-z]*)").captures(ua) {
         let family = "Firefox Alpha".to_owned();
@@ -1180,6 +1596,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1201,6 +1625,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Namoroka|Shiretoko|Minefield)\/(\d+)\.(\d+)([ab]\d+[a-z]*|)").captures(ua) {
         let family = "Firefox ($1)".replace("$1", result.get(1).unwrap().into());
@@ -1218,6 +1650,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1239,6 +1679,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(MozillaDeveloperPreview)\/(\d+)\.(\d+)([ab]\d+[a-z]*|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -1256,6 +1704,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1277,6 +1733,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Flock)\/(\d+)\.(\d+)(b\d+?)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -1294,6 +1758,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1315,6 +1787,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Navigator)\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = "Netscape".to_owned();
@@ -1332,6 +1812,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1353,6 +1841,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Netscape6)\/(\d+)\.(\d+)\.?([ab]?\d+|)").captures(ua) {
         let family = "Netscape".to_owned();
@@ -1370,6 +1866,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1391,6 +1895,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(UC? ?Browser|UCWEB|U3)[ /]?(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = "UC Browser".to_owned();
@@ -1408,6 +1920,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1429,6 +1949,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Opera Mini)(?:\/att|)\/?(\d+|)(?:\.(\d+)|)(?:\.(\d+)|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -1446,6 +1974,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1467,6 +2003,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Opera)\/(\d+)\.(\d+).+Opera Mobi").captures(ua) {
         let family = "Opera Mobile".to_owned();
@@ -1486,6 +2030,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"Opera Mobi.+(Opera)(?:\/|\s+)(\d+)\.(\d+)").captures(ua) {
         let family = "Opera Mobile".to_owned();
@@ -1503,6 +2055,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1527,6 +2087,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(?:Mobile Safari).*(OPR)\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = "Opera Mobile".to_owned();
@@ -1544,6 +2112,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1565,6 +2141,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Coast)\/(\d+).(\d+).(\d+)").captures(ua) {
         let family = "Opera Coast".to_owned();
@@ -1582,6 +2166,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1603,6 +2195,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"Chrome\/.+( MMS)\/(\d+).(\d+).(\d+)").captures(ua) {
         let family = "Opera Neon".to_owned();
@@ -1622,6 +2222,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(hpw|web)OS\/(\d+)\.(\d+)(?:\.(\d+)|)").captures(ua) {
         let family = "webOS Browser".to_owned();
@@ -1639,6 +2247,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1663,6 +2279,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"Gecko\/\d+ (Lightning)\/(\d+)\.(\d+)\.?((?:[ab]?\d+[a-z]*)|(?:\d*))").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -1680,6 +2304,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1701,6 +2333,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Firefox)\/(\d+)\.(\d+)([ab]\d+[a-z]*|) \(Swiftfox\)").captures(ua) {
         let family = "Swiftfox".to_owned();
@@ -1720,6 +2360,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(rekonq)\/(\d+)\.(\d+)(?:\.(\d+)|) Safari").captures(ua) {
         let family = "Rekonq".to_owned();
@@ -1737,6 +2385,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1761,6 +2417,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(konqueror)\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = "Konqueror".to_owned();
@@ -1778,6 +2442,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1802,6 +2474,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Symphony) (\d+).(\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -1819,6 +2499,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1852,6 +2540,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if  crate::regex_cache::cached_regex(r"(Nintendo 3DS)").is_match(ua) {
         let family = "NetFront NX".to_owned();
@@ -1874,6 +2570,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Puffin)\/(\d+)\.(\d+)(?:\.(\d+)|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -1891,6 +2595,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1912,6 +2624,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(SamsungBrowser)\/(\d+)\.(\d+)").captures(ua) {
         let family = "Samsung Internet".to_owned();
@@ -1929,6 +2649,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1950,6 +2678,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(coc_coc_browser)\/(\d+)\.(\d+)(?:\.(\d+)|)").captures(ua) {
         let family = "Coc Coc".to_owned();
@@ -1967,6 +2703,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -1988,6 +2732,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(FlyFlow)\/(\d+)\.(\d+)").captures(ua) {
         let family = "Baidu Explorer".to_owned();
@@ -2005,6 +2757,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2026,6 +2786,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Crosswalk)\/(\d+)\.(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -2043,6 +2811,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2064,6 +2840,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(MiuiBrowser)\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = "MiuiBrowser".to_owned();
@@ -2081,6 +2865,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2102,6 +2894,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"Mozilla.+Android.+(GSA)\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = "Google".to_owned();
@@ -2119,6 +2919,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2140,6 +2948,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"; wv\).+(Chrome)\/(\d+)\.(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = "Chrome Mobile WebView".to_owned();
@@ -2157,6 +2973,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2178,6 +3002,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(CriOS)\/(\d+)\.(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = "Chrome Mobile iOS".to_owned();
@@ -2195,6 +3027,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2216,6 +3056,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r" Mobile .*(Chrome)\/(\d+)\.(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = "Chrome Mobile".to_owned();
@@ -2233,6 +3081,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2254,6 +3110,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(SLP Browser)\/(\d+)\.(\d+)").captures(ua) {
         let family = "Tizen Browser".to_owned();
@@ -2271,6 +3135,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2292,6 +3164,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(MQQBrowser\/Mini)(?:(\d+)(?:\.(\d+)|)(?:\.(\d+)|)|)").captures(ua) {
         let family = "QQ Browser Mini".to_owned();
@@ -2309,6 +3189,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2330,6 +3218,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(QQBrowser)(?:\/(\d+)(?:\.(\d+)\.(\d+)(?:\.(\d+)|)|)|)").captures(ua) {
         let family = "QQ Browser".to_owned();
@@ -2347,6 +3243,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2368,6 +3272,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(PyAMF)\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -2385,6 +3297,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2406,6 +3326,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Chrome)\/(\d+)\.(\d+)\.(\d+).* MRCHROME").captures(ua) {
         let family = "Mail.ru Chromium Browser".to_owned();
@@ -2423,6 +3351,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2444,6 +3380,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(PodCruncher|Downcast)[ /]?(\d+)(?:\.(\d+)|)(?:\.(\d+)|)(?:\.(\d+)|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -2461,6 +3405,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2482,6 +3434,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Whale)\/(\d+)\.(\d+)\.(\d+)\.(\d+) Mobile(?:[ /]|$)").captures(ua) {
         let family = "Whale".to_owned();
@@ -2499,6 +3459,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2520,6 +3488,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Ghost)\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -2539,6 +3515,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Slack_SSB)\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = "Slack Desktop Client".to_owned();
@@ -2556,6 +3540,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2586,6 +3578,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2629,6 +3629,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Thunderbird)\/(\d+)\.(\d+)(?:\.(\d+(?:pre|))|)").captures(ua) {
         let family = "Thunderbird".to_owned();
@@ -2646,6 +3654,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2667,6 +3683,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Barca(?:Pro)?)\/(\d+)\.(\d+)(?:\.(\d+)|)").captures(ua) {
         let family = "Barca".to_owned();
@@ -2684,6 +3708,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2705,6 +3737,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Vivaldi)\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -2722,6 +3762,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2743,6 +3791,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(brave)\/(\d+)\.(\d+)\.(\d+) Chrome").captures(ua) {
         let family = "Brave".to_owned();
@@ -2760,6 +3816,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2781,6 +3845,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"\b(Dolphin)(?: |HDCN\/|\/INT\-)(\d+)\.(\d+)(?:\.(\d+)|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -2798,6 +3870,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2819,6 +3899,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Evolution)\/(\d+)\.(\d+)\.(\d+\.\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -2836,6 +3924,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2857,6 +3953,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(bingbot|Bolt|AdobeAIR|Jasmine|IceCat|Skyfire|Midori|Maxthon|Lynx|Arora|IBrowse|Dillo|Camino|Shiira|Fennec|Phoenix|Flock|Netscape|Lunascape|Epiphany|WebPilot|Opera Mini|Opera|NetFront|Netfront|Konqueror|Googlebot|SeaMonkey|Kazehakase|Vienna|Iceape|Iceweasel|IceWeasel|Iron|K-Meleon|Sleipnir|Galeon|GranParadiso|iCab|iTunes|MacAppStore|NetNewsWire|Space Bison|Stainless|Orca|Dolfin|BOLT|Minimo|Tizen Browser|Polaris|Abrowser|Planetweb|ICE Browser|mDolphin|qutebrowser|Otter|QupZilla|MailBar|kmail2|YahooMobileMail|ExchangeWebServices|ExchangeServicesClient|Dragon|Outlook-iOS-Android)\/(\d+)\.(\d+)(?:\.(\d+)|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -2874,6 +3978,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2895,6 +4007,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(IEMobile)[ /](\d+)\.(\d+)").captures(ua) {
         let family = "IE Mobile".to_owned();
@@ -2914,6 +4034,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(BacaBerita App)\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -2931,6 +4059,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -2955,6 +4091,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"^(AntennaPod|WMPlayer|Zune|Podkicker|Radio|ExoPlayerDemo|Overcast|PocketTunes|NSPlayer|okhttp|DoggCatcher|QuickNews|QuickTime|Peapod|Podcasts|GoldenPod|VLC|Spotify|Miro|MediaGo|Juice|iPodder|gPodder|Banshee)\/(\d+)\.(\d+)(?:\.(\d+)|)(?:\.(\d+)|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -2974,6 +4118,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"^(Peapod|Liferea)\/([^.\s]+)\.([^.\s]+|)\.?([^.\s]+|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -2991,6 +4143,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -3043,6 +4203,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Pocket Casts)$").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -3068,6 +4236,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(philpodder)\/(\d+)\.(\d+)\.?([^.\s]+|)\.?([^.\s]+|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -3085,6 +4261,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -3107,6 +4291,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -3139,6 +4331,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if  crate::regex_cache::cached_regex(r"EspnDownloadManager").is_match(ua) {
         let family = "ESPN".to_owned();
@@ -3161,6 +4361,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(podracer|jPodder) v ?(\d+)\.(\d+)(?:\.(\d+)|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -3178,6 +4386,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -3199,6 +4415,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Zune|BeyondPod) (\d+)(?:\.(\d+)|)[\);]").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -3218,6 +4442,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(WMPlayer)\/(\d+)\.(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -3235,6 +4467,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -3270,6 +4510,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Podkicker) \S+\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = "Podkicker".to_owned();
@@ -3289,6 +4537,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"^(HTC) Streaming Player \S+ \/ \S+ \/ \S+ \/ (\d+)\.(\d+)(?:\.(\d+)|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -3306,6 +4562,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -3333,6 +4597,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r" (VLC) for").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -3355,6 +4627,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"^(foobar)\S+\/([^.\s]+)\.([^.\s]+|)\.?([^.\s]+|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -3372,6 +4652,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -3393,6 +4681,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(amarok)\/([^.\s]+)\.([^.\s]+|)\.?([^.\s]+|)").captures(ua) {
         let family = "Amarok".to_owned();
@@ -3410,6 +4706,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -3434,6 +4738,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(iCab|Lunascape|Opera|Android|Jasmine|Polaris|Microsoft SkyDriveSync|The Bat!) (\d+)\.(\d+)(?:\.(\d+)|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -3453,6 +4765,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Kindle)\/(\d+)\.(\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -3470,6 +4790,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -3515,6 +4843,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Nextcloud)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -3537,6 +4873,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(ownCloud-android)\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = "Owncloud".to_owned();
@@ -3556,6 +4900,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(OC)\/(\d+)\.(\d+)\.(\d+)\.(\d+) \(Skype for Business\)").captures(ua) {
         let family = "Skype".to_owned();
@@ -3573,6 +4925,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -3600,6 +4960,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(MAXTHON|Maxthon) (\d+)\.(\d+)").captures(ua) {
         let family = "Maxthon".to_owned();
@@ -3617,6 +4985,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -3642,6 +5018,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(NCSA_Mosaic)\/(\d+)\.(\d+)").captures(ua) {
         let family = "NCSA Mosaic".to_owned();
@@ -3659,6 +5043,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -3680,6 +5072,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Embider)\/(\d+)\.(\d+)").captures(ua) {
         let family = "Polaris".to_owned();
@@ -3697,6 +5097,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -3718,6 +5126,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(iPod|iPhone|iPad).+GSA\/(\d+)\.(\d+)\.(\d+) Mobile").captures(ua) {
         let family = "Google".to_owned();
@@ -3735,6 +5151,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -3756,6 +5180,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(iPod|iPod touch|iPhone|iPad);.*CPU.*OS[ +](\d+)_(\d+)(?:_(\d+)|).* AppleNews\/\d+\.\d+\.\d+?").captures(ua) {
         let family = "Mobile Safari UI/WKWebView".to_owned();
@@ -3773,6 +5205,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -3794,6 +5234,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(iPod|iPod touch|iPhone|iPad);.*CPU.*OS[ +](\d+)_(\d+)(?:_(\d+)|).*Mobile.*[ +]Safari").captures(ua) {
         let family = "Mobile Safari".to_owned();
@@ -3813,6 +5261,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(iPod|iPod touch|iPhone|iPad);.*CPU.*OS[ +](\d+)_(\d+)(?:_(\d+)|).*Mobile").captures(ua) {
         let family = "Mobile Safari UI/WKWebView".to_owned();
@@ -3830,6 +5286,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -3857,6 +5321,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Outlook-iOS)\/\d+\.\d+\.prod\.iphone \((\d+)\.(\d+)\.(\d+)\)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -3874,6 +5346,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -3895,6 +5375,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(OneBrowser)\/(\d+).(\d+)").captures(ua) {
         let family = "ONE Browser".to_owned();
@@ -3912,6 +5400,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -3941,6 +5437,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"^(iBrowser|iRAPP)\/(\d+).(\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -3958,6 +5462,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -3982,6 +5494,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(NokiaBrowser)\/(\d+)\.(\d+).(\d+)").captures(ua) {
         let family = "Nokia Browser".to_owned();
@@ -3999,6 +5519,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4020,6 +5548,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(BrowserNG)\/(\d+)\.(\d+).(\d+)").captures(ua) {
         let family = "Nokia Browser".to_owned();
@@ -4037,6 +5573,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4063,6 +5607,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(S40OviBrowser)\/(\d+)\.(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = "Ovi Browser".to_owned();
@@ -4080,6 +5632,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4112,6 +5672,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Black[bB]erry|BB10).+Version\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = "BlackBerry WebKit".to_owned();
@@ -4129,6 +5697,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4161,6 +5737,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Blazer)\/(\d+)\.(\d+)").captures(ua) {
         let family = "Palm Blazer".to_owned();
@@ -4178,6 +5762,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4199,6 +5791,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(ELinks)\/(\d+)\.(\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -4216,6 +5816,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4237,6 +5845,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Links) \((\d+)\.(\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -4254,6 +5870,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4275,6 +5899,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(PhantomJS)\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -4292,6 +5924,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4313,6 +5953,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Version)\/(\d+)\.(\d+)(?:\.(\d+)|).*Safari\/").captures(ua) {
         let family = "Safari".to_owned();
@@ -4330,6 +5978,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4354,6 +6010,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(OLPC)\/Update()\.(\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -4364,6 +6028,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4383,6 +6055,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4407,6 +6087,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Trident)\/(7|8)\.(0)").captures(ua) {
         let family = "IE".to_owned();
@@ -4417,6 +6105,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4431,6 +6127,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Trident)\/(5)\.(0)").captures(ua) {
         let family = "IE".to_owned();
@@ -4443,6 +6147,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Trident)\/(4)\.(0)").captures(ua) {
         let family = "IE".to_owned();
@@ -4453,6 +6165,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4474,6 +6194,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(AppleWebKit)\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = "Apple Mail".to_owned();
@@ -4491,6 +6219,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4512,6 +6248,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(Firefox)\/(\d+)\.(\d+)(pre|[ab]\d+[a-z]*|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -4529,6 +6273,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4550,6 +6302,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"(python-requests)\/(\d+)\.(\d+)").captures(ua) {
         let family = "Python Requests".to_owned();
@@ -4567,6 +6327,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4588,23 +6356,12 @@
                     "0".to_string()
             }
         };
-        return [ family, major, minor, patch ];
-    } else if let Some(result) = crate::regex_cache::cached_regex(r"(Python\/3\.\d{1,3} aiohttp)\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
-        let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
-        let major = match result.get(2) {
+        let patch = match result.get(4) {
             Some(r) => {
-                    Into::<&str>::into(r).to_string()
+                Into::<&str>::into(r).to_string()
             },
             None => {
-                    "0".to_string()
-            }
-        };
-        let minor = match result.get(3) {
-            Some(r) => {
-                    Into::<&str>::into(r).to_string()
-            },
-            None => {
-                    "0".to_string()
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4624,6 +6381,41 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
+        return [ family, major, minor, patch ];
+    } else if let Some(result) = crate::regex_cache::cached_regex(r"(Python\/3\.\d{1,3} aiohttp)\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
+        let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
+        let major = match result.get(2) {
+            Some(r) => {
+                    Into::<&str>::into(r).to_string()
+            },
+            None => {
+                    "0".to_string()
+            }
+        };
+        let minor = match result.get(3) {
+            Some(r) => {
+                    Into::<&str>::into(r).to_string()
+            },
+            None => {
+                    "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4645,6 +6437,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"^(Cyberduck)\/(\d+)\.(\d+)\.(\d+)(?:\.\d+|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -4664,6 +6464,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"^(S3 Browser) (\d+)-(\d+)-(\d+)(?:\s*http:\/\/s3browser\.com|)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -4681,6 +6489,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4705,6 +6521,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"^(rusoto)\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -4722,6 +6546,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4743,6 +6575,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"^(Roku)\/DVP-(\d+)\.(\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -4760,6 +6600,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
@@ -4781,6 +6629,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"^(Box(?: Sync)?)\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = Into::<&str>::into(result.get(1).unwrap()).to_owned();
@@ -4800,6 +6656,14 @@
                     "0".to_string()
             }
         };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
+            }
+        };
         return [ family, major, minor, patch ];
     } else if let Some(result) = crate::regex_cache::cached_regex(r"^(ViaFree|Viafree)-(?:tvOS-)?[A-Z]{2}\/(\d+)\.(\d+)\.(\d+)").captures(ua) {
         let family = "ViaFree".to_owned();
@@ -4817,6 +6681,14 @@
             },
             None => {
                     "0".to_string()
+            }
+        };
+        let patch = match result.get(4) {
+            Some(r) => {
+                Into::<&str>::into(r).to_string()
+            },
+            None => {
+                "0".to_string()
             }
         };
         return [ family, major, minor, patch ];
