@@ -1,6 +1,20 @@
 {
  "source": "@financial-times/polyfill-useragent-normaliser@1.10.2 (MIT), recovered from npm after the GitHub repository was deleted",
  "note": "Expected values are UA.normalize() outputs of the recovered 1.10.2 package executed under node, over the union of this repo UA fixtures and the pzb 1000-UA corpus. Ground truth for ua.rs: family mapping, baselines, wrapper stripping.",
+ "intentional_divergences": [
+  {
+   "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Instagram 325.0.3.31.90 (iPhone14,5; iOS 17_4_1; en_US; en; scale=3.00; 1170x2532; 585196630)",
+   "reason": "iOS patch-version fix (commit 5137b7996): 17.4, not the WebKit-table 11.0"
+  },
+  {
+   "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 11_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15G77 [FBAN/FBIOS;FBDV/iPhone10,4;FBMD/iPhone;FBSN/iOS;FBSV/11.4.1;FBSS/2;FBCR/A1;FBID/phone;FBLC/de_DE;FBOP/5;FBRV/122166081]",
+   "reason": "iOS patch-version fix (commit 5137b7996): 11.4, not the WebKit-table 11.0"
+  },
+  {
+   "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 11_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15G77 [FBAN/FBIOS;FBAV/194.0.0.38.99;FBBV/127868476;FBDV/iPhone7,2;FBMD/iPhone;FBSN/iOS;FBSV/11.4.1;FBSS/2;FBCR/OrangeBotswana;FBID/phone;FBLC/en_GB;FBOP/5;FBRV/128807018]",
+   "reason": "iOS patch-version fix (commit 5137b7996): 11.4, not the WebKit-table 11.0"
+  }
+ ],
  "cases": [
   {
    "ua": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.172 Safari/537.22",

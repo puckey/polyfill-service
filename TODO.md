@@ -28,11 +28,12 @@ wrong, roughly in order of value:
     stray JS delimiter transliterated into the pattern, so Yandex Browser
     users were classified unknown instead of their underlying Chrome
     (fixed; ua_table re-blessed for that one row).
-- [ ] **2. uap-core `tests/test_ua.yaml`** (Apache-2.0 — keep its notice if
-  vendored): ~thousands of cases, actively maintained. Diff against
-  `parse.rs` to see where our frozen regex snapshot drifted. Expect noise:
-  new bot/app detection is irrelevant to polyfill serving; browser-family
-  misclassifications are the signal.
+- [ ] ~~**2. uap-core `tests/test_ua.yaml`**~~ — deliberately skipped: the
+  intoli triage answered the question this was meant to answer (99.89% of
+  current traffic weight classifies correctly), and diffing against current
+  uap-core would mostly surface bot renames irrelevant to polyfill serving.
+  Revisit only if the production unknown-UA metric shows real browsers
+  slipping through.
 - [x] **3. Production traffic**: the service now exports
   `polyfill_unknown_ua_total` and logs a 1-in-100 sample of unknown UA
   strings, so real traffic continuously surfaces misclassified browsers.
@@ -41,11 +42,15 @@ wrong, roughly in order of value:
   weight is below-baseline Safari 8 (correct by design) plus two candidates
   for future strip rules, both Chromium-skinned and confirmed unknown in
   upstream 1.10.2 too: XiaoMi MiuiBrowser (0.019%) and Amazon Silk (0.011%).
-- [ ] **5. Differential harness**: script that runs corpora (2, 4, plus the
-  pzb gist from issue 86) through our `parse_ua` and a second opinion
-  (`ua-parser-js` or the npm-recovered FT originals under node), and emits a
-  triage report of disagreements. Each resolved case becomes a new row in
-  `library/tests/fixtures/ua_table.json`.
+- [x] **5. Differential harness**: `node scripts/ua-triage.ts` runs this
+  repo's fixtures + the pzb corpus + a fresh daily intoli download through
+  our parser and the recovered upstream normaliser, and reports undocumented
+  disagreements (exit 1) plus the heaviest unknown-classified real-traffic
+  UAs. Intentional divergences live in the normaliser corpus fixture
+  (shared with the Rust test); the iOS patch-version fix is exempted as a
+  pattern — today's run shows current iOS in-app webviews (OS 26_x_y) hit
+  it constantly, i.e. upstream/production cdnjs misclassifies them as
+  iOS 11 while this fork serves correct bundles.
 
 ## Service
 
