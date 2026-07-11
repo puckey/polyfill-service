@@ -72,8 +72,11 @@ impl UserAgent for UA {
             let ua_string = crate::regex_cache::cached_regex(r"(?i) PaleMoon\/[\d.]+")
                 .replace(&ua_string, "");
 
-            // Yandex browser is recognised by UA module but is actually Chromium under the hood, so better to remove the Yandex identifier and get the UA module to detect it as Chrome
-            let ua_string = crate::regex_cache::cached_regex(r"(?i)(YaBrowser)\/(\d+\.)+\d+ /")
+            // Yandex browser is recognised by UA module but is actually Chromium under the hood, so better to remove the Yandex identifier and get the UA module to detect it as Chrome.
+            // (The original JS pattern is /(YaBrowser)\/(\d+\.)+\d+ /; an earlier
+            // transliteration copied the closing regex delimiter into the pattern,
+            // which made the strip never match.)
+            let ua_string = crate::regex_cache::cached_regex(r"(?i)(YaBrowser)\/(\d+\.)+\d+ ")
                 .replace(&ua_string, "");
 
             // Crosswalk browser is recognised by UA module but is actually Chromium under the hood, so better to remove the identifier and get the UA module to detect it as Chrome
