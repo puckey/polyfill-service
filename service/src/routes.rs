@@ -60,11 +60,11 @@ pub async fn handle_request(State(state): State<AppState>, req: axum::extract::R
         "/robots.txt" => resp(StatusCode::OK, &[], "User-agent: *\nDisallow:"),
         "/polyfill.js" | "/v3/polyfill.js" => {
             let user_agent = user_agent(&req);
-            polyfill(user_agent.as_deref(), false, state.env, &state.config).await
+            polyfill(user_agent.as_deref(), false, state.env, &state.config, &state.unknown_ua).await
         }
         "/polyfill.min.js" | "/v3/polyfill.min.js" => {
             let user_agent = user_agent(&req);
-            polyfill(user_agent.as_deref(), true, state.env, &state.config).await
+            polyfill(user_agent.as_deref(), true, state.env, &state.config, &state.unknown_ua).await
         }
         _ => resp(
             StatusCode::NOT_FOUND,

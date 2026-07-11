@@ -33,13 +33,14 @@ wrong, roughly in order of value:
   `parse.rs` to see where our frozen regex snapshot drifted. Expect noise:
   new bot/app detection is irrelevant to polyfill serving; browser-family
   misclassifications are the signal.
-- [ ] **3. Production traffic**: add sampled logging (or a capped
-  counter-by-family) for UAs that classify as unknown, so real Radio Garden
-  traffic continuously surfaces misclassified browsers. The iOS-webview bug
-  would have been immediately visible this way.
-- [ ] **4. intoli/user-agents**: daily-updated real-traffic UA strings with
-  market-share weights. Run the corpus through `parse_ua`, triage everything
-  common that lands on `other/0.0.0`.
+- [x] **3. Production traffic**: the service now exports
+  `polyfill_unknown_ua_total` and logs a 1-in-100 sample of unknown UA
+  strings, so real traffic continuously surfaces misclassified browsers.
+- [x] **4. intoli/user-agents**: triaged the 10,000-UA weighted corpus —
+  99.89% of traffic weight classifies to a known family. Remaining `other`
+  weight is below-baseline Safari 8 (correct by design) plus two candidates
+  for future strip rules, both Chromium-skinned and confirmed unknown in
+  upstream 1.10.2 too: XiaoMi MiuiBrowser (0.019%) and Amazon Silk (0.011%).
 - [ ] **5. Differential harness**: script that runs corpora (2, 4, plus the
   pzb gist from issue 86) through our `parse_ua` and a second opinion
   (`ua-parser-js` or the npm-recovered FT originals under node), and emits a

@@ -16,6 +16,13 @@ pub struct AppState {
     pub env: Arc<Env>,
     pub registry: prometheus::Registry,
     pub config: Arc<config::ServiceConfig>,
+    pub unknown_ua: Arc<UnknownUaTelemetry>,
+}
+
+/// Tracks requests from user agents the parser cannot classify.
+pub struct UnknownUaTelemetry {
+    pub metric: prometheus::IntCounter,
+    pub sample_counter: std::sync::atomic::AtomicU64,
 }
 
 #[tokio::main]
@@ -67,6 +74,11 @@ async fn main() {
     .unwrap();
     let bytes_out_metric =
         prometheus::IntCounter::new("polyfill_bytes_out_total", "Bundle bytes written").unwrap();
+    let unknown_ua_metric = prometheus::IntCounter::new(
+        "polyfill_unknown_ua_total",
+        "Bundle requests from user agents the parser could not classify",
+    )
+    .unwrap();
 
     registry
         .register(Box::new(store_query_metric.clone()))
@@ -79,6 +91,9 @@ async fn main() {
         .unwrap();
     registry
         .register(Box::new(bytes_out_metric.clone()))
+        .unwrap();
+    registry
+        .register(Box::new(unknown_ua_metric.clone()))
         .unwrap();
 
     let env = Arc::new(Env {
@@ -102,6 +117,10 @@ async fn main() {
         env,
         registry,
         config,
+        unknown_ua: Arc::new(UnknownUaTelemetry {
+            metric: unknown_ua_metric,
+            sample_counter: std::sync::atomic::AtomicU64::new(0),
+        }),
     };
 
     let app = axum::Router::new()
