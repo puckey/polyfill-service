@@ -5,9 +5,6 @@ members = [
     "library",
 ]
 
-[profile.release]
-debug = true
-
 [workspace.dependencies]
 prometheus = "0.14"
 r2d2 = "0.8"
