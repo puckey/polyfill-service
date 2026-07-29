@@ -1,0 +1,1 @@
+CreateMethodProperty(Array.prototype,"flat",function t(){var e=arguments[0],r=ToObject(this),o=ToLength(Get(r,"length")),a=1,e=(void 0!==e&&(a=ToInteger(e)),ArraySpeciesCreate(r,0));return FlattenIntoArray(e,r,o,0,a),e});

@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 
-use regex::Regex;
 use semver::{Version, VersionReq};
 use serde::Deserialize;
 
@@ -35,32 +34,26 @@ impl UserAgent for OldUA {
         let mut major: String;
         let mut minor: String;
         // let mut patch: String = "0".to_owned();
-        let re: Regex = Regex::new(r"(?i)^(\w+)\/(\d+)(?:\.(\d+){2})?$").unwrap();
+        let re = crate::regex_cache::cached_regex(r"(?i)^(\w+)\/(\d+)(?:\.(\d+){2})?$");
         if let Some(normalized) = re.captures(ua_string) {
             family = normalized.get(1).map(Into::<&str>::into).unwrap().into();
             major = normalized.get(2).map(Into::<&str>::into).unwrap().into();
             minor = normalized.get(3).map_or("0", Into::<&str>::into).to_owned();
         } else {
             // Chrome and Opera on iOS uses a UIWebView of the underlying platform to render content. By stripping the CriOS or OPiOS strings, the useragent parser will alias the user agent to ios_saf for the UIWebView, which is closer to the actual renderer
-            let ua_string = Regex::new(
-                r"(?i)((CriOS|OPiOS)\/(\d+)\.(\d+)\.(\d+)\.(\d+)|(FxiOS\/(\d+)\.(\d+)))",
-            )
-            .unwrap()
+            let ua_string = crate::regex_cache::cached_regex(r"(?i)((CriOS|OPiOS)\/(\d+)\.(\d+)\.(\d+)\.(\d+)|(FxiOS\/(\d+)\.(\d+)))")
             .replace(ua_string, "");
 
             // Vivaldi browser is recognised by UA module but is actually identical to Chrome, so the best way to get accurate targeting is to remove the vivaldi token from the UA
-            let ua_string = Regex::new(r"(?i) vivaldi\/[\d.]+\d+")
-                .unwrap()
+            let ua_string = crate::regex_cache::cached_regex(r"(?i) vivaldi\/[\d.]+\d+")
                 .replace(&ua_string, "");
 
             // Facebook in-app browser `[FBAN/.....]` or `[FB_IAB/.....]` (see https://github.com/Financial-Times/polyfill-servicessues/990)
-            let ua_string = Regex::new(r"(?i) \[(FB_IAB|FBAN|FBIOS|FB4A)\/[^\]]+\]")
-                .unwrap()
+            let ua_string = crate::regex_cache::cached_regex(r"(?i) \[(FB_IAB|FBAN|FBIOS|FB4A)\/[^\]]+\]")
                 .replace(&ua_string, "");
 
             // Electron/X.Y.Z` (see https://github.com/Financial-Times/polyfill-servicessues/1129)
-            let ua_string = Regex::new(r"(?i) Electron\/[\d.]+\d+")
-                .unwrap()
+            let ua_string = crate::regex_cache::cached_regex(r"(?i) Electron\/[\d.]+\d+")
                 .replace(&ua_string, "");
 
             let ua = parse(&ua_string);

@@ -1,0 +1,1 @@
+function ToObject(r){if(null==r)throw TypeError();return Object(r)}

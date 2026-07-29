@@ -1,0 +1,1 @@
+CreateMethodProperty(String.prototype,"codePointAt",function t(e){var o=RequireObjectCoercible(this),o=ToString(o),e=ToIntegerOrInfinity(e),r=o.length;if(!(e<0||r<=e))return CodePointAt(o,e)["[[CodePoint]]"]});

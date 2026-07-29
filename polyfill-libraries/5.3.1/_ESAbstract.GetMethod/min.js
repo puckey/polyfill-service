@@ -1,0 +1,1 @@
+function GetMethod(e,l){e=GetV(e,l);if(null!=e){if(!1===IsCallable(e))throw new TypeError("Method not callable: "+l);return e}}

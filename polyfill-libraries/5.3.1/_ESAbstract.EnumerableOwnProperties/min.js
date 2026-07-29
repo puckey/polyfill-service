@@ -1,0 +1,1 @@
+function EnumerableOwnProperties(e,r){for(var t=Object.keys(e),n=[],u=t.length,p=0;p<u;p++){var s,a=t[p];"string"===Type(a)&&(s=Object.getOwnPropertyDescriptor(e,a))&&s.enumerable&&("key"===r?n.push(a):(s=Get(e,a),n.push("value"===r?s:[a,s])))}return n}

@@ -1,0 +1,1 @@
+CreateMethodProperty(String.prototype,"toWellFormed",function e(){for(var o=RequireObjectCoercible(this),t=ToString(o),r=t.length,n=0,i="";n<r;){var d=CodePointAt(t,n);!0===d["[[IsUnpairedSurrogate]]"]?i+="�":i+=UTF16EncodeCodePoint(d["[[CodePoint]]"]),n+=d["[[CodeUnitCount]]"]}return i});

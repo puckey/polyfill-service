@@ -1,0 +1,1 @@
+CreateMethodProperty(Set.prototype,"union",function t(e){Set.prototype.has.call(this);var r,e=GetSetRecord(e),o=GetIterator(e["[[SetObject]]"],e["[[Keys]]"]),a=new Set;for(this.forEach(function(t){a.add(t)});r!==IteratorStepValue.DONE;)(r=IteratorStepValue(o))!==IteratorStepValue.DONE&&!1===a.has(r=-0===r?0:r)&&a.add(r);return a});

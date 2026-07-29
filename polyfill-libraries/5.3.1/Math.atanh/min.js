@@ -1,0 +1,1 @@
+CreateMethodProperty(Math,"atanh",function t(a){return isNaN(a)||a<-1||1<a?NaN:-1===a?-1/0:1===a?1/0:0===a&&1/a==1/0?0:0===a&&1/a==-1/0?-0:Math.log((1+a)/(1-a))/2});

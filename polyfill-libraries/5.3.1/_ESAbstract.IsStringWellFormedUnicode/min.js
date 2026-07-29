@@ -1,0 +1,1 @@
+function IsStringWellFormedUnicode(r){for(var n=r.length,e=0;e<n;){var t=CodePointAt(r,e);if(!0===t["[[IsUnpairedSurrogate]]"])return!1;e+=t["[[CodeUnitCount]]"]}return!0}

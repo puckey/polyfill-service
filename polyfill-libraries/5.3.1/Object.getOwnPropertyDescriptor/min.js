@@ -1,0 +1,1 @@
+!function(){var n=Object.getOwnPropertyDescriptor,c={}.toString,i="".split;CreateMethodProperty(Object,"getOwnPropertyDescriptor",function t(r,e){var o=ToObject(r),o=("string"===Type(o)||o instanceof String)&&"[object String]"==c.call(r)?i.call(r,""):Object(r),r=ToPropertyKey(e);return n(o,r)})}();

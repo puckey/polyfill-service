@@ -1,0 +1,1 @@
+!function(n){CreateMethodProperty(Object,"preventExtensions",function e(t){return"object"===Type(t)&&n&&n(t),t})}(Object.preventExtensions);

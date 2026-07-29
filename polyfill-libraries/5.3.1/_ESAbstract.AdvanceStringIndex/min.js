@@ -1,0 +1,1 @@
+function AdvanceStringIndex(n,t,e){return!1===e||n.length<=t+1?t+1:t+CodePointAt(n,t)["[[CodeUnitCount]]"]}

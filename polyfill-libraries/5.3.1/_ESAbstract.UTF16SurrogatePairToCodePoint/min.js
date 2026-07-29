@@ -1,0 +1,1 @@
+function UTF16SurrogatePairToCodePoint(o,r){return 1024*(o-55296)+(r-56320)+65536}

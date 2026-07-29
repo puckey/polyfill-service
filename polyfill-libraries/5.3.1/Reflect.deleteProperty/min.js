@@ -1,0 +1,1 @@
+CreateMethodProperty(Reflect,"deleteProperty",function e(t,r){if("object"!==Type(t))throw new TypeError(Object.prototype.toString.call(t)+" is not an Object");r=ToPropertyKey(r);try{return delete t[r],!HasOwnProperty(t,r)}catch(e){return!1}});

@@ -1,0 +1,1 @@
+self.URL.parse=function r(n){if(arguments.length<1)throw new TypeError("Not enough arguments");n=ToString(n);if(arguments.length<2||void 0===arguments[1])try{return new URL(n)}catch(r){return null}else{var e=ToString(arguments[1]);try{return new URL(n,e)}catch(r){return null}}};

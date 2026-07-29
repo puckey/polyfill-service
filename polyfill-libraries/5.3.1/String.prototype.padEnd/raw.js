@@ -1,0 +1,29 @@
+
+// String.prototype.padEnd
+/* global CreateMethodProperty, RequireObjectCoercible, StringPad, ToLength, ToString */
+// 21.1.3.13. String.prototype.padEnd( maxLength [ , fillString ] )
+CreateMethodProperty(String.prototype, 'padEnd', function padEnd(maxLength /* [ , fillString ] */) {
+	'use strict';
+	var fillString = arguments.length > 1 ? arguments[1] : undefined;
+	// 1. Let O be ? RequireObjectCoercible(this value).
+	var O = RequireObjectCoercible(this);
+	// 2. Let S be ? ToString(O).
+	var S = ToString(O);
+	// 3. Let intMaxLength be ? ToLength(maxLength).
+	var intMaxLength = ToLength(maxLength);
+	// 4. Let stringLength be the length of S.
+	var stringLength = S.length;
+	// 5. If intMaxLength is not greater than stringLength, return S.
+	if (intMaxLength <= stringLength) {
+		return S;
+	}
+	// 6. If fillString is undefined, let filler be the String value consisting solely of the code unit 0x0020 (SPACE).
+	if (fillString === undefined) {
+		var filler = ' ';
+		// 7. Else, let filler be ? ToString(fillString).
+	} else {
+		filler = ToString(fillString);
+	}
+	// 8. Return StringPad(S, intMaxLength, filler, end).
+	return StringPad(S, intMaxLength, filler, "END");
+});

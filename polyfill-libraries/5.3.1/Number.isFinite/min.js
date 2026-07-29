@@ -1,0 +1,1 @@
+!function(){var n=self;CreateMethodProperty(Number,"isFinite",function e(i){return"number"===Type(i)&&n.isFinite(i)})}();

@@ -1,0 +1,1 @@
+CreateMethodProperty(Set.prototype,"isSupersetOf",function e(t){var r=this,t=(Set.prototype.has.call(r),GetSetRecord(t));if(r.size<t["[[Size]]"])return!1;for(var o,a=GetIterator(t["[[SetObject]]"],t["[[Keys]]"]);o!==IteratorStepValue.DONE;)if((o=IteratorStepValue(a))!==IteratorStepValue.DONE&&!1===r.has(o))return IteratorClose(a,NormalCompletion(void 0)),!1;return!0});

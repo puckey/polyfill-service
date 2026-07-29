@@ -1,0 +1,1 @@
+function StringToCodePoints(o){for(var n=[],t=o.length,e=0;e<t;){var i=CodePointAt(o,e);n.push(i["[[CodePoint]]"]),e+=i["[[CodeUnitCount]]"]}return n}

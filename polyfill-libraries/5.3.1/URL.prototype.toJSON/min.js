@@ -1,0 +1,1 @@
+self.URL.prototype.toJSON=function t(){return this.href};

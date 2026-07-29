@@ -1,0 +1,1 @@
+function ToLength(n){n=ToInteger(n);return n<=0?0:Math.min(n,Math.pow(2,53)-1)}

@@ -28,7 +28,7 @@ use indexmap::{IndexMap, IndexSet};
 
     if features_with_flags.contains_key("all") {
         features_with_flags.insert("default".to_owned(), features_with_flags["all"].clone());
-        features_with_flags.remove("all");
+        features_with_flags.swap_remove("all");
     }
 
     features_with_flags

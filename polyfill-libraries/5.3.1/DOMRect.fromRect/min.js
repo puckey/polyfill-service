@@ -1,0 +1,1 @@
+!function(i){function r(t){return void 0===t?0:Number(t)}i.DOMRect.fromRect=function t(e){e=e||{};var n=new i.DOMRect;return n.x=r(e.x),n.y=r(e.y),n.width=r(e.width),n.height=r(e.height),n}}(self);

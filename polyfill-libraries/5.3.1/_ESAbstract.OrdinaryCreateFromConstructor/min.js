@@ -1,0 +1,1 @@
+function OrdinaryCreateFromConstructor(r,e){var t,o=arguments[2]||{},r=GetPrototypeFromConstructor(r,e),n=Object.create(r);for(t in o)Object.prototype.hasOwnProperty.call(o,t)&&Object.defineProperty(n,t,{configurable:!0,enumerable:!1,writable:!0,value:o[t]});return n}

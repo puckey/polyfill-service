@@ -1,0 +1,1 @@
+function ToPropertyKey(r){r=ToPrimitive(r,String);return"symbol"===Type(r)?r:ToString(r)}

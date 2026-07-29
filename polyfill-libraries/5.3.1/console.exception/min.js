@@ -1,0 +1,1 @@
+console.exception=function o(){"error"in console&&Function.prototype.apply.call(console.error,console,arguments)};

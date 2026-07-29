@@ -1,0 +1,1 @@
+CreateMethodProperty(Math,"imul",function t(r,e){var r=ToUint32(r),e=ToUint32(e),n=65535,o=n&r,i=n&e;return o*i+((r>>>16&n)*i+o*(e>>>16&n)<<16>>>0)|0});

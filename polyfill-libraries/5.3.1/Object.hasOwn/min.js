@@ -1,0 +1,1 @@
+CreateMethodProperty(Object,"hasOwn",function e(r,t){r=ToObject(r),t=ToPropertyKey(t);return HasOwnProperty(r,t)});

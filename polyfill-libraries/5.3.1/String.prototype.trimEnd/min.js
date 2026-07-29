@@ -1,0 +1,1 @@
+CreateMethodProperty(String.prototype,"trimEnd",function t(){return TrimString(this,"end")});

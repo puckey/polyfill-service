@@ -1,0 +1,1 @@
+!function(){var n={}.toString,i="".split;CreateMethodProperty(Object,"entries",function e(t){var r=ToObject(t),r=("string"===Type(r)||r instanceof String)&&"[object String]"==n.call(t)?i.call(t,""):Object(t);return EnumerableOwnProperties(r,"key+value")})}();

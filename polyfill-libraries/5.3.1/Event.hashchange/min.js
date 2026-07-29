@@ -1,0 +1,1 @@
+!function(h){var a=h.location.hash;h.onhashchange=function(){},function n(){a!==h.location.hash&&(a=h.location.hash,h.dispatchEvent(new Event("hashchange"))),setTimeout(n,500)}()}(self);

@@ -1,0 +1,1 @@
+CreateMethodProperty(Object,"groupBy",function r(e,t){for(var o=GroupBy(e,t,"property"),a=Object.create(null),n=0;n<o.length;n++){var p=o[n],y=p["[[Elements]]"];CreateDataPropertyOrThrow(a,p["[[Key]]"],y)}return a});

@@ -1,0 +1,1 @@
+function IterableToList(t){for(var e,r=1<arguments.length?GetIterator(t,arguments[1]):GetIterator(t),a=[];e!==IteratorStepValue.DONE;)(e=IteratorStepValue(r))!==IteratorStepValue.DONE&&a.push(e);return a}

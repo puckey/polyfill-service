@@ -1,0 +1,1 @@
+CreateMethodProperty(String.prototype,"padStart",function t(e){var r=1<arguments.length?arguments[1]:void 0,o=RequireObjectCoercible(this),o=ToString(o),e=ToLength(e);return e<=o.length?o:(r=void 0===r?" ":ToString(r),StringPad(o,e,r,"START"))});

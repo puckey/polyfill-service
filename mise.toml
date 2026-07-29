@@ -1,0 +1,4 @@
+# The test suite is verified on node 24 LTS (26 broke the previous runner).
+[tools]
+node = "24"
+pnpm = "11"

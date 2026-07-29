@@ -1,0 +1,1 @@
+function StringPad(r,n,t,u){var e=r.length;if(n<=e)return r;if(""===t)return r;for(var f=n-e,i="",a=0;a<f;a++)i+=t;return i=i.substr(0,f),"START"===u?i+r:r+i}

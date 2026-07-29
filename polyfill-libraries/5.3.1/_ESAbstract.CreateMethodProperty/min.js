@@ -1,0 +1,1 @@
+function CreateMethodProperty(e,r,t){Object.defineProperty(e,r,{value:t,writable:!0,enumerable:!1,configurable:!0})}

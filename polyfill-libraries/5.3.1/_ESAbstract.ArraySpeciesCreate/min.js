@@ -1,0 +1,1 @@
+function ArraySpeciesCreate(r,e){if(0===e&&1/e==-1/0&&(e=0),!1===IsArray(r))return ArrayCreate(e);r=Get(r,"constructor");if(void 0===(r="object"===Type(r)&&null===(r="Symbol"in self&&"species"in self.Symbol?Get(r,self.Symbol.species):void 0)?void 0:r))return ArrayCreate(e);if(IsConstructor(r))return Construct(r,[e]);throw new TypeError("C must be a constructor")}

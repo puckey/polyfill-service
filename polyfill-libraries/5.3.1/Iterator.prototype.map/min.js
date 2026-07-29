@@ -1,0 +1,1 @@
+CreateMethodProperty(Iterator.prototype,"map",function t(r){return IteratorHelpers.iteratorPrototype.map(this,r)});

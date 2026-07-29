@@ -1,0 +1,1 @@
+function TypedArrayCreate(e,r){e="object"==typeof e?new e(r[0]):Construct(e,r);if(1===r.length&&"number"==typeof r[0]&&e.length<r[0])throw TypeError();return e}

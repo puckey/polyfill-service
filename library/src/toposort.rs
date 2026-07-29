@@ -1,7 +1,7 @@
 use std::{collections::{HashMap, HashSet}, convert::TryInto};
 
 pub fn toposort(
-    nodes: &Vec<String>,
+    nodes: &[String],
     edges: &Vec<(String, String)>,
 ) -> Result<Vec<String>, String> {
     let mut cursor = nodes.len();
@@ -101,9 +101,9 @@ fn make_outgoing_edges(arr: &Vec<(String, String)>) -> HashMap<String, Vec<Strin
     for edge in arr {
         edges
             .entry(edge.0.clone())
-            .or_insert_with(Vec::new)
+            .or_default()
             .push(edge.1.clone());
-        edges.entry(edge.1.clone()).or_insert_with(Vec::new);
+        edges.entry(edge.1.clone()).or_default();
     }
     edges
 }

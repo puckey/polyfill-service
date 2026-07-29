@@ -1,0 +1,1 @@
+CreateMethodProperty(Set.prototype,"isSubsetOf",function t(e){var r=this,o=(Set.prototype.has.call(r),GetSetRecord(e));if(r.size>o["[[Size]]"])return!1;var i=r.size,a=0,c={};try{r.forEach(function(t){if(a<i){if(a+=1,!1===ToBoolean(Call(o["[[Has]]"],o["[[SetObject]]"],[t])))throw c;i=r.size}})}catch(t){if(t===c)return!1;throw t}return!0});

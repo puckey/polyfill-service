@@ -1,0 +1,1 @@
+function NormalCompletion(n){return{"[[Type]]":"normal","[[Value]]":n}}

@@ -1,0 +1,17 @@
+services:
+  polyfill:
+    build:
+      context: .
+      args:
+        # Library versions packed into the store; must include the version
+        # named in polyfill.toml. "all" packs every vendored version.
+        POLYFILL_VERSIONS: "5.3.1"
+    ports:
+      - "8080:8080"
+    volumes:
+      # The bundle definition. Edit polyfill.toml and restart to change
+      # which polyfills are served.
+      - ./polyfill.toml:/data/polyfill.toml:ro
+    environment:
+      RUST_LOG: info
+    restart: unless-stopped

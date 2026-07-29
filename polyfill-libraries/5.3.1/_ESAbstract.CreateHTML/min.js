@@ -1,0 +1,1 @@
+function CreateHTML(e,r,t,i){var e=RequireObjectCoercible(e),e=ToString(e),n="<"+r;return(n=""!==t?n+" "+t+'="'+ToString(i).replace(/"/g,"&quot;")+'"':n)+">"+e+"</"+r+">"}

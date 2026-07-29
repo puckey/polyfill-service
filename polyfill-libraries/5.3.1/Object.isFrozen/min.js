@@ -1,0 +1,1 @@
+!function(n){CreateMethodProperty(Object,"isFrozen",function e(t){return"object"!==Type(t)||!!n&&n(t)})}(Object.isFrozen);
