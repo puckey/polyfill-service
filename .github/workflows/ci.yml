@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned toolchain
+        run: rustup toolchain install && rustup component add rustfmt clippy
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo fmt --check
+      - run: cargo clippy --workspace --all-targets -- -D warnings
+      - run: cargo test --workspace
+
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned toolchain
+        run: rustup toolchain install
+      - uses: Swatinem/rust-cache@v2
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Build service and store
+        run: |
+          cargo build --bins
+          ./target/debug/build-db
+      - name: Start server
+        run: |
+          PORT=7676 ./target/debug/polyfill-service &
+          for i in $(seq 1 30); do
+            curl -sf -o /dev/null -A ci-healthcheck http://127.0.0.1:7676/polyfill.min.js && break
+            sleep 1
+          done
+      - name: Run integration tests
+        working-directory: test
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm typecheck
+          pnpm test
