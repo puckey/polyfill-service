@@ -114,7 +114,9 @@ const ours = execFileSync(path.join(repo, "target/release/examples/parse_ua"), [
 
 if (!existsSync(path.join(cache, "node_modules", NORMALISER))) {
 	console.log("installing recovered upstream normaliser from npm…");
-	execSync(`npm install --prefix ${JSON.stringify(cache)} --no-save ${NORMALISER}@1.10.2`, {
+	const manifest = path.join(cache, "package.json");
+	if (!existsSync(manifest)) writeFileSync(manifest, "{}\n");
+	execSync(`pnpm --dir ${JSON.stringify(cache)} add ${NORMALISER}@1.10.2`, {
 		stdio: "inherit",
 	});
 }
