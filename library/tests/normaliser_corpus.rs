@@ -34,9 +34,8 @@ struct Case {
 
 #[test]
 fn ft_normaliser_corpus() {
-    let fixture: Fixture =
-        serde_json::from_str(include_str!("fixtures/ft_normaliser_corpus.json"))
-            .expect("invalid corpus fixture");
+    let fixture: Fixture = serde_json::from_str(include_str!("fixtures/ft_normaliser_corpus.json"))
+        .expect("invalid corpus fixture");
     assert!(fixture.cases.len() > 1000);
 
     let mut failures = Vec::new();

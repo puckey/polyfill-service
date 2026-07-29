@@ -1,5 +1,5 @@
-
-#[must_use] pub fn useragent(ua: &str) -> [String; 4] {
+#[must_use]
+pub fn useragent(ua: &str) -> [String; 4] {
     let family = "Other".to_owned();
     let major = "0".to_owned();
     let minor = "0".to_owned();

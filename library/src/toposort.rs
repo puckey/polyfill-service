@@ -1,9 +1,9 @@
-use std::{collections::{HashMap, HashSet}, convert::TryInto};
+use std::{
+    collections::{HashMap, HashSet},
+    convert::TryInto,
+};
 
-pub fn toposort(
-    nodes: &[String],
-    edges: &Vec<(String, String)>,
-) -> Result<Vec<String>, String> {
+pub fn toposort(nodes: &[String], edges: &Vec<(String, String)>) -> Result<Vec<String>, String> {
     let mut cursor = nodes.len();
     let mut sorted: Vec<String> = vec![String::new(); cursor];
     let mut visited: HashSet<u32> = HashSet::new();
@@ -78,7 +78,9 @@ fn visit(
             let child = outgoing.get(i).unwrap();
             visit(
                 child.to_string(),
-                (*nodes_hash.get(child).unwrap()).try_into().expect("Unexpected u32 overflow in i"),
+                (*nodes_hash.get(child).unwrap())
+                    .try_into()
+                    .expect("Unexpected u32 overflow in i"),
                 predecessors,
                 visited,
                 outgoing_edges,

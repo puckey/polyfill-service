@@ -34,7 +34,8 @@ async fn main() {
         )
         .init();
 
-    let config_path = std::env::var("POLYFILL_CONFIG").unwrap_or_else(|_| "polyfill.toml".to_owned());
+    let config_path =
+        std::env::var("POLYFILL_CONFIG").unwrap_or_else(|_| "polyfill.toml".to_owned());
     let config = Arc::new(config::load(&config_path));
 
     let db_path = std::env::var("POLYFILL_DB").unwrap_or_else(|_| "polyfills.db".to_owned());
@@ -177,9 +178,7 @@ async fn validate_features(env: &Arc<Env>, config: &config::ServiceConfig) {
     let unknown = config
         .features
         .keys()
-        .filter(|name| {
-            meta.polyfill_meta(name).is_none() && meta.config_aliases(name).is_none()
-        })
+        .filter(|name| meta.polyfill_meta(name).is_none() && meta.config_aliases(name).is_none())
         .cloned()
         .collect::<Vec<_>>();
     assert!(

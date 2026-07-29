@@ -1,12 +1,12 @@
+use crate::UnknownUaTelemetry;
 use crate::config::ServiceConfig;
 use crate::routes::resp;
-use crate::UnknownUaTelemetry;
 use axum::http::StatusCode;
 use axum::response::Response;
 use polyfill_library::ua::{UA, UserAgent};
 use polyfill_library::{
-    buffer::Buffer, get_polyfill_string::get_polyfill_string_stream,
-    polyfill_parameters::PolyfillParameters, Env,
+    Env, buffer::Buffer, get_polyfill_string::get_polyfill_string_stream,
+    polyfill_parameters::PolyfillParameters,
 };
 use std::sync::Arc;
 use std::sync::atomic::Ordering;
@@ -31,9 +31,7 @@ pub(crate) async fn polyfill(
         telemetry.metric.inc();
         let seen = telemetry.sample_counter.fetch_add(1, Ordering::Relaxed);
         if seen.is_multiple_of(UNKNOWN_UA_LOG_SAMPLE) {
-            tracing::info!(
-                "unknown user agent (1/{UNKNOWN_UA_LOG_SAMPLE} sample): {ua_string:?}"
-            );
+            tracing::info!("unknown user agent (1/{UNKNOWN_UA_LOG_SAMPLE} sample): {ua_string:?}");
         }
     }
 
@@ -56,7 +54,10 @@ pub(crate) async fn polyfill(
                 ("Access-Control-Allow-Origin", "*"),
                 ("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS"),
                 ("Content-Type", "text/javascript; charset=UTF-8"),
-                ("Cache-Control", "public, s-maxage=31536000, max-age=604800, stale-while-revalidate=604800, stale-if-error=604800, immutable"),
+                (
+                    "Cache-Control",
+                    "public, s-maxage=31536000, max-age=604800, stale-while-revalidate=604800, stale-if-error=604800, immutable",
+                ),
                 // We need "Vary: User-Agent" in the browser cache because a browser
                 // may update itself to a version which needs different polyfills
                 // So we need to have it ignore the browser cached bundle when the user-agent changes.

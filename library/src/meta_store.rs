@@ -123,6 +123,9 @@ fn load_version_meta(env: &Env, version: &str) -> Result<VersionMeta, String> {
         ));
     }
 
-    tracing::info!("loaded metadata for version {version} ({} features)", metas.len());
+    tracing::info!(
+        "loaded metadata for version {version} ({} features)",
+        metas.len()
+    );
     Ok(VersionMeta { metas, aliases })
 }

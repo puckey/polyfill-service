@@ -9,17 +9,15 @@
 //!   D: chrome <50, no dependencies, no detect
 //!   E: chrome * (every chrome)
 
+use polyfill_library::Env;
 use polyfill_library::buffer::Buffer;
 use polyfill_library::get_polyfill_string::get_polyfill_string_stream;
 use polyfill_library::polyfill_parameters::PolyfillParameters;
-use polyfill_library::Env;
 use std::sync::Arc;
 
 const VERSION: &str = "9.9.9";
-const OLD_CHROME: &str =
-    "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.0.0 Safari/537.36";
-const NEW_CHROME: &str =
-    "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.0.0 Safari/537.36";
+const OLD_CHROME: &str = "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.0.0 Safari/537.36";
+const NEW_CHROME: &str = "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.0.0 Safari/537.36";
 
 fn feature_row(name: &str, meta: &str) -> Vec<(String, String)> {
     vec![
@@ -36,10 +34,8 @@ fn build_fixture_store(test_name: &str) -> std::path::PathBuf {
     ));
     let _ = std::fs::remove_file(&path);
     let conn = rusqlite::Connection::open(&path).expect("failed to create fixture store");
-    conn.execute_batch(
-        "CREATE TABLE files_9_9_9 (name TEXT PRIMARY KEY, value BLOB NOT NULL);",
-    )
-    .unwrap();
+    conn.execute_batch("CREATE TABLE files_9_9_9 (name TEXT PRIMARY KEY, value BLOB NOT NULL);")
+        .unwrap();
 
     let mut rows: Vec<(String, String)> = vec![(
         "/aliases.json".to_owned(),
@@ -206,7 +202,10 @@ async fn default_alias_expands() {
     let (env, _store) = test_env("default");
     let out = bundle(&env, &params("default", OLD_CHROME)).await;
 
-    assert!(out.contains("RAW_A") && out.contains("RAW_B"), "default alias incomplete");
+    assert!(
+        out.contains("RAW_A") && out.contains("RAW_B"),
+        "default alias incomplete"
+    );
 }
 
 #[tokio::test]

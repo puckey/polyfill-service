@@ -1,9 +1,9 @@
+use crate::AppState;
 use crate::pages::home;
 use crate::polyfill::polyfill;
-use crate::AppState;
 use axum::body::Body;
 use axum::extract::State;
-use axum::http::{header, Method, StatusCode};
+use axum::http::{Method, StatusCode, header};
 use axum::response::Response;
 
 pub(crate) fn resp<B: Into<Body>>(
@@ -18,14 +18,20 @@ pub(crate) fn resp<B: Into<Body>>(
     builder.body(body.into()).expect("failed to build response")
 }
 
-pub async fn handle_request(State(state): State<AppState>, req: axum::extract::Request) -> Response {
+pub async fn handle_request(
+    State(state): State<AppState>,
+    req: axum::extract::Request,
+) -> Response {
     match *req.method() {
         Method::OPTIONS => {
             return resp(
                 StatusCode::OK,
                 &[
                     ("allow", "OPTIONS, GET, HEAD"),
-                    ("Cache-Control", "public, s-maxage=31536000, max-age=604800, stale-while-revalidate=604800, stale-if-error=604800, immutable"),
+                    (
+                        "Cache-Control",
+                        "public, s-maxage=31536000, max-age=604800, stale-while-revalidate=604800, stale-if-error=604800, immutable",
+                    ),
                 ],
                 "",
             );
@@ -60,15 +66,32 @@ pub async fn handle_request(State(state): State<AppState>, req: axum::extract::R
         "/robots.txt" => resp(StatusCode::OK, &[], "User-agent: *\nDisallow:"),
         "/polyfill.js" | "/v3/polyfill.js" => {
             let user_agent = user_agent(&req);
-            polyfill(user_agent.as_deref(), false, state.env, &state.config, &state.unknown_ua).await
+            polyfill(
+                user_agent.as_deref(),
+                false,
+                state.env,
+                &state.config,
+                &state.unknown_ua,
+            )
+            .await
         }
         "/polyfill.min.js" | "/v3/polyfill.min.js" => {
             let user_agent = user_agent(&req);
-            polyfill(user_agent.as_deref(), true, state.env, &state.config, &state.unknown_ua).await
+            polyfill(
+                user_agent.as_deref(),
+                true,
+                state.env,
+                &state.config,
+                &state.unknown_ua,
+            )
+            .await
         }
         _ => resp(
             StatusCode::NOT_FOUND,
-            &[("Cache-Control", "public, s-maxage=31536000, max-age=604800, stale-while-revalidate=604800, stale-if-error=604800, immutable")],
+            &[(
+                "Cache-Control",
+                "public, s-maxage=31536000, max-age=604800, stale-while-revalidate=604800, stale-if-error=604800, immutable",
+            )],
             format!("{path}: Not Found"),
         ),
     }

@@ -1,7 +1,7 @@
 use indexmap::{IndexMap, IndexSet};
 
-
-#[must_use] pub fn features_from_query_parameter(
+#[must_use]
+pub fn features_from_query_parameter(
     features_parameter: &str,
     flags_parameter: &str,
 ) -> IndexMap<String, IndexSet<String>> {

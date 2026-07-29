@@ -1,4 +1,4 @@
-use maud::{html, DOCTYPE};
+use maud::{DOCTYPE, html};
 
 pub(crate) fn home(version: &str, features: &[String]) -> String {
     html! {

@@ -7,7 +7,7 @@
 //!
 //! and review the fixture diff — every changed row must be explainable.
 
-use polyfill_library::ua::{UserAgent, UA};
+use polyfill_library::ua::{UA, UserAgent};
 
 /// Representative real-world UA strings: top families straddling the
 /// baselines, wrapper browsers the parser strips, bots, and garbage.

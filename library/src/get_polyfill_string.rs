@@ -1,10 +1,10 @@
 use crate::meta_store::{self, VersionMeta};
+use crate::{BoxError, Env};
 use crate::{
     buffer::Buffer,
     old_ua::{self, OldUA},
-    ua::{UserAgent, UA},
+    ua::{UA, UserAgent},
 };
-use crate::{BoxError, Env};
 use indexmap::IndexSet;
 use std::sync::Arc;
 

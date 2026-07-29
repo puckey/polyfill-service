@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use semver::{Version, VersionReq};
 use serde::Deserialize;
 
-use crate::{parse::parse, ua::UserAgent, BoxError};
+use crate::{BoxError, parse::parse, ua::UserAgent};
 
 #[allow(dead_code)]
 #[derive(Deserialize)]
@@ -41,7 +41,9 @@ impl UserAgent for OldUA {
             minor = normalized.get(3).map_or("0", Into::<&str>::into).to_owned();
         } else {
             // Chrome and Opera on iOS uses a UIWebView of the underlying platform to render content. By stripping the CriOS or OPiOS strings, the useragent parser will alias the user agent to ios_saf for the UIWebView, which is closer to the actual renderer
-            let ua_string = crate::regex_cache::cached_regex(r"(?i)((CriOS|OPiOS)\/(\d+)\.(\d+)\.(\d+)\.(\d+)|(FxiOS\/(\d+)\.(\d+)))")
+            let ua_string = crate::regex_cache::cached_regex(
+                r"(?i)((CriOS|OPiOS)\/(\d+)\.(\d+)\.(\d+)\.(\d+)|(FxiOS\/(\d+)\.(\d+)))",
+            )
             .replace(ua_string, "");
 
             // Vivaldi browser is recognised by UA module but is actually identical to Chrome, so the best way to get accurate targeting is to remove the vivaldi token from the UA
@@ -49,8 +51,9 @@ impl UserAgent for OldUA {
                 .replace(&ua_string, "");
 
             // Facebook in-app browser `[FBAN/.....]` or `[FB_IAB/.....]` (see https://github.com/Financial-Times/polyfill-servicessues/990)
-            let ua_string = crate::regex_cache::cached_regex(r"(?i) \[(FB_IAB|FBAN|FBIOS|FB4A)\/[^\]]+\]")
-                .replace(&ua_string, "");
+            let ua_string =
+                crate::regex_cache::cached_regex(r"(?i) \[(FB_IAB|FBAN|FBIOS|FB4A)\/[^\]]+\]")
+                    .replace(&ua_string, "");
 
             // Electron/X.Y.Z` (see https://github.com/Financial-Times/polyfill-servicessues/1129)
             let ua_string = crate::regex_cache::cached_regex(r"(?i) Electron\/[\d.]+\d+")
