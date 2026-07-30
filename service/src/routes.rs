@@ -66,22 +66,28 @@ pub async fn handle_request(
         "/robots.txt" => resp(StatusCode::OK, &[], "User-agent: *\nDisallow:"),
         "/polyfill.js" | "/v3/polyfill.js" => {
             let user_agent = user_agent(&req);
+            let accept_encoding = accept_encoding(&req);
             polyfill(
                 user_agent.as_deref(),
+                accept_encoding.as_deref(),
                 false,
                 state.env,
                 &state.config,
+                &state.cache,
                 &state.unknown_ua,
             )
             .await
         }
         "/polyfill.min.js" | "/v3/polyfill.min.js" => {
             let user_agent = user_agent(&req);
+            let accept_encoding = accept_encoding(&req);
             polyfill(
                 user_agent.as_deref(),
+                accept_encoding.as_deref(),
                 true,
                 state.env,
                 &state.config,
+                &state.cache,
                 &state.unknown_ua,
             )
             .await
@@ -100,6 +106,13 @@ pub async fn handle_request(
 fn user_agent(req: &axum::extract::Request) -> Option<String> {
     req.headers()
         .get(header::USER_AGENT)
+        .and_then(|value| value.to_str().ok())
+        .map(std::borrow::ToOwned::to_owned)
+}
+
+fn accept_encoding(req: &axum::extract::Request) -> Option<String> {
+    req.headers()
+        .get(header::ACCEPT_ENCODING)
         .and_then(|value| value.to_str().ok())
         .map(std::borrow::ToOwned::to_owned)
 }

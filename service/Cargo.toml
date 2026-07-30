@@ -15,6 +15,8 @@ path = "src/bin/build_db.rs"
 
 [dependencies]
 axum = "0.8"
+brotli = "7"
+flate2 = "1"
 indexmap = "2"
 maud = "0.27"
 polyfill-library = { path = "../library" }
@@ -28,3 +30,4 @@ toml = "1"
 tower-http = { version = "0.7", features = ["compression-gzip", "compression-br", "compression-zstd"] }
 tracing = { workspace = true }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+zstd = "0.13"

@@ -1,5 +1,6 @@
 #![warn(clippy::all, clippy::pedantic, clippy::cargo)]
 #![allow(clippy::missing_docs_in_private_items)]
+mod bundle_cache;
 mod config;
 mod pages;
 mod polyfill;
@@ -16,6 +17,7 @@ pub struct AppState {
     pub env: Arc<Env>,
     pub registry: prometheus::Registry,
     pub config: Arc<config::ServiceConfig>,
+    pub cache: Arc<bundle_cache::BundleCache>,
     pub unknown_ua: Arc<UnknownUaTelemetry>,
 }
 
@@ -80,7 +82,6 @@ async fn main() {
         "Bundle requests from user agents the parser could not classify",
     )
     .unwrap();
-
     registry
         .register(Box::new(store_query_metric.clone()))
         .unwrap();
@@ -108,6 +109,8 @@ async fn main() {
 
     validate_features(&env, &config).await;
 
+    let cache = build_bundle_cache(&registry, &env, &config).await;
+
     tracing::info!(
         "serving polyfill-library {} with features: {}",
         config.version,
@@ -118,6 +121,7 @@ async fn main() {
         env,
         registry,
         config,
+        cache,
         unknown_ua: Arc::new(UnknownUaTelemetry {
             metric: unknown_ua_metric,
             sample_counter: std::sync::atomic::AtomicU64::new(0),
@@ -135,6 +139,37 @@ async fn main() {
         .unwrap_or_else(|err| panic!("failed to bind port {port}: {err}"));
     tracing::info!("listening on http://0.0.0.0:{port}");
     axum::serve(listener, app).await.expect("server failed");
+}
+
+/// Bundles are pure functions of the (immutable) config and the UA bucket,
+/// so they are cached in memory and served pre-compressed. Warms the shared
+/// unknown-UA entry — the largest bundle, and the one bots hammer — so it
+/// is never built on a request.
+async fn build_bundle_cache(
+    registry: &prometheus::Registry,
+    env: &Arc<Env>,
+    config: &config::ServiceConfig,
+) -> Arc<bundle_cache::BundleCache> {
+    let hits = prometheus::IntCounter::new(
+        "polyfill_bundle_cache_hits_total",
+        "Bundle requests served from the in-memory cache",
+    )
+    .unwrap();
+    let misses = prometheus::IntCounter::new(
+        "polyfill_bundle_cache_misses_total",
+        "Bundle requests that had to build (and cache) their bundle",
+    )
+    .unwrap();
+    registry.register(Box::new(hits.clone())).unwrap();
+    registry.register(Box::new(misses.clone())).unwrap();
+
+    let cache = Arc::new(bundle_cache::BundleCache::new(
+        bundle_cache::CACHE_MAX_BYTES,
+        hits,
+        misses,
+    ));
+    polyfill::warm_unknown_bundle(Arc::clone(env), config, &cache).await;
+    cache
 }
 
 fn ensure_version_in_store(

@@ -10,8 +10,8 @@ struct RawConfig {
     /// Polyfills and aliases to serve, e.g. `fetch`, `es2015`,
     /// `IntersectionObserver`. Every entry is gated — wrapped in a runtime
     /// feature detect — by default, so a polyfill can never clobber a
-    /// feature the browser already has (some, like Symbol.matchAll on iOS
-    /// 18 WKWebView, are readonly and crash on assignment). Flags after a
+    /// feature the browser already has (some, like `Symbol.matchAll` on
+    /// iOS 18 `WKWebView`, are readonly and crash on assignment). Flags after a
     /// pipe adjust that: `Array.from|always` (include for every UA),
     /// `fetch|ungated` (drop the runtime detect).
     features: Vec<String>,

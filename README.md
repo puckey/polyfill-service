@@ -9,7 +9,7 @@ What changed relative to upstream:
 - The Cloudflare Workers HTTP layer was replaced with [axum](https://github.com/tokio-rs/axum); the D1 database with a local SQLite file built by the included `build-db` binary.
 - Bundle configuration moved from URL parameters to `polyfill.toml` (version, features, unknown-UA policy, excludes). The server validates the config against the library metadata at startup, so a typo'd feature name fails the deploy instead of silently serving nothing.
 - Polyfill library [5.3.1](https://github.com/mrhenry/polyfill-library) is vendored (upstream stops at 4.8.0), adding the es2025 features from [cdnjs/polyfill-service#15](https://github.com/cdnjs/polyfill-service/issues/15): `Promise.try`, the `Set` methods, and the Iterator helpers.
-- Hot paths were fixed (cached regexes, metadata parsed once at startup): a bundle response costs ~1–4 ms of CPU. Responses are compressed (gzip/brotli/zstd). Prometheus metrics at `/metrics`.
+- Hot paths were fixed (cached regexes, metadata parsed once at startup), and bundles are memoized in memory — pre-compressed (gzip/brotli/zstd), keyed on the normalized UA bucket, with the unknown-UA bundle (the largest, and the one bots hit) prebuilt at startup. A cache hit costs a memcpy; a miss ~1–4 ms of CPU. Prometheus metrics at `/metrics`.
 - The polyfill bundling logic itself (UA detection, feature resolution, dependency sorting) is unchanged upstream code.
 
 ## Configure
@@ -571,10 +571,22 @@ cargo build --release
 | `PORT` | `8080` | HTTP listen port |
 | `RUST_LOG` | `info` | Log filter (tracing-subscriber syntax) |
 
-The service compresses responses but does no TLS or caching — run it behind
-your regular reverse proxy / CDN. Responses carry long-lived `Cache-Control`
-headers and `Vary: User-Agent`, so any standard HTTP cache in front of it
-will do the heavy lifting.
+The service serves bundles from an in-memory cache: entries are keyed on
+the UA parser's own normalization (family + version — a few hundred live
+buckets; every unclassifiable UA shares one entry, prebuilt at startup),
+pre-compressed once (gzip/brotli/zstd) and evicted LRU under a 64 MB byte
+cap. Since a bundle is a pure function of the immutable config and the UA
+bucket, entries never go stale — a config change is a restart. Cache
+behavior is visible at `/metrics` as `polyfill_bundle_cache_hits_total` /
+`_misses_total`.
+
+Don't rely on a fronting HTTP cache instead: responses vary on
+`User-Agent`, which shared caches handle badly — reverse proxies commonly
+strip or ignore the UA to avoid cache fragmentation, and CDNs have
+historically ignored `Vary: User-Agent` outright, which turns "cache in
+front" into either no caching or one UA's bundle served to everyone. Run
+the service behind your proxy for TLS and routing; treat any edge caching
+as optional offload, not correctness.
 
 ## Tests
 
