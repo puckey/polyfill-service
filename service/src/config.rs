@@ -8,9 +8,12 @@ struct RawConfig {
     /// Polyfill library version to serve (must be in the store).
     version: String,
     /// Polyfills and aliases to serve, e.g. `fetch`, `es2015`,
-    /// `IntersectionObserver`. An entry may carry flags after a pipe:
-    /// `Array.from|always` (always include), `fetch|gated` (wrap in a
-    /// runtime feature detect even for browsers that match).
+    /// `IntersectionObserver`. Every entry is gated — wrapped in a runtime
+    /// feature detect — by default, so a polyfill can never clobber a
+    /// feature the browser already has (some, like Symbol.matchAll on iOS
+    /// 18 WKWebView, are readonly and crash on assignment). Flags after a
+    /// pipe adjust that: `Array.from|always` (include for every UA),
+    /// `fetch|ungated` (drop the runtime detect).
     features: Vec<String>,
     /// What unrecognized user agents (bots, exotic browsers) receive:
     /// "polyfill" = every configured feature behind runtime detects,
@@ -51,7 +54,30 @@ pub fn load(path: &str) -> ServiceConfig {
         raw.unknown
     );
 
-    let features = features_from_query_parameter(&raw.features.join(","), "");
+    let mut features = features_from_query_parameter(&raw.features.join(","), "");
+
+    // Gating is the default: `|ungated` opts a single entry out, and the
+    // (now redundant) `|gated` stays accepted. Unknown flags are config
+    // typos — reject them here so they fail the deploy, matching how
+    // unknown feature names are handled.
+    for (name, flags) in &mut features {
+        // features_from_query_parameter splits its (empty) global-flags
+        // parameter into [""] and folds that into every set.
+        flags.swap_remove("");
+        for flag in flags.iter() {
+            assert!(
+                flag == "always" || flag == "gated" || flag == "ungated",
+                "config {path}: feature {name:?} has unknown flag {flag:?} (known: always, gated, ungated)"
+            );
+        }
+        assert!(
+            !(flags.contains("gated") && flags.contains("ungated")),
+            "config {path}: feature {name:?} is both gated and ungated"
+        );
+        if !flags.swap_remove("ungated") {
+            flags.insert("gated".to_owned());
+        }
+    }
 
     ServiceConfig {
         version: raw.version,
@@ -83,6 +109,8 @@ mod tests {
         assert_eq!(config.unknown, "polyfill");
         assert!(config.excludes.is_empty());
         assert!(config.features.contains_key("fetch"));
+        // Gating is the default.
+        assert!(config.features["fetch"].contains("gated"));
     }
 
     #[test]
@@ -95,6 +123,43 @@ mod tests {
         let _ = std::fs::remove_file(&path);
 
         assert!(config.features["Array.from"].contains("always"));
+        // `always` composes with the gated default.
+        assert!(config.features["Array.from"].contains("gated"));
+    }
+
+    #[test]
+    fn ungated_opts_out_of_the_gated_default() {
+        let path = write_config(
+            "ungated",
+            "version = \"5.3.1\"\nfeatures = [\"fetch|ungated\", \"Blob\"]\n",
+        );
+        let config = super::load(&path);
+        let _ = std::fs::remove_file(&path);
+
+        assert!(!config.features["fetch"].contains("gated"));
+        // The pseudo-flag is consumed here, not passed to the library.
+        assert!(!config.features["fetch"].contains("ungated"));
+        assert!(config.features["Blob"].contains("gated"));
+    }
+
+    #[test]
+    #[should_panic(expected = "unknown flag")]
+    fn unknown_flags_are_rejected() {
+        let path = write_config(
+            "flag-typo",
+            "version = \"5.3.1\"\nfeatures = [\"fetch|gatd\"]\n",
+        );
+        super::load(&path);
+    }
+
+    #[test]
+    #[should_panic(expected = "both gated and ungated")]
+    fn contradictory_flags_are_rejected() {
+        let path = write_config(
+            "flag-clash",
+            "version = \"5.3.1\"\nfeatures = [\"fetch|gated|ungated\"]\n",
+        );
+        super::load(&path);
     }
 
     #[test]

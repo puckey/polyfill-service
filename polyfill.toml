@@ -9,9 +9,11 @@
 # (see build-db / the POLYFILL_VERSIONS Docker build arg).
 version = "5.3.1"
 
-# Polyfills and aliases to serve. An entry may carry flags after a pipe:
-#   "Array.from|always"  always include, even for browsers that have it
-#   "fetch|gated"        wrap in a runtime feature-detect regardless of UA
+# Polyfills and aliases to serve (see the README's feature catalogue for
+# the full vocabulary). Every entry is gated — wrapped in a runtime
+# feature-detect — by default. Flags after a pipe adjust that:
+#   "Array.from|always"  include for every UA, not just the targeted ones
+#   "fetch|ungated"      drop the runtime feature-detect
 features = [
     "default",  # the library's curated baseline set
     "fetch",
