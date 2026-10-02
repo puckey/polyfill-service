@@ -1,1 +1,1 @@
-CreateMethodProperty(Array.prototype,"at",function t(r){var e=ToObject(this),n=LengthOfArrayLike(e),r=ToIntegerOrInfinity(r),r=0<=r?r:n+r;if(!(r<0||n<=r))return Get(e,ToString(r))});
+CreateMethodProperty(Array.prototype,"at",function(t){"use strict";var e=ToObject(this),r=LengthOfArrayLike(e),n=ToIntegerOrInfinity(t),i=n>=0?n:r+n;return i<0||i>=r?undefined:Get(e,ToString(i))});
