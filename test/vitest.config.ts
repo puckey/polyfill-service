@@ -9,5 +9,8 @@ export default defineConfig({
 		globals: true,
 		environment: "node",
 		testTimeout: 60_000,
+		// The goldens' beforeAll fetches two bundles; the largest take longer
+		// than vitest's 10s default to build on an unoptimized (CI) binary.
+		hookTimeout: 60_000,
 	},
 });

@@ -237,8 +237,8 @@
 			"fetch",
 			"requestAnimationFrame"
 		],
-		"minBytes": 488040,
-		"minSha256": "5f0027f42468c36378d0fe2de0d9bbae93b1c05645bc9c1687e5f662999b2a3e"
+		"minBytes": 494278,
+		"minSha256": "04412bb2ac4fb945acd5657defd63a2f2dceef113a3eb5dc1a46253d4cf384ad"
 	},
 	{
 		"name": "chrome-42",
@@ -334,8 +334,8 @@
 			"fetch",
 			"requestAnimationFrame"
 		],
-		"minBytes": 328483,
-		"minSha256": "d89b76b52814322aa91ae02d92f8ddaea31fbe255149ac23547fe4b5b60210da"
+		"minBytes": 334001,
+		"minSha256": "c7da2db11f385317034e35d06be8fc1634528843ff2762e89b888b990c116414"
 	},
 	{
 		"name": "chrome-109",
@@ -375,8 +375,8 @@
 			"String.prototype.trim",
 			"fetch"
 		],
-		"minBytes": 287922,
-		"minSha256": "7e1938e0aab13b136a5b42764e36b2f285bd775f74838894ba09d84904962476"
+		"minBytes": 289136,
+		"minSha256": "56bc279066a9e09eaefc564e688bc34aecf3118df1596f117cf375f9bc864360"
 	},
 	{
 		"name": "firefox-28",
@@ -566,8 +566,8 @@
 			"Element.prototype.replaceWith",
 			"fetch"
 		],
-		"minBytes": 311976,
-		"minSha256": "fe095a7cfd1ea10078eac57980457cc3e00de8749e9d6b99867fb382135a623b",
+		"minBytes": 315463,
+		"minSha256": "018c1c85f9c22300082f25b4f1cc4359cca22e44cc82d9599a2a08a922ad01d4",
 		"note": "parse-only: bundle redefines well-known Symbols that are non-configurable in modern V8 (fine in the real target browser)",
 		"parseOnly": true
 	},
@@ -789,8 +789,8 @@
 			"Element.prototype.replaceWith",
 			"fetch"
 		],
-		"minBytes": 455813,
-		"minSha256": "5a3d3be6e5899d1dd0e4e1b4831ef847e64b3d879ae7797b7dcdabaf31f2f4d1",
+		"minBytes": 460051,
+		"minSha256": "e32f9aa57ad27b51bb93df7a76b7dc46973efa8c0d3f995ae1a42e3a43e09cd4",
 		"note": "parse-only: bundle redefines well-known Symbols that are non-configurable in modern V8 (fine in the real target browser)",
 		"parseOnly": true
 	},
@@ -833,8 +833,8 @@
 			"String.prototype.trim",
 			"fetch"
 		],
-		"minBytes": 288492,
-		"minSha256": "6bb80f2c297712415bcfc53dac2d6559a3802469da96018507615581425948a6"
+		"minBytes": 289983,
+		"minSha256": "6ffc6dfb1e81af53df2412d993c261e713e630114c2cf86ec37a2eebf56430ee"
 	},
 	{
 		"name": "ios-safari-26",
@@ -933,8 +933,8 @@
 			"requestAnimationFrame",
 			"~html5-elements"
 		],
-		"minBytes": 60201,
-		"minSha256": "c68af1ffc8c72ea6899b5708b7970c4446f353615340a3ba8c63a96cd443c233"
+		"minBytes": 64391,
+		"minSha256": "50117e09b75afaf5b99ad57ff8ac2a54813381dd1d9af26c80b296db51a3b198"
 	},
 	{
 		"name": "ie-9",
@@ -1056,8 +1056,8 @@
 			"requestAnimationFrame",
 			"~html5-elements"
 		],
-		"minBytes": 499132,
-		"minSha256": "bd6da5c9631bf31097dadc251d61e946249b1339d1d51d9a240e6a95ecf46a11"
+		"minBytes": 506472,
+		"minSha256": "cd1739c23a100d800996dfc6a56ae4639afe88597abdf5800ac978b110197fb0"
 	},
 	{
 		"name": "ie-11",
@@ -1175,8 +1175,8 @@
 			"Element.prototype.replaceWith",
 			"fetch"
 		],
-		"minBytes": 494388,
-		"minSha256": "9878023bd4815368bd10eac006e8f55aa5ca5cab4a2be8a9a5cccc7401ab072b"
+		"minBytes": 501247,
+		"minSha256": "0b0e1e1dab8825e87085edfb551234672870a133079380ea5537335416146cc3"
 	},
 	{
 		"name": "edge-legacy-12",
@@ -1272,8 +1272,8 @@
 			"Element.prototype.replaceWith",
 			"fetch"
 		],
-		"minBytes": 345992,
-		"minSha256": "3fcf72aaa08422e1152f0e9214719c4142f2e387c0d335eded10de3962adbf01"
+		"minBytes": 351550,
+		"minSha256": "7020416a582513cfc26ef9f5c98f055f891c2d46b92b87b4aebc343296dc263f"
 	},
 	{
 		"name": "edge-120",
@@ -1374,8 +1374,8 @@
 			"fetch",
 			"requestAnimationFrame"
 		],
-		"minBytes": 323485,
-		"minSha256": "c381167204ebde411c244effe64399d64f9eb594ad6f34e60f21707a34470707"
+		"minBytes": 328441,
+		"minSha256": "b97cb740e7f1791b506070bd938d9c6fc381f87a2303f9992de763b7229ec91d"
 	},
 	{
 		"name": "samsung-26",
@@ -1629,8 +1629,8 @@
 			"fetch",
 			"requestAnimationFrame"
 		],
-		"minBytes": 488040,
-		"minSha256": "5f0027f42468c36378d0fe2de0d9bbae93b1c05645bc9c1687e5f662999b2a3e"
+		"minBytes": 494278,
+		"minSha256": "04412bb2ac4fb945acd5657defd63a2f2dceef113a3eb5dc1a46253d4cf384ad"
 	},
 	{
 		"name": "facebook-inapp-ios",
@@ -1740,8 +1740,8 @@
 			"fetch",
 			"requestAnimationFrame"
 		],
-		"minBytes": 328483,
-		"minSha256": "d89b76b52814322aa91ae02d92f8ddaea31fbe255149ac23547fe4b5b60210da"
+		"minBytes": 334001,
+		"minSha256": "c7da2db11f385317034e35d06be8fc1634528843ff2762e89b888b990c116414"
 	},
 	{
 		"name": "curl",
