@@ -1,1 +1,1 @@
-CreateMethodProperty(String.prototype,"at",function t(e){var r=RequireObjectCoercible(this),r=ToString(r),i=r.length,e=ToIntegerOrInfinity(e),e=0<=e?e:i+e;if(!(e<0||i<=e))return r.substring(e,e+1)});
+CreateMethodProperty(String.prototype,"at",function(t){"use strict";var e=RequireObjectCoercible(this),r=ToString(e),n=r.length,i=ToIntegerOrInfinity(t),o=i>=0?i:n+i;return o<0||o>=n?undefined:r.substring(o,o+1)});
