@@ -1,1 +1,1 @@
-CreateMethodProperty(String.prototype,"trim",function t(){return TrimString(this,"start+end")});
+CreateMethodProperty(String.prototype,"trim",function t(){"use strict";return TrimString(this,"start+end")});
