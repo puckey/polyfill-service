@@ -124,8 +124,8 @@
 			"requestAnimationFrame",
 			"~html5-elements"
 		],
-		"minBytes": 508028,
-		"minSha256": "3f31ed815f4e5287e050d4c5c084e0fa4c2b2be51fabc9acbf4a0eb9a4bf1681"
+		"minBytes": 508054,
+		"minSha256": "6ccbbaf240b9360461af3c1e514633210dababc647dff1829bfe05ca0340167b"
 	},
 	{
 		"name": "chrome-29",
@@ -237,8 +237,8 @@
 			"fetch",
 			"requestAnimationFrame"
 		],
-		"minBytes": 494278,
-		"minSha256": "04412bb2ac4fb945acd5657defd63a2f2dceef113a3eb5dc1a46253d4cf384ad"
+		"minBytes": 494304,
+		"minSha256": "d20a71601f95806eadc815f8b322d5d17e2dfb49c63d6c3db1d49087624ac384"
 	},
 	{
 		"name": "chrome-42",
@@ -334,8 +334,8 @@
 			"fetch",
 			"requestAnimationFrame"
 		],
-		"minBytes": 334001,
-		"minSha256": "c7da2db11f385317034e35d06be8fc1634528843ff2762e89b888b990c116414"
+		"minBytes": 334027,
+		"minSha256": "3da131ecb63fcc61e1087c0ae4bc7f4a94561411c757600ffe261cb2e7e5aae7"
 	},
 	{
 		"name": "chrome-109",
@@ -375,8 +375,8 @@
 			"String.prototype.trim",
 			"fetch"
 		],
-		"minBytes": 289136,
-		"minSha256": "56bc279066a9e09eaefc564e688bc34aecf3118df1596f117cf375f9bc864360"
+		"minBytes": 289149,
+		"minSha256": "1a482cf15be2e36d1772e6f25885ecc1bccc9f7e5efe55c5391d5154021eeaca"
 	},
 	{
 		"name": "firefox-28",
@@ -503,8 +503,8 @@
 			"requestAnimationFrame",
 			"~html5-elements"
 		],
-		"minBytes": 508028,
-		"minSha256": "3f31ed815f4e5287e050d4c5c084e0fa4c2b2be51fabc9acbf4a0eb9a4bf1681"
+		"minBytes": 508054,
+		"minSha256": "6ccbbaf240b9360461af3c1e514633210dababc647dff1829bfe05ca0340167b"
 	},
 	{
 		"name": "firefox-45",
@@ -566,8 +566,8 @@
 			"Element.prototype.replaceWith",
 			"fetch"
 		],
-		"minBytes": 315463,
-		"minSha256": "018c1c85f9c22300082f25b4f1cc4359cca22e44cc82d9599a2a08a922ad01d4",
+		"minBytes": 315476,
+		"minSha256": "10a49838e4d5d07cdbdf45eea6946194f87c8d677955167c1c8c971063f77b81",
 		"note": "parse-only: bundle redefines well-known Symbols that are non-configurable in modern V8 (fine in the real target browser)",
 		"parseOnly": true
 	},
@@ -703,8 +703,8 @@
 			"requestAnimationFrame",
 			"~html5-elements"
 		],
-		"minBytes": 508028,
-		"minSha256": "3f31ed815f4e5287e050d4c5c084e0fa4c2b2be51fabc9acbf4a0eb9a4bf1681"
+		"minBytes": 508054,
+		"minSha256": "6ccbbaf240b9360461af3c1e514633210dababc647dff1829bfe05ca0340167b"
 	},
 	{
 		"name": "safari-9",
@@ -789,8 +789,8 @@
 			"Element.prototype.replaceWith",
 			"fetch"
 		],
-		"minBytes": 460051,
-		"minSha256": "e32f9aa57ad27b51bb93df7a76b7dc46973efa8c0d3f995ae1a42e3a43e09cd4",
+		"minBytes": 460077,
+		"minSha256": "ae250b3de44b6675b74216079337736bf42f5a43a99d06040ca6de8219e74a7e",
 		"note": "parse-only: bundle redefines well-known Symbols that are non-configurable in modern V8 (fine in the real target browser)",
 		"parseOnly": true
 	},
@@ -833,8 +833,8 @@
 			"String.prototype.trim",
 			"fetch"
 		],
-		"minBytes": 289983,
-		"minSha256": "6ffc6dfb1e81af53df2412d993c261e713e630114c2cf86ec37a2eebf56430ee"
+		"minBytes": 290009,
+		"minSha256": "7cf264864f17db83f530da54a9c1af4fcd2ecee86654f53c7bc11b453cd123c7"
 	},
 	{
 		"name": "ios-safari-26",
@@ -933,8 +933,8 @@
 			"requestAnimationFrame",
 			"~html5-elements"
 		],
-		"minBytes": 64391,
-		"minSha256": "50117e09b75afaf5b99ad57ff8ac2a54813381dd1d9af26c80b296db51a3b198"
+		"minBytes": 64404,
+		"minSha256": "49a45d74be8a7c88319262a6f410ad40afcea367a7ae200782791330059ab48b"
 	},
 	{
 		"name": "ie-9",
@@ -1056,8 +1056,8 @@
 			"requestAnimationFrame",
 			"~html5-elements"
 		],
-		"minBytes": 506472,
-		"minSha256": "cd1739c23a100d800996dfc6a56ae4639afe88597abdf5800ac978b110197fb0"
+		"minBytes": 506498,
+		"minSha256": "e145bb361a5c052dbb4778bb0f173338245f7f23ae9be29c3fea6730617669c0"
 	},
 	{
 		"name": "ie-11",
@@ -1175,8 +1175,8 @@
 			"Element.prototype.replaceWith",
 			"fetch"
 		],
-		"minBytes": 501247,
-		"minSha256": "0b0e1e1dab8825e87085edfb551234672870a133079380ea5537335416146cc3"
+		"minBytes": 501273,
+		"minSha256": "f6731ca185c989494b6be11cf42d9ee46ee145239a2b367501d9f8d0089ef69b"
 	},
 	{
 		"name": "edge-legacy-12",
@@ -1272,8 +1272,8 @@
 			"Element.prototype.replaceWith",
 			"fetch"
 		],
-		"minBytes": 351550,
-		"minSha256": "7020416a582513cfc26ef9f5c98f055f891c2d46b92b87b4aebc343296dc263f"
+		"minBytes": 351576,
+		"minSha256": "70904846a53e5715eeeaa9f8d9c851821b757de596b8146bc78916b3d17698ca"
 	},
 	{
 		"name": "edge-120",
@@ -1374,8 +1374,8 @@
 			"fetch",
 			"requestAnimationFrame"
 		],
-		"minBytes": 328441,
-		"minSha256": "b97cb740e7f1791b506070bd938d9c6fc381f87a2303f9992de763b7229ec91d"
+		"minBytes": 328467,
+		"minSha256": "1a58ec3d86002cb7ce1cccdb2a19937a18b37abd9347d262ba51f241bb0a78d3"
 	},
 	{
 		"name": "samsung-26",
@@ -1509,8 +1509,8 @@
 			"requestAnimationFrame",
 			"~html5-elements"
 		],
-		"minBytes": 508028,
-		"minSha256": "3f31ed815f4e5287e050d4c5c084e0fa4c2b2be51fabc9acbf4a0eb9a4bf1681"
+		"minBytes": 508054,
+		"minSha256": "6ccbbaf240b9360461af3c1e514633210dababc647dff1829bfe05ca0340167b"
 	},
 	{
 		"name": "opera-110",
@@ -1629,8 +1629,8 @@
 			"fetch",
 			"requestAnimationFrame"
 		],
-		"minBytes": 494278,
-		"minSha256": "04412bb2ac4fb945acd5657defd63a2f2dceef113a3eb5dc1a46253d4cf384ad"
+		"minBytes": 494304,
+		"minSha256": "d20a71601f95806eadc815f8b322d5d17e2dfb49c63d6c3db1d49087624ac384"
 	},
 	{
 		"name": "facebook-inapp-ios",
@@ -1740,8 +1740,8 @@
 			"fetch",
 			"requestAnimationFrame"
 		],
-		"minBytes": 334001,
-		"minSha256": "c7da2db11f385317034e35d06be8fc1634528843ff2762e89b888b990c116414"
+		"minBytes": 334027,
+		"minSha256": "3da131ecb63fcc61e1087c0ae4bc7f4a94561411c757600ffe261cb2e7e5aae7"
 	},
 	{
 		"name": "curl",
@@ -1868,8 +1868,8 @@
 			"requestAnimationFrame",
 			"~html5-elements"
 		],
-		"minBytes": 508028,
-		"minSha256": "3f31ed815f4e5287e050d4c5c084e0fa4c2b2be51fabc9acbf4a0eb9a4bf1681"
+		"minBytes": 508054,
+		"minSha256": "6ccbbaf240b9360461af3c1e514633210dababc647dff1829bfe05ca0340167b"
 	},
 	{
 		"name": "empty-ua",
@@ -1996,8 +1996,8 @@
 			"requestAnimationFrame",
 			"~html5-elements"
 		],
-		"minBytes": 508028,
-		"minSha256": "3f31ed815f4e5287e050d4c5c084e0fa4c2b2be51fabc9acbf4a0eb9a4bf1681"
+		"minBytes": 508054,
+		"minSha256": "6ccbbaf240b9360461af3c1e514633210dababc647dff1829bfe05ca0340167b"
 	},
 	{
 		"name": "garbage",
@@ -2124,7 +2124,7 @@
 			"requestAnimationFrame",
 			"~html5-elements"
 		],
-		"minBytes": 508028,
-		"minSha256": "3f31ed815f4e5287e050d4c5c084e0fa4c2b2be51fabc9acbf4a0eb9a4bf1681"
+		"minBytes": 508054,
+		"minSha256": "6ccbbaf240b9360461af3c1e514633210dababc647dff1829bfe05ca0340167b"
 	}
 ]
