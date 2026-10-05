@@ -20,7 +20,6 @@ const FIXED = [
 
 // Still return a value on a null or undefined receiver: https://github.com/puckey/polyfill-service/issues/8
 const KNOWN_FAILURES = [
-	"Array.prototype.at",
 	"Array.prototype.entries",
 	"Array.prototype.fill",
 	"Array.prototype.find",
@@ -33,7 +32,6 @@ const KNOWN_FAILURES = [
 	"Iterator.prototype.map",
 	"Iterator.prototype.take",
 	"RegExp.prototype.flags",
-	"String.prototype.at",
 	"String.prototype.codePointAt",
 	"TypedArray.prototype.at",
 	"TypedArray.prototype.entries",
