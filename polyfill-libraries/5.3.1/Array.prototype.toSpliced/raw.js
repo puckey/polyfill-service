@@ -3,6 +3,7 @@
 /* global ArrayCreate, CreateDataPropertyOrThrow, CreateMethodProperty, Get, LengthOfArrayLike, ToIntegerOrInfinity, ToObject, ToString */
 // 23.1.3.35 Array.prototype.toSpliced ( start, skipCount, ...items )
 CreateMethodProperty(Array.prototype, 'toSpliced', function toSpliced(start, skipCount) {
+	'use strict';
 	// 1. Let O be ? ToObject(this value).
 	var O = ToObject(this);
 	// 2. Let len be ? LengthOfArrayLike(O).

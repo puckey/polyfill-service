@@ -3,6 +3,7 @@
 /* global ArrayCreate, CreateDataPropertyOrThrow, CreateMethodProperty, IsCallable, LengthOfArrayLike, ToObject, ToString */
 // 23.1.3.34 Array.prototype.toSorted ( comparefn )
 CreateMethodProperty(Array.prototype, 'toSorted', function toSorted(comparefn) {
+	'use strict';
 	// 1. If comparefn is not undefined and IsCallable(comparefn) is false, throw a TypeError exception.
 	if (comparefn !== undefined && IsCallable(comparefn) === false) {
 		throw new TypeError(

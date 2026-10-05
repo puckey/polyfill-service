@@ -3,6 +3,7 @@
 /* global ArrayCreate, CreateDataPropertyOrThrow, CreateMethodProperty, Get, LengthOfArrayLike, ToObject, ToString */
 // 23.1.3.33 Array.prototype.toReversed ( )
 CreateMethodProperty(Array.prototype, 'toReversed', function toReversed() {
+	'use strict';
 	// 1. Let O be ? ToObject(this value).
 	var O = ToObject(this);
 	// 2. Let len be ? LengthOfArrayLike(O).

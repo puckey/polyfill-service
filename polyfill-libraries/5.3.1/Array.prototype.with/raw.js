@@ -3,6 +3,7 @@
 /* global ArrayCreate, CreateDataPropertyOrThrow, CreateMethodProperty, Get, LengthOfArrayLike, ToIntegerOrInfinity, ToObject, ToString */
 // 23.1.3.39 Array.prototype.with ( index, value )
 CreateMethodProperty(Array.prototype, 'with', function With(index, value) {
+	'use strict';
 	// 1. Let O be ? ToObject(this value).
 	var O = ToObject(this);
 	// 2. Let len be ? LengthOfArrayLike(O).
