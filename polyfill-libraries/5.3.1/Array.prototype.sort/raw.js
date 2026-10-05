@@ -13,6 +13,7 @@ var origSort = Array.prototype.sort;
 // if x < y, zero if x = y, or a positive value if x > y.
 
 CreateMethodProperty(Array.prototype, "sort", function sort(compareFn) {
+	"use strict";
 	// 1. If comparefn is not undefined and IsCallable(comparefn) is false, throw
 	//    a TypeError exception.
 	if (compareFn !== undefined && IsCallable(compareFn) === false) {

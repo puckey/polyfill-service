@@ -25,7 +25,6 @@ const KNOWN_FAILURES = [
 	"Array.prototype.find",
 	"Array.prototype.findIndex",
 	"Array.prototype.keys",
-	"Array.prototype.sort",
 	"Iterator.prototype.drop",
 	"Iterator.prototype.filter",
 	"Iterator.prototype.flatMap",
@@ -46,7 +45,6 @@ const KNOWN_FAILURES = [
 const KNOWN_FAILURES_MIN_ONLY = [
 	"Array.prototype.copyWithin",
 	"Array.prototype.flat",
-	"Array.prototype.flatMap",
 	"Array.prototype.includes",
 	"Object.prototype.toString",
 	"String.prototype.endsWith",
@@ -56,9 +54,7 @@ const KNOWN_FAILURES_MIN_ONLY = [
 	"String.prototype.padEnd",
 	"String.prototype.padStart",
 	"String.prototype.repeat",
-	"String.prototype.replaceAll",
 	"String.prototype.startsWith",
-	"String.prototype.trim",
 	"String.prototype.trimEnd",
 	"String.prototype.trimStart",
 ];
