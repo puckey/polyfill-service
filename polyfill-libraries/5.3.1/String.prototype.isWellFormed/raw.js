@@ -4,6 +4,7 @@
 
 // 22.1.3.10 String.prototype.isWellFormed ( )
 CreateMethodProperty(String.prototype, "isWellFormed", function isWellFormed() {
+	'use strict';
 	// 1. Let O be ? RequireObjectCoercible(this value).
 	var O = RequireObjectCoercible(this);
 	// 2. Let S be ? ToString(O).

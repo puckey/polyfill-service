@@ -3,6 +3,7 @@
 /* global Call, CreateMethodProperty, Get, IsCallable, LengthOfArrayLike, ToBoolean, ToObject, ToString */
 // 23.1.3.11 Array.prototype.findLast ( predicate [ , thisArg ] )
 CreateMethodProperty(Array.prototype, 'findLast', function findLast(predicate /*[ , thisArg ]*/) {
+	'use strict';
 	// 1. Let O be ? ToObject(this value).
 	var O = ToObject(this);
 	// 2. Let len be ? LengthOfArrayLike(O).
